@@ -1,0 +1,99 @@
+<section>
+    <div class="section-header">
+        {{isNew ? 'New': 'Edit & Resend'}} Notification
+    </div>
+    <div class="section-content">
+        <div>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Topic Title</mat-label>
+                <input matInput
+                       placeholder="Slot For The 10 March Got Cancelled Due To Some Issue"
+                       [maxlength]="30"
+                       [(ngModel)]="title" />
+            </mat-form-field>
+        </div>
+
+        <div class="mb-4">
+            <quill-editor [(ngModel)]="message_template">
+                <div quill-editor-toolbar>
+                    <span class="ql-formats">
+                        <select class="ql-font">
+                            <option selected></option>
+                            <option value="serif"></option>
+                            <option value="monospace"></option>
+                        </select>
+                        <select class="ql-size">
+                            <option value="small"></option>
+                            <option selected></option>
+                            <option value="large"></option>
+                            <option value="huge"></option>
+                        </select>
+                    </span>
+                    <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                        <button class="ql-strike"></button>
+                    </span>
+                    <span class="ql-formats">
+                        <select class="ql-color"></select>
+                        <select class="ql-background"></select>
+                    </span>
+                    <span class="ql-formats">
+                        <button class="ql-list" value="ordered"></button>
+                        <button class="ql-list" value="bullet"></button>
+                        <select class="ql-align">
+                            <option selected></option>
+                            <option value="center"></option>
+                            <option value="right"></option>
+                            <option value="justify"></option>
+                        </select>
+                    </span>
+                    <span class="ql-formats">
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                    </span>
+                    <span class="ql-formats">
+                        <app-recipient-field-selector name="Merge Fields"
+                                                      (selected)="recipientFieldSelected($event)">
+                        </app-recipient-field-selector>
+                    </span>
+                </div>
+            </quill-editor>
+        </div>
+
+        <ng-select appearance="outline"
+                   placeholder="Add Recipient"
+                   [multiple]="true"
+                   [(ngModel)]="selectedRecipients"
+                   [minTermLength]="3"
+                   [compareWith]="compareRecipient"
+                   [typeahead]="recipientFilter$">
+            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label">
+                    <ng-container *ngIf="item.isFilterQuery; else itemTemplate">
+                        Filtered {{item.count}} recipients
+                    </ng-container>
+                    <ng-template #itemTemplate>
+                        {{item.fname}} {{item.lname}}
+                    </ng-template>
+                </span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+            </ng-template>
+            <ng-option *ngFor="let item of filteredRecipients"
+                       [value]="item">
+                {{item.fname}} {{item.lname}}
+            </ng-option>
+        </ng-select>
+
+        <recipient-list-grid (addFilteredRecipients)="addFilteredRecipients($event)"></recipient-list-grid>
+    </div>
+</section>
+
+<div class="d-flex" style="margin-bottom: 100px;">
+    <button class="btn blue-bg white-text mr-3" [disabled]="!isValid()" (click)="onSend()">Send Now</button>
+    <button class="btn blue-bg white-text mr-3" [disabled]="!isValid()"  (click)="onSchedule()">Schedule</button>
+    <button class="btn btn-secondary mr-3" (click)="goToList()">Cancel</button>
+</div>
+
+<ad-hoc-time-schedule [(open)]="schedulerOpen" (timeScheduled)="onSend($event)"></ad-hoc-time-schedule>

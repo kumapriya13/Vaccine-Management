@@ -1,0 +1,111 @@
+<app-component-dynamic-heading [heading]="'MANAGE RECEPTIONIST'" [refererClick]="true"></app-component-dynamic-heading>
+<div class="vms-sign-up">
+    <div class="vaccinator-schedule-header mb-4">
+        <div class="container d-flex align-items-center">
+            <h1 class="roboto-bold-20 m-0 pr-1" style="border-right: 2px solid #9F9F9F;">Add Receptionist</h1>
+            <p class="roboto-regular-14 m-0 pl-1" style="color: #9F9F9F;"><span>New York Presbyterian Hospital</span>
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="conatiner pb-5">
+        <form class="container d-flex flex-column align-items-center">
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>First Name *</mat-label>
+                    <input matInput placeholder="First Name" formControlName="firstName" />
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Last Name *</mat-label>
+                    <input matInput placeholder="Last Name" formControlName="lastName" />
+
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Email ID *</mat-label>
+                    <input matInput placeholder="Email ID" formControlName="email" />
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Phone Number *</mat-label>
+                    <input matInput placeholder="+1 (724)-401-2938" formControlName="phone" />
+
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput placeholder="Date of Birth" formControlName="dob" [matDatepicker]="picker1" />
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Gender</mat-label>
+                    <mat-select matInput placeholder="Gender" formControlName="gender">
+                        <mat-option *ngFor="let item of genderData; let j = index" [value]="item">
+                            {{item}}
+                          </mat-option>              
+                    </mat-select>
+
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Home Address</mat-label>
+                    <input matInput placeholder="450 Avenue" formControlName="home" />
+
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="New York" formControlName="city" />
+                    <!-- <mat-error *ngIf="!addVaccinatorForm.get('address3').valid">Address Line 2 is required
+            </mat-error> -->
+                </mat-form-field>
+
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Zipcode</mat-label>
+                    <input matInput placeholder="450Avenue" formControlName="zip">
+
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Assign Seat</mat-label>
+                    <mat-select matInput placeholder="Select" formControlName="assign">
+                        <mat-option value="Seat A">Seat A</mat-option>
+                        <mat-option value="Seat B">Seat B</mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </div>
+
+            <div class="w-50 d-flex justify-content-end mt-2">
+                <button mat-button type="submit" class="roboto-medium-18 white-text mr-2" style="width: 119px;
+      height: 46px;left: 240px; background: #1C8DE8 0% 0% no-repeat padding-box;
+      border-radius: 4px;">Save </button>
+                <button mat-button type="button" class="roboto-medium-18 white-text ml-2" style="width: 119px;
+                        height: 46px; left: 250px;background: #999999 0% 0% no-repeat padding-box;
+                          border-radius: 4px;" [routerLink]="'/site-admin/list-vaccinator'">Cancel</button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>

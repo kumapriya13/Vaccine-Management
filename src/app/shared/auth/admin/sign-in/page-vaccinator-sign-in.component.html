@@ -1,0 +1,72 @@
+<div class="main-div-bg-conatiner container" style="display: flex; justify-content: center;">
+    <div style="flex-direction: column;">
+        <div class="main-div-logo-area white-bg cursor-pointer">
+            <!-- <a href="javascript:void(0);" [routerLink]="'/'"> -->
+                <img (click)="backClicked()" src="{{ logo}} ">
+            <!-- </a> -->
+        </div>
+
+        <p class="d-flex justify-content-center roboto-bold-33 white-text py-3">LOG IN</p>
+        <div class="d-flex justify-content-center  login-container mb-5">
+
+            <form class="sign-in pt-0" [formGroup]="authSignInForm" (ngSubmit)="authSignInFormSub()">
+                <!-- <button class="vms-btn-sm light-blue-bg white-text roboto-medium-12 ml-1 mr-1" type="button" (click)="getUserType('vaccinator')">I want Vaccine</button>
+                <button class="vms-btn-sm blue-bg white-text roboto-medium-12 ml-1 mr-1" type="button" (click)="getUserType('vaccinator')">Vaccinator</button>
+                <button class="vms-btn-sm nevy-blue-bg  white-text roboto-medium-12 ml-1 mr-1" type="button" (click)="getUserType('sadmin')">Site Admin</button>
+                <button class="vms-btn-sm dark-blue-bg white-text roboto-medium-12 ml-1 mr-1" type="button" (click)="getUserType('fadmin')">Facility Admin</button> -->
+
+                <div class="sign-in-div">
+                    <a class="list-group-item float-right border-0" href="javascript:void(0);" [routerLink]="'/'">
+                        <i class="fa fa-times" aria-hidden="true"></i></a>
+                    <!-- <p class="roboto-regular-14 text-left ml-40">Email address</p> -->
+                    <div class="mb-3 mx-5">
+                        <label for="exampleFormControlInput1"
+                            class="form-label d-flex justify-content-start w-100 text-left">Username</label>
+
+                        <!-- <mat-label>Phone Number</mat-label> -->
+                        <input type="text" class="form-control sign-in-input-field white-2-bg" placeholder="username"
+                            formControlName="user" />
+
+                        <!-- <input type="text" class="form-control sign-in-input-field white-2-bg" id="exampleFormControlInput1" placeholder="Username" formControlName="user"> -->
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn roboto-regular-12 border-0 shadow-none py-0 mr-5 blue-text"
+                            [routerLink]="'/auth/admin-reset-password'">Forgot your password?</button>
+                    </div>
+                    <div class="mb-3 mx-5">
+                        <label for="exampleFormControlInput2" class="form-label w-100 text-left">Password</label>
+
+                        <input [type]="passwordToggler ? 'password' : 'text'"
+                            class="form-control sign-in-input-field white-2-bg" id="exampleFormControlInput2"
+                            placeholder="Password" formControlName="password" required>
+
+                        <mat-icon style="position: relative; top: -35px; right: -180px; cursor: pointer;" matSuffix
+                            (click)="passwordToggler = !passwordToggler">{{passwordToggler ?
+                            'visibility_off':'visibility' }}
+                        </mat-icon>
+                    </div>
+                    <!-- <p id="password-lable" class="roboto-regular-14 text-left ml-40">Password</p> -->
+
+                    <div class="sign-in-btn-container mb-3 mx-5">
+                        <button class="sign-in-btn blue-bg white-text roboto-medium-18" type="submit">Sign in</button>
+                    </div>
+                    <!-- <div class="d-flex justify-content-center ml-2">
+                        <span class="roboto-regular-14">Do not have an account?</span><button type="button" class="btn roboto-regular-14 border-0 shadow-none py-0 blue-text"
+                            [routerLink]="'/auth/sign-up'" required>Register Now</button>
+                    </div> -->
+                </div>
+                <div class="social-media-login">
+                    <!-- <p>Or Login with</p> -->
+                    <!-- <ul>
+                        <li><a href="#" title="google plus" class="gp"><i class="fa fa-google-plus"></i></a>
+                        </li>
+                        <li><a href="#" title="facebook" class="fb"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" title="twitter" class="tw"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" title="instagram" class="inst"><i class="fa fa-instagram"></i></a>
+                        </li>
+                    </ul> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

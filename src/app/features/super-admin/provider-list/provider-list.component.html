@@ -1,0 +1,258 @@
+<app-component-dynamic-heading [heading]="'Provider'"></app-component-dynamic-heading>
+<div class="container" id="super-list">
+    <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+        <li class="nav-item mx-1" role="presentation">
+            <a class="nav-link active" id="pills-provider-tab" data-toggle="pill" href="#pills-provider" role="tab"
+                aria-controls="pills-provider" aria-selected="true">Provider</a>
+        </li>
+        <li class="nav-item mx-1" role="presentation">
+            <a class="nav-link" id="pills-sites-tab" data-toggle="pill" href="#pills-sites" role="tab"
+                aria-controls="pills-sites" aria-selected="false">Sites</a>
+        </li>
+        <li class="nav-item mx-1" role="presentation">
+            <a class="nav-link" id="pills-seats-tab" data-toggle="pill" href="#pills-seats" role="tab"
+                aria-controls="pills-seats" aria-selected="false">seats</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-provider" role="tabpanel" aria-labelledby="pills-provider-tab">
+            <div class="py-0" >
+                <div class="d-flex align-items-center justify-content-between mt-2">
+                    <!-- <div class="d-flex align-items-center ml-2">
+                        <input type="text" placeholder="&#xF002;&nbsp; Search here" id="iconified"
+                            class="form-control empty search" [(ngModel)]="searchValue" />
+                        <button class="btn roboto-medium-16 filter ml-3" (click)="searchRecipient()">
+                            Filter
+                        </button>
+                    </div> -->
+                    <div class="d-flex">
+                        <!-- <mat-form-field appearance="outline" style="width: 280px !important;">
+                            <mat-label>Search</mat-label>
+                            <input matInput [(ngModel)]="searchValue" #searchInput />
+                       </mat-form-field> -->
+                        <!-- <div class="pt-2">
+                            <button type="button"ss
+                                class="btn roboto-medium-16 white-text blue-2-bg ml-3 filter" (click)="searchRecipient()">Filter</button>
+
+                        </div> -->
+                        <app-search-box (searchEvent)="searchRecipient($event)"></app-search-box>
+                    </div>
+                    <button class="btn add-prov roboto-medium-16 white-text blue-2-bg py-1 mt-1"
+                        [routerLink]="'/super-admin/provider-create'">
+                        Add Provider
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col ml-6">
+                        <small class="text-muted roboto-regular-12">Showing {{ ((pageIndex - 1) *
+                            pageLength)==0?1:((pageIndex-1) * pageLength )+ 1}} to
+                            {{
+                            totalCount < pageLength * pageIndex ? totalCount : pageLength * pageIndex }} of {{
+                                totalCount }} entries</small>
+                    </div>
+                    <!-- <a
+                        href="javascript:void(0)"
+                        (click)="downloadRecipientTemplate()"
+                        role="link"
+                        class="col offset-4 text-right roboto-regular-16 blue-text"
+                        ><i class="fa fa-download" aria-hidden="true"></i
+                        >&nbsp;Download</a
+                    >
+                    <a
+                        class="col text-center roboto-regular-16 blue-text"
+                        href="#myModal"
+                        role="link"
+                        data-toggle="modal"
+                        data-toggle="modal"
+                        style="text-decoration: none"
+                        ><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Bulk
+                        Import</a
+                    > -->
+                    <!-- <a class="col roboto-regular-16 blue-text"
+                        ><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Change
+                        Columns
+                    </a> -->
+                </div>
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-lg modal-ku">
+                        <div class="modal-content" style="border-radius: 20px">
+                            <div class="modal-header">
+                                <h4 class="modal-title btn roboto-bold-24">
+                                    Upload list
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    &times;
+                                </button>
+                            </div>
+                            <div class="modal-body modalbox" style="height: 300px">
+                                <form enctype="multipart/form-data" style="text-align: center">
+                                    <p style="
+                                            text-align: center;
+                                            margin-top: 40px;
+                                            font-size: 18px;
+                                        ">
+                                        Drop files here
+                                    </p>
+                                    <p>or</p>
+                                    <input type="file"  accept=".csv" #userFile id="file"
+                                        (change)="gotFileFromLocal($event.target.files)" />
+                                </form>
+                                <br />
+                                <p *ngIf="successStatus">
+                                    Success: Some rows were processed successfully. If
+                                    you want to check the processed rows click
+                                    <a href="javascript:void(0)" (click)="downloadMyFile('success')">here</a>
+                                    to download the success file
+                                </p>
+                                <br />
+                                <p *ngIf="failureStatus">
+                                    Error: Some rows could not be process as there seems
+                                    to be some issue. Click
+                                    <a href="javascript:void(0)" (click)="downloadMyFile('failed')">here</a>
+                                    to download the failure file.
+                                </p>
+                                <br /><br />
+                                <p style="text-align: center; font-size: 16px">
+                                    You can upload CSV file format. Download
+                                    <a href="">Sample</a> file
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button mat-button type="submit" class="roboto-medium-18 white-text mr-2" style="
+                                        width: 119px;
+                                        height: 46px;
+                                        left: -500px;
+                                        background: #3040c5 0% 0% no-repeat padding-box;
+                                        border-radius: 4px;
+                                    " (click)="uploadCSVFile()">
+                                    Submit
+                                </button>
+                                <button mat-button type="button" class="roboto-medium-18" data-dismiss="modal" style="
+                                        width: 119px;
+                                        height: 46px;
+                                        left: -490px;
+                                        background: #e1e1e1 0% 0% no-repeat padding-box;
+                                        border-radius: 10px;
+                                        opacity: 0.5;
+                                    ">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped mb-3">
+                    <tbody>
+                        <tr class="blue-2-bg white-text">
+                            <th class="txt roboto-regular-18 text-left">Providers</th>
+                            <th class="txt roboto-regular-18 text-left">Provider Admin</th>
+                            <th class="txt roboto-regular-18 text-left">Vaccines</th>
+                            <!-- <th class="txt roboto-regular-18 text-left">Facilities</th> -->
+                            <th class="txt roboto-regular-18 text-left">Sites</th>
+                            <th class="txt roboto-regular-18 text-center">Action</th>
+                            <th></th>
+                        </tr>
+                        <tr *ngFor="let User of providerDataList; let i = index">
+                            <td class="txt blue-text roboto-medium-16">
+                                {{ User.provider_name }}
+                            </td>
+                            <td class="txt blue-text roboto-medium-16 text-left blue-text"></td>
+                            <td class="txt blue-text roboto-medium-16 text-left blue-text"></td>
+                            <td class="txt blue-text roboto-medium-16 text-left blue-text"></td>
+                            <td class="txt blue-text roboto-medium-16 text-left blue-text"></td>
+                            <td class="txt blue-text roboto-medium-16 text-left blue-text">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <button type="submit" class="btn edit roboto-regular-11 blue-text mr-2"
+                                        [routerLink]="[
+                                            '/super-admin/provider-update/',
+                                            User.id
+                                        ]">
+                                        Edit <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <button type="submit" class="btn delete roboto-regular-11 ml-2"
+                                        (click)="recipientInfo = User['id']" data-toggle="modal"
+                                        data-target="#exampleModal2">
+                                        Delete <i class="fa fa-trash-o blue-text"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+               <!-- <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" *ngIf="pageIndex > 1">
+                            <a class="page-link" (click)="
+                                    getPageRecipientDataUser(pageIndex - 1, pageLength)
+                                ">Previous</a>
+                        </li>
+                        <ng-container *ngFor="let item of [-2, -1, 0, 1, 2]">
+                            <li class="page-item" *ngIf="
+                                    pageIndex + item > 0 &&
+                                    (pageIndex + item - 1) * pageLength <= totalCount
+                                " [class.active]="pageIndex == pageIndex + item">
+                                <a class="page-link" (click)="
+                                        getPageRecipientDataUser(
+                                            pageIndex + item,
+                                            pageLength
+                                        )
+                                    ">{{ pageIndex + item }}</a>
+                            </li>
+                        </ng-container>
+                        <li class="page-item" *ngIf="pageIndex * pageLength < totalCount">
+                            <a class="page-link" (click)="
+                                    getPageRecipientDataUser(pageIndex + 1, pageLength)
+                                ">Next</a>
+                        </li>
+                    </ul>
+                </nav> -->
+
+                <div class="d-flex justify-content-between">
+                    <small class="text-muted roboto-regular-12">
+                        Showing {{(pageIndex -1) * pageLength + 1}} to {{totalCount > (pageLength * pageIndex) ?(pageLength *
+                        pageIndex)
+                        : totalCount }} of {{totalCount}}
+                        entries</small>
+                    <ngb-pagination class="ml-auto" (pageChange)="onPageChange($event)" [maxSize]="5" [page]="pageIndex"
+                        [pageSize]="pageLength" [collectionSize]="totalCount"></ngb-pagination>
+                </div>
+
+                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabe2" aria-hidden="true">
+                    <div class="modal-dialog border-0 h-auto delete-popup" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-center">
+                                <h3 class="modal-title m-0 text-center roboto-regular-16" id="exampleModalLabe2">
+                                    Delete Provider
+                                </h3>
+                            </div>
+                            <div class="modal-body">
+                                <p class="roboto-regular-14 text-center m-0 pt-2 pb-4">
+                                    Are you sure you want to delete provider
+                                </p>
+                            </div>
+                            <div class="modal-footer p-0 d-flex justify-content-around align-items-center">
+                                <button data-dismiss="modal" aria-label="Close" type="button"
+                                    class="btn w-50 px-0 rounded-0 shadow-none m-0 border-right blue-text">
+                                    No
+                                </button>
+                                <button data-dismiss="modal" aria-label="Close" type="button"
+                                    class="btn w-50 px-0 rounded-0 shadow-none m-0 blue-text"
+                                    (click)="onDeleteSeat(recipientInfo)">
+                                    Yes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-sites" role="tabpanel" aria-labelledby="pills-sites-tab">sites works here
+        </div>
+        <div class="tab-pane fade" id="pills-seats" role="tabpanel" aria-labelledby="pills-seats-tab">seats works here
+        </div>
+    </div>
+
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

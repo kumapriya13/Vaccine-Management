@@ -1,0 +1,44 @@
+<div data-message="Map" class="mapSection">
+    <iframe title="google maps"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96873.73653467487!2d-74.01503701272314!3d40.64522284241859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24416947c2109%3A0x82765c7404007886!2sBrooklyn%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1609790386802!5m2!1sen!2sin"
+        width="100%" height="390" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+        tabindex="0"></iframe>
+    <div class="form-container">
+        <h1 class="form-heading">Get vaccinated<br />at a location near you</h1>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <!-- zip detail here -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="zip"
+                            placeholder="enter zip to find nearest vaccination center" />
+                    </div>
+                </div>
+                <!-- search area here -->
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <select class="form-control" id="search area"  [(ngModel)]="distanceMiles" name="search area">
+                            <option [value]="1">Search area in 1 miles</option>
+                            <option [value]="2">Search area in 2 miles</option>
+                            <option [value]="3">Search area in 3 miles</option>
+                            <option [value]="4">Search area in 4 miles</option>
+                            <option [value]="5">Search area in 5 miles</option>
+                            <option [value]="6">Search area in 6 miles</option>
+                            <option [value]="7">Search area in 7 miles</option>
+                            <option [value]="8">Search area in 8 miles</option>
+                            <option [value]="9">Search area in 9 miles</option>
+                            <option [value]="10">Search area in 10 miles</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- search button here -->
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="pt-3">
+            <p class="form-footer">PROTECT YOURSELF, FAMILY AND YOUR LOVED ONES FROM COVID-19</p>
+        </div>
+    </div>
+</div>

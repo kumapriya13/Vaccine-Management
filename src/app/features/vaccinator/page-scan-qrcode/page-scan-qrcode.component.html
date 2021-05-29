@@ -1,0 +1,91 @@
+<app-component-vaccinator-header></app-component-vaccinator-header>
+<app-component-dynamic-heading [heading]="'Scan QR Code'" [caseType]="'regular'"></app-component-dynamic-heading>
+<!-- <div class="page-header mb-4">
+  <div class="container d-flex align-items-center">
+    <h1 class="vcn-sch-text roboto-medium-40 m-0">
+      <ng-container>
+        Scan QR Code
+      </ng-container>
+    </h1>
+  </div>
+</div> -->
+
+<div class="container py-4">
+  <div class="card border-0 shadow justify-content-center">
+
+    <div class="card-body px-5 d-flex justify-content-center">        
+      <a [routerLink]="[]" (click)="(showCam=true)">Activate &nbsp;</a> a portable Scanner or Camera 
+    </div>
+
+    <div class="card-body px-5 d-flex justify-content-center" *ngIf="(!showCam)">
+      <img src="assets/images/png/TestQRCode.png">
+    </div>
+    
+    <div class="card-body px-5 d-flex justify-content-center">      
+      <ng-container *ngIf="(showCam)">
+        <div class="scanner-shell" [hidden]="!hasDevices">
+          <mat-menu #appMenu="matMenu">
+            <mat-selection-list>
+              <mat-list-option checkboxPosition="start" (click)="toggleTryHarder()" [selected]="tryHarder">
+                Enable Try-harder
+              </mat-list-option>
+              <mat-list-option checkboxPosition="start" (click)="toggleTorch()" [selected]="torchEnabled"
+                *ngIf="torchAvailable$ | async">
+                Enable Torch
+              </mat-list-option>
+            </mat-selection-list>
+            <mat-divider></mat-divider>
+          </mat-menu>
+
+          <header>
+            <mat-form-field appearance="fill">
+              <select matNativeControl matInput (change)="onDeviceSelectChange($event.target.value)">
+                <option value="" [selected]="!currentDevice">No Device Selected</option>
+                <option *ngFor="let device of availableDevices" [value]="device.deviceId"
+                  [selected]="currentDevice && device.deviceId === currentDevice.deviceId">{{device.label}}</option>
+              </select>
+            </mat-form-field>
+            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </header>
+
+          <zxing-scanner [torch]="torchEnabled" [(device)]="currentDevice" (scanSuccess)="onCodeResult($event)"
+            [formats]="formatsEnabled" [tryHarder]="tryHarder" (permissionResponse)="onHasPermission($event)"
+            (camerasFound)="onCamerasFound($event)" (torchCompatible)="onTorchCompatible($event)"></zxing-scanner>
+
+          <!-- <section class="results" *ngIf="qrResultString">
+            <div>
+              <small>Result</small>
+              <strong>{{ qrResultString }}</strong>
+            </div>
+            <button mat-icon-button (click)="clearResult()">&times;</button>
+          </section> -->
+        </div>
+
+        <ng-container *ngIf="hasPermission === undefined && this.availableDevices?.length!=0">
+            Waiting for permissions.     
+        </ng-container>
+
+        <ng-container *ngIf="hasPermission === false && this.availableDevices?.length!=0">
+              You denied the camera permission.
+        </ng-container>
+
+        <!-- <ng-container *ngIf="hasDevices === undefined || this.availableDevices?.length==0">
+              Couldn't check for devices.
+        </ng-container> -->
+
+            <ng-container *ngIf="hasDevices === false && this.availableDevices?.length==0">
+                 No devices were found.             
+            </ng-container>
+      </ng-container> 
+         
+    </div>    
+    <div class="card-body px-5 d-flex justify-content-center">        
+         Scan QR code of Recipient.     
+    </div>
+  </div>
+</div>
+
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

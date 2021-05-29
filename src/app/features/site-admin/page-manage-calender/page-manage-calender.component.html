@@ -1,0 +1,140 @@
+<app-component-dynamic-heading [heading]="'MANAGE CALENDAR'" [refererClick]="true"></app-component-dynamic-heading>
+
+<div class="container"> 
+    <div class="d-flex align-items-center pb-3">
+        <p class="roboto-bold-20">Site : &nbsp;</p>
+        <p class="roboto-regular-20" style="color: #9F9F9F;">{{siteName}}</p>
+    </div>
+
+    <section *ngIf="multiSeats">
+        <h4 class="multiseat">Seats for Slot Generation</h4>
+        <mat-chip-list class="mt-2 mat-chip-list" aria-label="Seat selection">
+            <mat-chip
+                *ngFor="let seat of multiSeats"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="removeSeat(seat)">
+                {{seat?.seat}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </section> 
+
+    <section class="pt-5">
+        <h4 class="multiseat">Select Date Range</h4>
+        <div class="row">
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker" [min]="minDate" autocomplete="off">
+                        <input matStartDate placeholder="Start date" (dateInput)="setDates('start_date', $event.value)">
+                        <input matEndDate placeholder="End date" (dateInput)="setDates('end_date', $event.value)">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h4 class="multiseat">Days of Operation</h4>
+        <div class="row px-2 py-1 ml-1" style="width: 350px; background-color: #F8F8F8;">
+            <p class="roboto-medium-18 m-0" style="color: #003A74;">All days have the same schedule?</p>
+            <form class="pl-4">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch1" [checked]="sameSchedule" (change)="setSameSchedule()" data-onstyle="outline-success" data-offstyle="outline-secondary">
+                    <label class="custom-control-label" for="switch1"></label>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex justify-content-around py-4" style="width: 400px;">
+            <span 
+                *ngFor="let day of days"
+                class="roboto-regular-12 rounded-circle border day-badge text-center cursor-pointer"
+                [ngClass]="{'day-b-col': isDaySelected(day)}"
+                (click)="setDayOfWeek(day)">
+                {{day?.short}}
+            </span>
+        </div>
+    </section>
+
+    <section>
+        <div id="same-schedule" class="p-4" *ngIf="sameSchedule && selectedDays.length > 0">
+            <h4 class="roboto-medium-20">Hours of operation</h4>
+
+            <div class="row">
+                <div class="col">
+                <mat-radio-group [value]="is24Hours" aria-label="Select an option" (change)="setIs24Hours()" color="primary">
+                    <mat-radio-button [value]="true" style="font-size: 16px;color: #000;">24 Hours</mat-radio-button>
+                    <mat-radio-button [value]="false" class="pl-4" style="font-size: 16px;color: black;">Certain hours of the day only</mat-radio-button>
+                </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="row col-5 mt-3" *ngIf="!is24Hours">
+                <div class="col">
+                <mat-form-field appearance="outline" class="time-box">
+                    <mat-label>Start Time</mat-label>
+                    <input matInput [ngxTimepicker]="starttimepicker" class="cursor-pointer" placeholder="Start Time" autocomplete="off" />
+                    <ngx-material-timepicker (timeSet)="setTime('start_time', $event)" #starttimepicker></ngx-material-timepicker>
+                </mat-form-field>
+                </div>
+                <div class="col-2">
+                <p class="roboto-regular-16 pt-3">to</p>
+                </div>
+                <div class="col">
+                <mat-form-field appearance="outline" class="time-box">
+                    <mat-label>End Time</mat-label>
+                    <input matInput [ngxTimepicker]="endtimepicker" class="cursor-pointer" placeholder="End Time" autocomplete="off" />
+                    <ngx-material-timepicker (timeSet)="setTime('end_time', $event)" #endtimepicker></ngx-material-timepicker>
+                </mat-form-field>
+                </div>
+            </div>
+
+            <hr />
+
+            <h4 class="roboto-medium-20">Slot time</h4>
+
+            <div class="row col-6">
+                <div class="col-3">
+                <mat-form-field appearance="outline" class="slot-box">
+                    <mat-label>Hours</mat-label>
+                    <mat-select value="00" (selectionChange)="setSlotTime('hour', $event.value)">
+                        <mat-option *ngFor="let hour of hours" [value]="hour">
+                            {{hour}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field appearance="outline" class="slot-box">
+                        <mat-label>Minutes</mat-label>
+                        <mat-select value="00" (selectionChange)="setSlotTime('minute', $event.value)">
+                        <mat-option *ngFor="let minute of minutes" [value]="minute">
+                            {{minute}}
+                        </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div id="not-same-schedule" class="mb-5" *ngIf="!sameSchedule">
+            <mat-tab-group dynamicHeight="true" class="tab-box">
+                <mat-tab *ngFor="let day of selectedDays" [label]="days[day.SeatDay.day_of_week].long" class="p-3">
+                    <hours-slot-time [day]="day"></hours-slot-time>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+        <hr />
+        <div class="d-flex align-items-center pb-3">
+            <button [disabled]="disablePreview()" class="btn prev-btn mr-3" (click)="preview()">Preview</button>
+            <button class="btn can-btn ml-3" (click)="cancel()">Cancel</button>
+        </div>
+    </section>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,77 @@
+<!-- header here -->
+<div class="body">
+    <header>
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-md-12 forMob">
+                    <div class="topText"><a href="#" title="Vaccine Provider"> Help</a></div>
+
+                </div> -->
+                <div class="col-md-2">
+                    <!-- company logo here -->
+                    <div class="logoArea" (click)="backClicked()">
+                        <img src="{{ logo }}"
+                        style="
+                                width: 130px !important;
+                                height: auto !important;
+                            " alt="logo - 21-20 All Clear"
+                            [routerLink]="'/vaccinator/dashboard'" />
+                        <div class="hamBtn">
+                            <a><i class="fa fa-align-justify"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="rightTop">
+                        <!-- right navigation menu here -->
+                        <div class="topText"><a [routerLink]="'/vaccinator/help'" [routerLinkActive]="'active'"
+                                title="Vaccine Provider"></a>&nbsp;</div>
+
+                        <div class="navigationBtm">
+                            <ul>
+                                <li><a [routerLink]="'/vaccinator/dashboard'" [routerLinkActive]="'active'"
+                                        title="Home">Home</a></li>
+                                <li><a [routerLink]="'/vaccinator/schedule'" [routerLinkActive]="'active'"
+                                        title="Today's Schedule">Today's Schedule</a></li>
+                                <li><a [routerLink]="'/vaccinator/scan-qr-code'"  [routerLinkActive]="'active'"
+                                            title="Scan QR Code">Scan QR Code</a></li>
+                                <!-- <li><a [routerLink]="'/vaccinator/history'" [routerLinkActive]="'active'"
+                                        title="History">History</a></li> -->
+
+                                <!-- <li><a title="Notification"><i class="fa fa-bell-o" style="font-size: 20px;"></i></a>
+                                </li> -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbardrop"
+                                        data-toggle="dropdown" style="color: #0984E3;">
+                                        <i class="fa fa-user-circle-o" style="font-size: 25px; color: #0984E3;"></i>
+                                    </a>
+                                    <div class="dropdown-menu p-2">
+                                        <ul>
+                                            <li>
+                                                <!-- [routerLink]="'/vaccinator/profile'" -->
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="'/auth/admin-my-profile'"
+                                                    [routerLinkActive]="'active'" title="My Profile">My Profile</a>
+                                            </li>
+                                            <li>
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="'/vaccinator/dashboard'"
+                                                    [routerLinkActive]="'active'" title="Dashboard">Dashboard</a>
+                                            </li>
+                                            <li *ngIf="vaccinatorDetails$ | async as vaccinatorDetails">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="['/auth/admin-change-password']"
+                                                    [routerLinkActive]="'active'" title="Dashboard">Change Password</a>
+                                            </li>
+                                            <li>
+                                                <a class="p-0 pb-1 mb-2" (click)="logout()" title="Logout">Logout</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

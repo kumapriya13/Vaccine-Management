@@ -1,0 +1,60 @@
+<div class="p-4">
+  <h4 class="roboto-medium-20">Hours of operation</h4>
+
+  <div class="row">
+    <div class="col">
+      <mat-radio-group [value]="is24Hours" aria-label="Select an option" (change)="setIs24Hours()" color="primary">
+        <mat-radio-button [value]="true" style="font-size: 16px;color: #000;">24 Hours</mat-radio-button>
+        <mat-radio-button [value]="false" class="pl-4" style="font-size: 16px;color: black;">Certain hours of the day only</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <div class="row col-5 mt-3" *ngIf="!is24Hours">
+    <div class="col">
+      <mat-form-field appearance="outline" class="time-box">
+        <mat-label>Start Time</mat-label>
+        <input matInput [ngxTimepicker]="starttimepicker" placeholder="Start Time" autocomplete="off">
+        <ngx-material-timepicker (timeSet)="setTime('start_time', $event)" #starttimepicker></ngx-material-timepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-2">
+      <p class="roboto-regular-16 pt-3">to</p>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline" class="time-box">
+        <mat-label>End Time</mat-label>
+        <input matInput [ngxTimepicker]="endtimepicker" placeholder="End Time" autocomplete="off" />
+        <ngx-material-timepicker (timeSet)="setTime('end_time', $event)" #endtimepicker></ngx-material-timepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <hr />
+
+  <h4 class="roboto-medium-20">Slot time</h4>
+
+  <div class="row col-6">
+    <div class="col-3">
+      <mat-form-field appearance="outline" class="slot-box">
+        <mat-label>Hours</mat-label>
+        <mat-select value="00" (selectionChange)="setSlotTime('hour', $event.value)">
+          <mat-option *ngFor="let hour of hours" [value]="hour">
+            {{hour}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-3">
+      <mat-form-field appearance="outline" class="slot-box">
+        <mat-label>Minutes</mat-label>
+        <mat-select value="00" (selectionChange)="setSlotTime('minute', $event.value)">
+          <mat-option *ngFor="let minute of minutes" [value]="minute">
+            {{minute}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

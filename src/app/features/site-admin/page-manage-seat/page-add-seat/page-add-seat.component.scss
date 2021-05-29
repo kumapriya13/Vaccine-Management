@@ -1,0 +1,110 @@
+@charset "UTF-8";
+.site-admin-add-site-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+    font-size: 22px;
+    font-weight: lighter;
+  }
+}
+
+.bg-primary {
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+}
+
+.vaccinator-schedule-header {
+  // background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+  opacity: 1;
+  padding: 1.2rem 0;
+  i {
+    color: #ffffff;
+    font-size: 40px;
+  }
+}
+
+.btn {
+  background: #0984e3 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  letter-spacing: 0px;
+  color: #ffffff;
+  padding: 0 4rem;
+}
+
+:host ::ng-deep .mat-checkbox-inner-container {
+  padding: 10px;
+}
+
+.term-cond-text {
+  letter-spacing: 0px;
+  opacity: 1;
+  padding-left: 1rem;
+}
+.card {
+  width: 363px;
+  height: 345px;
+  background-color: #ffffff;
+  .card-header {
+    background-color: #ffffff;
+    border-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .card-footer {
+    background-color: #ffffff;
+    border-top: 0 !important;
+  }
+}
+.highlight {
+  color: #0984e3;
+}
+
+.check-box-div {
+  margin-top: 12px;
+}
+
+.vms-sign-up {
+  .mat-input-element {
+    font-weight: 500;
+    font-size: 18px;
+  }
+}
+
+.seat {
+  text-align: left;
+  font: normal normal normal 18px/22px Roboto;
+  letter-spacing: 0px;
+  color: #9f9f9f;
+  text-shadow: 0px 6px 6px #fffcfc29;
+  opacity: 1;
+}
+
+.seats {
+  text-align: left;
+  font: normal normal normal 16px/19px Roboto;
+  letter-spacing: 0px;
+  color: #003a74;
+  opacity: 1;
+}
+
+.vaccinator-list {
+  margin-top: 1px;
+}
+
+ul {
+  li {
+    list-style: none !important;
+    background-color: #efefef !important;
+  }
+}
+
+.add-sch-btn-card {
+  width: 754px !important;
+  height: 118px !important;
+}
+.add-sch-btn {
+  width: 202px;
+  height: 34px;
+  background: #AADAFF 0% 0% no-repeat padding-box;
+  color: #000000;
+  border-radius: 4px;
+}

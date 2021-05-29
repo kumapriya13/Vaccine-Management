@@ -1,0 +1,162 @@
+.site-admin-list-add-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+    font-size: 22px;
+    font-weight: lighter;
+  }
+}
+
+.search-form-field {
+  width: 230px;
+}
+
+:host ::ng-deep .table-action-strip {
+  .mat-form-field-flex > .mat-form-field-infix {
+    // border: 0 !important;
+    padding: 0.4em 0px !important;
+    padding-bottom: 0.6em !important;
+  }
+  .mat-form-field-label-wrapper {
+    top: -1.5em;
+  }
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+}
+
+.open {
+  background-color: darkgreen;
+  height: 42px !important;
+}
+
+.missed {
+  background-color: rgb(224, 102, 54);
+  height: 42px !important;
+}
+
+.open-button-color {
+  background-color: darkgreen;
+}
+
+.cus-pad-title {
+  padding: 3px 10px;
+}
+
+.seat {
+  color: white;
+  width: 100%;
+  margin-top: 9px;
+}
+
+.booked-button-color {
+  background-color: lightgreen;
+}
+
+.private {
+  color: white;
+  background-color: rgb(224, 179, 54);
+}
+
+.public {
+  color: white;
+  background-color: rgb(54, 170, 224);
+}
+
+.booked,
+.open,
+.missed {
+  color: white;
+  border: 1px black solid;
+  text-transform: capitalize;
+  height: 36px!important;
+}
+
+.booked {
+  color: #000;
+  background-color: lightgreen;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+button[mat-stroked-button] {
+  width: 140px !important;
+}
+button[mat-stroked-button].booked-btn {
+  width: 400px !important;
+  background-color: lightgreen;
+  border: 1px black solid;
+  text-transform: capitalize;
+}
+.inner-book-line {
+  background-color: black solid;
+}
+.table thead th {
+  border-bottom: 0;
+}
+.table td {
+  border-top: 0;
+}
+.table th {
+  border-top: 0;
+}
+.table-head {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid black;
+  border-style: dashed;
+}
+
+.table > .table-head:first-child > tr:first-child > th:first-child {
+  position: absolute;
+  display: inline-block;
+  background-color: white;
+  z-index: 10;
+  // background-color: red;
+  // height: 100%;
+}
+
+.table > .table-tbody > tr > td:first-child {
+  position: absolute;
+  display: inline-block;
+  background-color: white;
+  z-index: 10;
+  // height: 100%;
+}
+
+.table > thead:first-child > tr:first-child > th:nth-child(2) {
+  padding-left: 175px !important;
+}
+
+.table > tbody > tr > td:nth-child(2) {
+  padding-left: 175px !important;
+}
+.left-arrow {
+  width: 30px;
+  height: 30px;
+  padding-left: 8px;
+  padding-top: 4px;
+  cursor: pointer;
+}
+.right-arrow {
+  width: 30px;
+  height: 30px;
+  padding-left: 10px;
+  padding-top: 4px;
+  cursor: pointer;
+}
+.arrow {
+  position: sticky;
+  bottom: 11%;
+  z-index: 99;
+  margin: 0 -40px;
+}

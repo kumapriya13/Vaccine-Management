@@ -1,0 +1,13 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.form-row-width {
+  width: 768px;
+}
+
+@media (max-width: 768px) {
+  .form-row-width {
+    width: 100%;
+  }
+}

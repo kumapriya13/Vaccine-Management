@@ -1,0 +1,154 @@
+<div class="book-slot-container">
+
+    <div class="row">
+        <div class="text blue-text">Choose from the available time slots</div>
+        <!-- <div>
+            <button mat-button class="btn rounded-pill">Change Vaccination Center</button>
+        </div> -->
+    </div>
+
+
+    <div class="row margin-top d-flex align-items-center">
+        <div>
+            <ng-container *ngIf="_site">
+                <p class="m-0" style="color: #333333;"><b>{{_site.site_name}}</b></p>
+                <p class="m-0">
+                    <ng-container *ngIf="selectedVaccine">
+                        <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                        <span style="color: #636E72;"
+                            *ngFor="let vaccine of _site.$expanded.availableVaccines; let last = last;">{{vaccine.name}}<span
+                                *ngIf="!last">,</span>&nbsp; </span>
+                    </ng-container>
+                    <ng-container *ngIf="!selectedVaccine">
+                        <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                        <span class="roboto-regular-14" style="color: #636E72;">&nbsp;{{ _material.name
+                            }}</span>
+                    </ng-container>
+                </p>
+
+            </ng-container>
+        </div>
+        <div class="d-md-flex justify-content-between">
+            <div *ngIf="selectedVaccine">
+                <span class="filter-text"><b>Filter facility by Vaccine</b></span>
+                <mat-form-field appearance="outline" *ngIf="_site">
+                    <mat-label *ngIf="_material">{{_material.name}}</mat-label>
+                    <mat-select ([ngModel])="_material" (selectionChange)="changeMaterialHandler($event.value)">
+                        <mat-option *ngFor="let materialItem of _site.$expanded.availableVaccines"
+                            [value]="materialItem">
+                            {{ materialItem.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="pt-2 ml-3">
+                <button class="btn px-3 white-text rounded-pill" style="width: 229px; height: 46px;"
+                    (click)="changeVaccination()">Change Vaccination
+                    Center</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-box"></div>
+    <div class="d-flex justify-content-between d-flex-xs book-slot-box">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="center" class="slot-calender">
+            <ng-container *ngIf="renderCal">
+                <mat-calendar #calendar style="width: 280px !important;" class="border w-100 p-2" [minDate]="minDate"
+                    [selected]="selectedDate" [dateClass]="previous_gray" (selectedChange)="onSelect($event)">
+                </mat-calendar>
+            </ng-container>
+            <!-- <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" [min]="minDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field> -->
+        </div>
+        <div class="time-slot-list h-100 px-5 pt-4 pb-3">
+            <p>
+                <strong><span style="text-align: left;
+                font: normal normal medium 20px/24px Roboto;
+                letter-spacing: 0px;
+                color: #333333;">Available Slots for </span>
+                    <span style="text-align: left;
+                font: normal normal medium 20px/24px Roboto;
+                letter-spacing: 0px;
+                color: #0984E3;">{{ selectedDate | date: 'MMM d, y' }}</span>
+                </strong>
+            </p>
+            <div class="d-flex flex-wrap h-75" style="overflow-y: auto;">
+                <!-- [hidden]="checkForDisable(dateSlotItem)" [disabled]="checkForDisable(dateSlotItem)" -->
+                <div class="ml-0 mr-4 mb-3" *ngFor="let dateSlotItem of _dateSlotList">
+                    <!-- *ngIf="!checkForDisable(dateSlotItem)" -->
+                    <button mat-button class="time-btn success"
+                        [ngClass]="{'time-btn-active': (dateSlot==dateSlotItem)}"
+                        [class.warning]="dateSlotItem.frequency<=5&&!(dateSlot==dateSlotItem)"
+                        (click)="setDateSlot(dateSlotItem); isSubmited=false;">{{dateSlotItem.start_time | date:
+                        'hh:mm a'}}-{{dateSlotItem.end_time | date: 'hh:mm a'}}
+                        ({{dateSlotItem.frequency}})</button>
+
+                    <!-- <button mat-button class="time-btn"
+                        [ngClass]="{'time-btn-active': (dateSlot==dateSlotItem), 'time-btn-disabled': checkForDisable(dateSlotItem)}"
+                        [class.success]="dateSlotItem.frequency>5&&!(dateSlot==dateSlotItem)"
+                        [class.warning]="dateSlotItem.frequency<=5&&!(dateSlot==dateSlotItem)"
+                        (click)="setDateSlot(dateSlotItem)">{{dateSlotItem.start_time | date:
+                        'hh:mm a'}}-{{dateSlotItem.end_time | date: 'hh:mm a'}} ({{dateSlotItem.frequency}})</button> -->
+                </div>
+            </div>
+
+            <div class="book-app-container pt-2 pl-4">
+                <button mat-button class="book-appointment-btn rounded-pill" [disabled]="dateSlot==null || isSubmited"
+                    (click)="reqBookAppointment()">Book Appointment</button>
+
+
+            </div>
+        </div>
+        <div class="h-100 site-list">
+            <ng-container *ngIf="siteList.length===0;">
+                <h1>No list found</h1>
+            </ng-container>
+
+            <ng-cotainer *ngIf="siteList.length!==0;">
+                <div class="d-flex px-3 h-100 flex-column" style="overflow-y: auto;">
+                    <div *ngFor="let siteItem of siteList" class="card mb-1">
+                        <div class="card-body">
+                            <div class="roboto-medium-16"><b>{{siteItem ? siteItem.site_name: ''}}</b></div>
+                            <div class="d-flex align-items-center">
+                                <div class="roboto-regular-14"><span>{{siteItem ? siteItem.city: ''}},&nbsp;</span>
+                                </div>
+                                <div class="roboto-regular-14"><span>{{siteItem ? siteItem.state: ''}},&nbsp;</span>
+                                </div>
+                                <div class="roboto-regular-14"><span>{{siteItem ? siteItem.zip: ''}}</span></div>
+                            </div>
+                            <div class="list-item-text roboto-medium-14 grey-text d-flex justify-content-between">
+                                <div>
+                                    <ng-container *ngIf="selectedVaccine">
+                                        <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                                        <span class="roboto-regular-14" style="color: #636E72;"
+                                            *ngFor="let vaccine of siteItem.$expanded.availableVaccines; let last = last;">{{vaccine.name}}
+                                            <span *ngIf="!last">,</span>&nbsp;</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="!selectedVaccine">
+                                        <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                                        <span class="roboto-regular-14" style="color: #636E72;">&nbsp;{{ _material.name
+                                            }}</span>
+                                    </ng-container>
+                                </div>
+
+                                <span style="font-weight: normal !important;" class="blue-text"><i
+                                        class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{
+                                    siteItem.$expanded.distance | number : '1.2-2' }}&nbsp;Miles</span>
+                            </div>
+                            <button mat-button class="time-btn mt-2" [ngClass]="{'time-btn-active': (_site==siteItem)}"
+                                (click)="siteHandler(siteItem)" style="width: 280px;">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-cotainer>
+            <!-- <div class="d-flex justify-content-center mt-3">
+                <button mat-button class="btn rounded-pill"
+                    style="background-color: #0984e3; color: #ffffff; width: 229px; height: 46px;">Near By
+                    Centers</button>
+            </div> -->
+        </div>
+    </div>
+</div>

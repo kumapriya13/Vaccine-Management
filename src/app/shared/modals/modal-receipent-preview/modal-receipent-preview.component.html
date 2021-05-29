@@ -1,0 +1,279 @@
+<div class="vms-sign-up">
+    <div class="vaccinator-schedule-header mb-4">
+        <div class="container d-flex align-items-center">
+            <h1 class="roboto-medium-40 text-light m-0">Preview</h1>
+        </div>
+    </div>
+    <div class="conatiner py-5">
+        <form class="container d-flex flex-column align-items-center" [formGroup]="authRecipientSignUpForm">
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>First Name *</mat-label>
+                    <input readonly matInput placeholder="First Name" formControlName="firstName" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Last Name *</mat-label>
+                    <input readonly matInput placeholder="Last Name" formControlName="lastName" />
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Email ID *</mat-label>
+                    <input readonly matInput placeholder="Email ID" formControlName="email" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label class="ml-5 pl-2">Phone Number *</mat-label>
+                    <input readonly type="text" placeholder="Phone Number" formControlName="phone" matInput ng2TelInput
+                        [ng2TelInputOptions]="{initialCountry: this.iso2}" />
+                </mat-form-field>
+
+            </div>
+
+            <div class="form-row-width container">
+                <mat-radio-group [disabled]="true" aria-label="Select an option" formControlName="primaryType"
+                    class="d-flex justify-content-center flex-column flex-md-row">
+                    <mat-radio-button value="email" class="mx-md-4 w-100">SET EMAIL AS PRIMARY</mat-radio-button>
+                    <mat-radio-button value="phone" class="mx-md-4 w-100">SET PHONE AS PRIMARY</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Password *</mat-label>
+                    <input readonly matInput placeholder="Password" [type]="hide ? 'password' : 'text'"
+                        formControlName="password" />
+                    <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">{{hide ?
+                        'visibility_off':'visibility' }}</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Confirm Password *</mat-label>
+                    <input readonly matInput placeholder="Confirm Password" appConfirmEqualValidator="password"
+                        [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" />
+                    <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">{{hide ?
+                        'visibility_off':'visibility' }}</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Date of Birth *</mat-label>
+                    <input readonly matInput placeholder="Date of Birth"
+                        [value]="authRecipientSignUpForm.get('dob').value | date:'MM/dd/yyyy'" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Gender *</mat-label>
+                    <input readonly matInput placeholder="gender" formControlName="gender" />
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Address Line 1 *</mat-label>
+                    <input readonly matInput placeholder="Address Line 1" formControlName="address1" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Address Line 2 *</mat-label>
+                    <input readonly matInput placeholder="Address Line 2" formControlName="address2" />
+                </mat-form-field>
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Apartment,Suit,Unit Number </mat-label>
+                    <input readonly matInput placeholder="Apartment,Suit,Unit Number" formControlName="address3" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Home Phone Number</mat-label>
+                    <input matInput placeholder="Home Mobile Phone Number" formControlName="homePhoneNumber" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('homePhoneNumber').valid">Home Mobile Phone Number is
+                        required
+                    </mat-error> -->
+                </mat-form-field>
+
+
+
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Zip *</mat-label>
+                    <input readonly matInput placeholder="Zip" #zip formControlName="zip" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>City *</mat-label>
+                    <input readonly matInput placeholder="City" formControlName="city" />
+                </mat-form-field>
+
+
+
+
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>State *</mat-label>
+                    <input readonly matInput placeholder="state" formControlName="state" />
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Country *</mat-label>
+                    <input readonly matInput placeholder="Country" formControlName="country" />
+
+                </mat-form-field>
+
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>County *</mat-label>
+                    <input readonly matInput placeholder="county" formControlName="county" />
+                </mat-form-field>
+                
+                <mat-form-field class="mx-md-4 w-100">
+                    <input matInput readonly class="empty-input" />
+
+                </mat-form-field>
+            </div>
+
+            <div formGroupName="answers">
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <div class="mx-md-4 w-100">
+                        <div class="bottom-border mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">1. Which of the following best describes your ethnic
+                                group? *
+                            </p>
+                            <mat-form-field appearance="outline" class="w-100" style="width: 690px !important;">
+                                <input readonly matInput placeholder="ethnicgroup" formControlName="ethnicgroup" />
+                            </mat-form-field>
+                        </div>
+                        <div class="bottom-border mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">2. Which of the following best describes your race?
+                                Please select all that apply? *</p>
+                            <ul class="p-2">
+                                <li *ngFor="let control of authRecipientSignUpForm.value['answers']['raceFormArray']">
+                                    <input readonly disabled type="checkbox" checked [value]="control">&nbsp;&nbsp;
+                                    <span class="roboto-regular-14">{{control}}</span>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">3. Select all that apply</p>
+                            <ul class="p-2">
+                                <li
+                                    *ngFor="let control of authRecipientSignUpForm.value['answers']['applyAllFormArray']">
+                                    <input readonly disabled type="checkbox" checked [value]="control">&nbsp;&nbsp;
+                                    <span class="roboto-regular-14">{{control}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <div class="mx-md-4 w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Prescription, over-the- counter medications, dietary supplements, or herbal remedies
+                                being taken at the time of Vaccination.
+                            </p>
+                        </div>
+                    </div>
+                </div> 
+                
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                        <input readonly matInput formControlName="prescriptionQ" placeholder="Type here" />
+                    </mat-form-field>
+                </div> -->
+
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <div class="mx-md-4 w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Allergies to medications, food, or other products:
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                        <input readonly disabled matInput formControlName="allergiestomedications"
+                            placeholder="Type here" />
+                    </mat-form-field>
+                </div>
+
+                <!-- <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <div class="mx-md-4 w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Other illnesses at the time of vaccination and up to one month
+                            </p>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                        <input readonly disabled matInput formControlName="otherillnesses" placeholder="Type here" />
+                    </mat-form-field>
+                </div> -->
+
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <div class="mx-md-4 w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Chronic or long-standing health conditions prior
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                        <input readonly disabled matInput formControlName="chronicorlongstanding"
+                            placeholder="Type here" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <div class="mx-md-4 w-100">
+                    <div class="mb-3">
+                        <p class="pb-3 m-0 roboto-medium-18">Insurance Information</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Insurance </mat-label>
+                    <input readonly disabled matInput placeholder="Insurance" formControlName="insurance" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Insurance Provider name </mat-label>
+                    <input readonly disabled matInput placeholder="Insurance provider name"
+                        formControlName="insuranceprovidername" />
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Medical Group Number </mat-label>
+                    <input readonly disabled matInput placeholder="Medical Group Number"
+                        formControlName="medicalGroupNumber" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Medical Id </mat-label>
+                    <input readonly disabled matInput placeholder="Medical Id" formControlName="memberId" />
+                </mat-form-field>
+            </div>
+        </form>
+
+        <div class="d-flex justify-content-center proceed-div py-3">
+            <button mat-button (click)="closeTheDialog('next')" class="btn mr-3 roboto-medium-18" type="submit">
+                Next&nbsp;&nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </button>
+            <button (click)="closeTheDialog('back')" class="btn preview-btn roboto-medium-16">Back</button>
+        </div>
+    </div>
+</div>

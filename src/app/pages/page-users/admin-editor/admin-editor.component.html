@@ -1,0 +1,164 @@
+<app-component-dynamic-heading [heading]="'Users - '+(isNew ? 'Add New' : 'Edit')+' '+adminTitleByType[adminType]"></app-component-dynamic-heading>
+
+<div class="container mb-5">
+    <h2 class="mb-4">
+        {{isNew ? 'New' : 'Update'}} {{adminTitleByType[adminType]}} Details
+    </h2>
+    <!-- {{formGroup.value | json}}
+    {{providers | json}} -->
+    <div *ngIf="formGroup">
+        <form class="container d-flex flex-column p-0" [formGroup]="formGroup" (ngSubmit)="save()">
+          
+          
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field *ngIf="providerVisible" appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Provider *</mat-label>
+                    <mat-select [disabled]="!isNew" matInput placeholder="Select Provider" formControlName="provider"
+                        (selectionChange)="providerChanged($event)">
+                        <mat-option *ngFor="let data of providers; let j = index" [value]="data.id">
+                            {{data.provider_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('provider').hasError('required')">Provider is required
+                    </mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field *ngIf="siteVisible" appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Site *</mat-label>
+                    <mat-select [disabled]="!isNew" matInput placeholder="Select Site" formControlName="site"
+                        (selectionChange)="siteChanged($event)">
+                        <mat-option *ngFor="let data of sites; let j = index" [value]="data.id">
+                            {{data.site_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('site').hasError('required')">Site is required</mat-error>
+                </mat-form-field> -->
+                <ng-container *ngIf="(adminType !=='site-admin'); else NonSiteAdmin" >                  
+                        <mat-form-field appearance="outline" class="mx-md-4 w-100"  *ngIf="siteVisible">       
+                        <mat-label>Select Sites *</mat-label>
+                        <mat-select [disabled]="!isNew"  multiple                      
+                        name="site" (selectionChange)="getSingleSite($event)"
+                        formControlName="site" #siteobj>
+                        <mat-option value="selectAll" (click)="toggleAllSelection(ev,sites)" #ev>
+                            Select All
+                        </mat-option>
+                        <!-- <mat-option (click)="toggleAllSelection(checkAll)" #checkAll value="Select All"> Select All </mat-option> -->
+                        <mat-option *ngFor="let v of sites" [value]="v.id"> {{v.site_name}} </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formGroup.get('site').hasError('required')">Site is required</mat-error>
+                       </mat-form-field>
+                    </ng-container>
+
+                   <ng-template #NonSiteAdmin>
+                    <mat-form-field *ngIf="siteVisible" appearance="outline" class="mx-md-4 w-100">
+                        <mat-label>Site *</mat-label>
+                        <mat-select [disabled]="!isNew" matInput placeholder="Select Site" formControlName="site"
+                            (selectionChange)="siteChanged($event)">
+                            <mat-option *ngFor="let data of sites; let j = index" [value]="data.id">
+                                {{data.site_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formGroup.get('site').hasError('required')">Site is required</mat-error>
+                    </mat-form-field>
+                    </ng-template>
+
+                   
+                  
+
+                
+
+                    
+
+                </div>
+
+                <!-- <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                        <div class="mx-md-4 w-100"></div>
+                        <div class="mx-md-4 w-100">
+                            <div class="d-flex card-body" style="padding:0px">
+                                <ul class="p-0 mb-2 h-100 px-2" style="overflow-y: auto;">
+                                    <li *ngFor="let item of sitesSelected" (click)="(isNew?removeSite(item):'')"
+                                        class="vaccinator-list d-flex justify-content-between px-2 py-1">
+                                        {{item.site_name}}<i class="fa fa-trash-o blue-text text-right"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                </div>  -->
+            
+
+
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>First Name *</mat-label>
+                    <input matInput placeholder="Enter First Name" type="text" formControlName="fname" />
+                    <mat-error *ngIf="formGroup.get('fname').hasError('required')">
+                        First Name is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Last Name *</mat-label>
+                    <input matInput placeholder="Enter Last Name" type="text" formControlName="lname" />
+                    <mat-error *ngIf="formGroup.get('lname').hasError('required')">
+                        Last Name is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Email Address *
+                    </mat-label>
+                    <input matInput placeholder="Enter Email Address" type="text" formControlName="email" />
+                    <mat-error *ngIf="formGroup.get('email').hasError('required')">
+                        Email ID is required
+                    </mat-error>
+                    <mat-error *ngIf="formGroup.get('email').hasError('pattern')">
+                        Email must be a valid
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label class="ml-5 pl-2">Mobile Phone Number *</mat-label>
+                    <!-- <div *ngIf="!isNew">
+                        <input matInput placeholder="Mobile Phone Number" formControlName="phoneNo" />
+                    </div>
+                    <div *ngIf="isNew"> -->
+                    <input matInput placeholder="Mobile Phone Number" formControlName="phoneNo" ng2TelInput
+                        [ng2TelInputOptions]="{initialCountry: 'us'}" (countryChange)="onDialCodeChange($event)" />
+                    <!-- </div> -->
+                    <mat-error *ngIf="formGroup.get('phoneNo').hasError('pattern')">
+                        Enter valid phoneNo number.
+                    </mat-error>
+                    <mat-error *ngIf="formGroup.get('phoneNo').hasError('required')">
+                        Phone number is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Gender</mat-label>
+                    <mat-select matInput placeholder="Gender" formControlName="gender">
+                        <mat-option *ngFor="let item of genderData; let j = index" [value]="item">
+                            {{item}}
+                          </mat-option>              
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>User Name *</mat-label>
+                    <input matInput placeholder="Enter UserName" type="text" formControlName="user_name" />
+                    <mat-error *ngIf="formGroup.get('user_name').hasError('required')">
+                        User name is required
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <div class="d-flex center py-3 mr-3">
+                    <button class="btn roboto-medium-18 white-text save-btn" type="submit">{{isNew?'Save':'Update'}}</button>
+                </div>
+                <div class="d-flex center py-3 ml-3">
+                    <button class="btn roboto-medium-18 cancel-btn" type="button"
+                        [routerLink]="isNew ? '../../' : '../../../'">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

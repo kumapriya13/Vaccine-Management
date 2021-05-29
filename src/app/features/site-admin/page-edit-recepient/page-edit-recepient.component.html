@@ -1,0 +1,12 @@
+<app-component-site-admin-header></app-component-site-admin-header>
+<div class="vms-sign-up">
+    <app-component-dynamic-heading [heading]="'Edit Recipient'"></app-component-dynamic-heading>
+
+<edit-recepient-common [redirection]="redirection" 
+  [redirectionAfterSave]="redirectionAfterSave" 
+  [(recepient)]="recepientId"
+  [is_allow_private]="is_allow_private"
+  ></edit-recepient-common>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

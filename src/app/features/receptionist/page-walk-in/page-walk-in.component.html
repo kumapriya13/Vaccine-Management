@@ -1,0 +1,201 @@
+<app-component-receptionist-header></app-component-receptionist-header>
+<app-component-dynamic-heading [heading]="'Appointment'" [refererClick]="true"></app-component-dynamic-heading>
+
+<div class="container vaccinator-list-container my-2 pb-2">
+  <div class="d-flex align-items-center justify-content-between py-3 table-action-strip">
+    <div class="d-flex align-items-center">
+      <mat-form-field appearance="outline" class="search-form-field cus-search-form-field">
+        <!-- <mat-label>Search</mat-label> -->
+        <input matInput (keyup)="checkIFBlankLoadData(searchInput)" #searchInput
+          (keyup.enter)="applyFilter(searchInput)" placeholder="Search recipient" />
+
+        <button mat-button *ngIf="searchInput.value.trim() !=''" matSuffix mat-icon-button aria-label="Clear"
+          (click)="(searchInput.value='');applyFilter(searchInput)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3 mb-3"
+        (click)="applyFilter(searchInput)">Filter</button>
+
+        <!-- <div class="py-1 ml-3 mb-3 d-flex align-items-center justify-content-between" >       
+          <select class="form-control" style="width: 250px;" id="site" name="site" 
+                  (change)="siteChanged($event.target.value)"
+                  [(ngModel)]="selectedSiteId">
+                 <option *ngFor="let data of sites; let j = index" [value]="data.site_id">                    
+                  {{data.site_name}}
+                 </option>
+          </select>
+      </div> -->
+    </div>
+    <div class="d-flex align-items-center">
+      <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3" (click)="openDialog()">
+        <i class="fa fa-book" aria-hidden="true"></i>
+        <span vmsTooltip="receptionist_bookappointment" placement="top" delay="10">
+          &nbsp;Book Appointments&nbsp;&nbsp;</span>
+      </button>
+      <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3"
+        [routerLink]="'/receptionist/new-registration'">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        <span vmsTooltip="receptionist_registration" placement="top" delay="10">&nbsp;
+          New Registration&nbsp;&nbsp;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="overflow-hidden">
+    <div class="w-100" style="overflow-y: hidden; overflow-x: auto;">
+      <table mat-table MatSort [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+
+        <ng-container matColumnDef="input_check_box">
+          <th mat-header-cell *matHeaderCellDef class="roboto-regular-18 header-align-left">
+            <input type="checkbox" (click)="checkUncheckAll(elel)" #elel>
+          </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+            <ng-container *ngIf="disableControl(element); then disabledTemplate else enabledTemplate">
+            </ng-container>
+            <ng-template #disabledTemplate>
+              <input type="checkbox" value="{{element.id}}" [disabled]="true" [readonly]="true" value="{{element.id}}"
+                #children>
+            </ng-template>
+            <ng-template #enabledTemplate>
+              <input type="checkbox" value="{{element.id}}" [checked]="checkAll" value="{{element.id}}" #children>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Recipient
+          </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.name}}
+          </td>
+      </ng-container>
+      <ng-container matColumnDef="dob">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> DOB
+          </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+              {{getValidDate(element.dob)}}
+          </td>
+      </ng-container>
+      <ng-container matColumnDef="slottime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Slot Time </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+              {{element.slotTime ? (element.slotTime | date: 'h:mm a') : ''}}
+          </td>
+      </ng-container>
+      <ng-container matColumnDef="vaccine">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Vaccine </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+              {{element?.vaccine}}
+          </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Date </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+              {{element.date ? (element.date | formatDate) : '' }}
+              </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dose">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Dose </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+              <!-- {{element.$expanded.booked_visits.length > 0 ? element.$expanded.booked_visits[0].dose_in_series
+              : '' }} -->
+              {{element?.dose}}
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="survey">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18">Survey#</th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+              {{element?.surveyId}}
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Status </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+              {{element.status | titlecase}}
+          </td>
+      </ng-container>
+
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="roboto-regular-18 text-left">Action </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="text-right pr-5 mr-3">
+              <button *ngIf="(!element.is_activated || (element.inviteStatus && element.inviteStatus != 'accepted'))" class="btn btn-outline-primary roboto-regular-12 mr-2"
+                (click)="onInvite(element, inviteDialog)">
+                <b> {{ element?.inviteStatus === 'sent' ? 'Reinvite' : 'Invite' }}</b>
+              </button>
+
+              <button class="btn btn-outline-primary roboto-regular-12 mr-2"
+                (click)="appointmentClick(element)">Appointment</button>
+
+              <button type="button" class="btn btn-outline-primary roboto-regular-12"
+                [routerLink]="['/receptionist/edit-info-user',element.id]">Edit <i
+                  class="fa fa-pencil-square-o"></i></button>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator class="w-100" [length]="totalCount" [pageIndex]="pageIndex" (page)="getPageRecpient($event)"
+      [pageSize]="pageSize" [pageSizeOptions]="opt" showFirstLastButtons></mat-paginator>
+      
+  </div>
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe2"
+    aria-hidden="true">
+    <div class="modal-dialog border-0 h-auto delete-popup" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h3 class="modal-title m-0 text-center roboto-regular-16" id="exampleModalLabe2">Delete Seat</h3>
+        </div>
+        <div class="modal-body">
+          <p class="roboto-regular-14 text-center m-0 pt-2 pb-4">Are you sure you want to delete seat </p>
+        </div>
+        <div class="modal-footer p-0 d-flex justify-content-around align-items-center">
+          <button data-dismiss="modal" aria-label="Close" type="button"
+            class="btn w-50 px-0 rounded-0 shadow-none m-0 border-right blue-text">No</button>
+          <button data-dismiss="modal" aria-label="Close" type="button"
+            class="btn w-50 px-0 rounded-0 shadow-none m-0 blue-text">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #inviteDialog let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Invite User</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Please select email or mobile for user name
+    </p>
+
+    <input type="radio" id="user_type_email" name="login_type" value="email" class="mr-2"
+      [(ngModel)]="recipientToInvite.userType" [disabled]="!recipientToInvite.email">
+    <label for="user_type_email">
+      Email ({{recipientToInvite.email || 'N/A'}})
+    </label><br>
+    <input type="radio" id="user_type_phone" name="login_type" value="phone" class="mr-2"
+      [(ngModel)]="recipientToInvite.userType" [disabled]="!recipientToInvite.mobile_number">
+    <label for="user_type_phone">
+      Phone ({{recipientToInvite.mobile_number || 'N/A'}})
+    </label><br>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Ok click')"
+      [disabled]="!recipientToInvite.userType">Invite</button>
+  </div>
+</ng-template>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

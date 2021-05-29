@@ -1,0 +1,84 @@
+.HomeAbout {
+  background: url("../../../../assets/images/Banner\ 2.jpg") no-repeat center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 555px;
+  @media (max-width: 768px) {
+    height: auto;
+  }
+  > div {
+    position: relative;
+    // height: 100%;
+  }
+  .border {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #0984e380;
+    opacity: 0.9;
+    align-self: center !important;
+  }
+  .green {
+    font-size: 35px !important;
+    color: #118484;
+    font: normal normal bold 40px/53px Roboto;
+  }
+  .btn-primary {
+    background-color: #118484;
+    color: #fff !important;
+  }
+  .vacc-recp-log-btn {
+    color: #118484;
+  }
+  .text {
+    text-emphasis-color: #118484;
+  }
+  .txt-green {
+    font-size: 35px !important;
+    color: #0984e3;
+    font: normal normal bold 40px/53px Roboto;
+  }
+  .btn-pry {
+    background-color: #0984e3;
+  }
+  a {
+    color: #fff;
+  }
+  .slideContent {
+    position: relative;
+    padding: 50px 80px;
+    box-shadow: 0 0 35px -35px;
+    .pr-space {
+      padding-right: 80px;
+      &:before {
+        position: absolute;
+        content: "";
+        width: 1px;
+        top: 0;
+        bottom: 0;
+        right: 35px;
+        background-color: #ededed;
+      }
+    }
+    h3 {
+      font-size: 40px;
+      font-weight: 600;
+      color: #375d9d;
+      margin: 0 0 25px;
+      &.green {
+        color: #118484;
+      }
+    }
+    &:before {
+      position: absolute;
+      content: "";
+      background: #fff;
+      opacity: 0.7;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+}
+.seal-logo {
+  width: 100%;
+}

@@ -1,0 +1,48 @@
+<app-component-vaccinator-header></app-component-vaccinator-header>
+<div class="container-fluid p-0 m-0">
+    <app-component-dynamic-heading [heading]="'History'" [refererClick]="true"></app-component-dynamic-heading>
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <mat-form-field appearance="outline" style="width: 260px !important;">
+                <input matInput placeholder="Enter Survey Id" />
+                <!-- (keyup)="filterList(searchInput,true)" -->
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <div class="pb-4">
+                <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3">Filter</button>
+                <!-- (click)="filterList(searchInput,false)" -->
+            </div>
+        </div>
+        <!-- <input type="text" class="form p-3 mb-4" placeholder="Search" width="623px"> -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="roboto-regular-18 blue-bg white-text text-left">Time</th>
+                    <th class="roboto-regular-18 blue-bg white-text text-left">Recipient</th>
+                    <th class="roboto-regular-18 blue-bg white-text text-left">Dose</th>
+                    <th class="roboto-regular-18 blue-bg white-text text-left">Date</th>
+                    <th class="roboto-regular-18 blue-bg white-text text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let history of historyList">
+                    <td class="txt text-left">
+                        <span
+                            class="roboto-medium-16">{{history.VaccinationDetails.DATE_OF_ADMINISTRATION_YYYYMMDD}}</span>&nbsp;<span>am</span>
+                    </td>
+                    <td class="txt roboto-medium-16 text-left">
+                        {{history.VaccinationDetails.PATIENT_FIRST_NAME}}
+                        {{history.VaccinationDetails.PATIENT_LAST_NAME}}
+                    </td>
+                    <td class="txt text-left">1st dose</td>
+                    <td class="txt text-left">{{history.VaccinationDetails.date}}</td>
+                    <td class="txt text-left" [routerLink]="'/vaccinator/checklist'">
+                        <i class="fa fa-pencil-square-o pl-4"></i><br />checklist
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

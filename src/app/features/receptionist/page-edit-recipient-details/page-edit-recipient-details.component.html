@@ -1,0 +1,11 @@
+<app-component-receptionist-header></app-component-receptionist-header>
+<div class="vms-sign-up">
+  <app-component-dynamic-heading [heading]="'Edit Profile'"></app-component-dynamic-heading>
+
+  <edit-recepient-common [redirection]="redirection" 
+  [redirectionAfterSave]="redirectionAfterSave" 
+  [(recepient)]="recepientId"
+  [(fromWalkinPage)]="fromWalkinPage"
+  ></edit-recepient-common>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

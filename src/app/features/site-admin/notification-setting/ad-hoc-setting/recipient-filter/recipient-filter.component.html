@@ -1,0 +1,144 @@
+<div class="recipient-filter">
+    <div class="filter-header d-flex align-items-center">
+        <span class="title">List Of Recipient: {{totalCount}} Recipients</span>
+
+        <div class="d-flex ml-auto align-items-center">
+            <button class="btn blue-bg white-text roboto-regular-12 py-1 rounded-pill" (click)="selectAll.emit()">
+                Select All
+            </button>
+            <span class="filter-btn ml-3" (click)="resetFilter()">
+                Reset Filter
+                <i class="fa fa-filter ml-1"></i>
+            </span>
+        </div>
+    </div>
+    <div class="filter-content" [formGroup]="filterFormGroup">
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select City</mat-label>
+                <mat-select formControlName="city">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of cities;" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Ethnicity</mat-label>
+                <mat-select formControlName="ethnicity">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of ethnicity;" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Race</mat-label>
+                <mat-select formControlName="race">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of races;" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Qualification Code</mat-label>
+                <mat-select formControlName="classification">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of classifications;" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Gender</mat-label>
+                <mat-select formControlName="gender">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of genderData;" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Age</mat-label>
+                <mat-select formControlName="ageRange">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of ageList;" [value]="item">
+                        {{item[0]}} - {{item[1]}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Country</mat-label>
+                <mat-select formControlName="country">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let country of countries;" [value]="country.CountryName">
+                        {{country.CountryName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select County</mat-label>
+                <mat-select formControlName="county">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let county of counties;" [value]="county">
+                        {{county}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Medical Condition</mat-label>
+                <mat-select>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Employment Types</mat-label>
+                <mat-select>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Second Dose Received</mat-label>
+                <mat-select formControlName="secondDose">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of secondDoseMaterials;" [value]="item">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Enter Zip Code </mat-label>
+                <input matInput placeholder="Enter Zip Code" formControlName="zip" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select First Dose Received</mat-label>
+                <mat-select formControlName="firstDose">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of firstDoseMaterials;" [value]="item">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Site</mat-label>
+                <mat-select formControlName="sites">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let item of listSite;" [value]="item.id">
+                        {{item.site_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Appointment</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="appointmentDob">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn light-grey-bg white-text roboto-regular-12 py-1 rounded-pill"
+                (click)="addFilteredRecipients.emit()">
+                Add Filtered Recipients
+            </button>
+        </div>
+    </div>
+</div>

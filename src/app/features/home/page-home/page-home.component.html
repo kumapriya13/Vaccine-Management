@@ -1,0 +1,259 @@
+<app-component-vaccine-recipient-and-provider-auth-banner></app-component-vaccine-recipient-and-provider-auth-banner>
+<!-- START: map html code -->
+<div data-message="Map" class="mapSection">
+    <!-- <iframe title="google maps"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96873.73653467487!2d-74.01503701272314!3d40.64522284241859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24416947c2109%3A0x82765c7404007886!2sBrooklyn%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1609790386802!5m2!1sen!2sin"
+        width="100%" height="390" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+        tabindex="0"></iframe> -->
+    <google-map height="390px" width="100%" [zoom]="zoom" [center]="center" [options]="options">
+        <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
+            [title]="marker.title" [options]="marker.options">
+        </map-marker>
+    </google-map>
+    
+    <div class="form-container">
+        <h1 class="form-heading blue-text">Get vaccinated<br />at a location near you</h1>
+        <!-- <a class="pfizer-link-cursor roboto-italic-16 navy-text" href="https://apps.apple.com/us/app/2120check-com/id1559172195" target="_blank"><i class="fa fa-play" aria-hidden="true"></i></a> -->
+        <div class="container-fluid p-0 pt-4">
+            <div class="row">
+                <!-- zip detail here -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input class="form-control" type="search" [(ngModel)]="getZip" id="zip"
+                            placeholder="enter zip to find nearest vaccination center" />
+                    </div>
+                </div>
+                <!-- search area here -->
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="distanceMiles" id="search_area" name="search area">
+                            <option [value]="100">Search Near By Sites</option>
+                            <option  [value]="5">Search Sites within 05 Miles</option>
+                            <option [value]="10">Search Sites within 10 Miles</option>
+                            <option [value]="15">Search Sites within 15 Miles</option>
+                            <option [value]="20">Search Sites within 20 Miles</option>
+                            <option [value]="25">Search Sites within 25 Miles</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- search button here -->
+                <div class="col-md-4">
+                    <button class="btn btn-primary blue-bg light-text rounded-pill w-100"
+                        (click)="getSiteListBySearch()">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="pt-3">
+            <p class="form-footer roboto-medium-16">PROTECT YOURSELF, FAMILY AND YOUR LOVED ONES FROM COVID-19</p>
+        </div>
+    </div>
+</div>
+<!-- END: map html code -->
+<div class="container-fluid w-100 py-2">
+    <div class="container dosage-administration py-5">
+            <mat-list>
+                <mat-list-item *ngFor="let site of siteList">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div style="width: 450px;">
+                            <div mat-line class="roboto-medium-20"><b>{{site ? site.site_name: ''}}</b></div>
+                            <div mat-line class="roboto-regular-14"> <span>{{site ? site.address1: ''}}</span></div>
+                            <div class="d-flex align-items-center">
+                                <div mat-line class="roboto-regular-14"> <span>{{site ? site.city: ''}},&nbsp;</span></div>
+                                <div mat-line class="roboto-regular-14"> <span>{{site ? site.state: ''}},&nbsp;</span></div>
+                                <div mat-line class="roboto-regular-14"> <span>{{site ? site.zip: ''}}</span></div>
+                            </div>
+                            <!-- <div mat-line class="list-item-text roboto-medium-14 grey-text">
+                                <ng-container *ngIf="selectedVaccine">
+                                    <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                                    <span class="roboto-regular-14" style="color: #636E72;"
+                                        *ngFor="let vaccine of site.$expanded.availableVaccines; let last = last;">{{vaccine.name}}
+                                        <span *ngIf="!last">,</span>
+                                        &nbsp;</span>
+                                </ng-container>
+                                <ng-container *ngIf="!selectedVaccine">
+                                    <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                                    <span class="roboto-regular-14" style="color: #636E72;">&nbsp;{{ material && material.name ? material.name :''
+                                        }}</span>
+                                </ng-container>
+                            </div> -->
+                        </div>
+                        <div mat-line style="background-color: white;"
+                            class="mr-5 badge badge-light py-2 px-4 rounded-pill border">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{ site.$expanded.distance | number
+                            : '1.2-2' }}&nbsp;Miles
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <hr>
+                </mat-list-item>
+            </mat-list>
+    </div>
+</div>
+<!-- START : THIS PAGE CODE -->
+<div class="container-fluid w-100 py-2">
+    <div class="container dosage-administration py-5">
+        <div class="row">
+            <div class="col-lg-8 col-12">
+                <h3 class="m-0">Dosage</h3>
+                <h3>and administration</h3>
+                <p>As COVID-19 vaccines are authorized and then recommended for use in the United States, it will be
+                    important to understand what is known about each vaccine. </p>
+                <p>Currently, two vaccines are authorized and recommended to prevent COVID-19 and given below is the
+                    dosage and administration details for them.</p>
+                <div>
+                    <div class="d-flex justify-content-center">
+                        <ul class="nav nav-tabs d-flex w-100" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link pfizer-tab-cursor" id="pfizer-biontech-vaccine" data-toggle="tab"
+                                    (click)="this.myTabSelectedIndex=0" [class.active]="this.myTabSelectedIndex==0"
+                                    role="tab" aria-controls="pfizer-biontech-vaccine" aria-selected="true">
+                                    <h6>Pfizer-BioNTech Vaccine</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link moderna-tab-cursor" id="moderna-vaccine" data-toggle="tab"
+                                    (click)="this.myTabSelectedIndex=1" [class.active]="this.myTabSelectedIndex==1"
+                                    role="tab" aria-controls="moderna-vaccine" aria-selected="false">
+                                    <h6>Moderna Vaccine</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link Janssen-tab-cursor" id="Janssen-vaccine" data-toggle="tab"
+                                    (click)="this.myTabSelectedIndex=2" [class.active]="this.myTabSelectedIndex==2"
+                                    role="tab" aria-controls="Janssen-vaccine" aria-selected="false">
+                                    <h6>Janssen (J&J) Vaccine</h6>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content p-3" id="myTabContent">
+                        <div class="tab-pane" *ngIf="myTabSelectedIndex==0" [class.active]="this.myTabSelectedIndex==0"
+                            id="pfizer-biontech-vaccine" role="tabpanel" aria-labelledby="pfizer-biontech-vaccine">
+                            <div class="row">
+                                <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                    <h6>Schedule</h6>
+                                    <p>2 doses series separated <br />by 21 days<br /> Both doses must be <br />COVID-19
+                                        Vaccine (Pfizer)
+                                    </p>
+                                    <p class="comp-info-detail oboto-italic-16">For more information visit <a
+                                            class="pfizer-link-cursor roboto-italic-16 navy-text"
+                                            href="https://www.pfizer.com/" target="_blank">Pfizer.com</a></p>
+                                </div>
+
+                                <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                    <h6>Administer</h6>
+                                    <p>Intramuscular (IM) injection<br /> in the deltoid muscle</p>
+                                </div>
+
+                                <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                    <h6>Age Indications</h6>
+                                    <p>12 years of age and older</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" *ngIf="myTabSelectedIndex==1" [class.active]="this.myTabSelectedIndex==1"
+                            id="moderna-vaccine" role="tabpane2" aria-labelledby="moderna-vaccine">
+                            <div class="row">
+                                <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                    <h6>Schedule</h6>
+                                    <p>2 doses series separated <br />by 28 days<br /> Both doses must be <br />COVID-19
+                                        Vaccine (Moderna)
+                                    </p>
+                                    <p class="comp-info-detail oboto-italic-16">For more information visit <a
+                                            class="moderna-link-cursor roboto-italic-16 navy-text"
+                                            href="https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/Moderna.html"
+                                            target="_blank">Moderna.com</a></p>
+                                </div>
+
+                                <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                    <h6>Administer</h6>
+                                    <p>Intramuscular (IM) injection<br /> in the deltoid muscle</p>
+                                </div>
+
+                                <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                    <h6>Age Indications</h6>
+                                    <p>18 years of age and older</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" *ngIf="myTabSelectedIndex==2" [class.active]="this.myTabSelectedIndex==2"
+                        id="Janssen-vaccine" role="tabpane2" aria-labelledby="Janssen-vaccine">
+                        <div class="row">
+                            <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                <h6>Schedule</h6>
+                                <p>1 dose required for<br />COVID-19
+                                    Vaccine (Janssen)
+                                </p>
+                                <p class="comp-info-detail oboto-italic-16">For more information visit <a
+                                        class="moderna-link-cursor roboto-italic-16 navy-text"
+                                        href="https://www.janssen.com/" target="_blank">Janssen.com</a></p>
+                            </div>
+
+                            <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                <h6>Administer</h6>
+                                <p>Intramuscular (IM) injection<br /> in the deltoid muscle</p>
+                            </div>
+
+                            <div class="col-md-4 pfizer-biontech-vaccine-content-box">
+                                <h6>Age Indications</h6>
+                                <p>18 years of age and older</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12 px-5 vaccine-img-box">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid covid-safety-instruction-box p-0">
+    <div class="container covid-safety-instruction py-5">
+        <h4>How can <br />I protect myself from Covid-19?</h4>
+        <div class="w-75 d-lg-flex flex-wrap align-items-center justify-content-between pt-5 ">
+            <div class="d-flex flex-column align-items-center">
+                <div class="safety-instruction-detail">
+                    <img src="../../../../assets/images/ico1.svg" alt="ico1">
+                </div>
+                <p class="pt-3 roboto-bold-16" style="text-align: center;
+letter-spacing: 0px;
+color: #354463;
+text-transform: uppercase;">WEAR A FACEMASK</p>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+                <div class="safety-instruction-detail">
+                    <img src="../../../../assets/images/ico2.svg" alt="ico2">
+                </div>
+                <p class="pt-3 roboto-bold-16" style="text-align: center;
+letter-spacing: 0px;
+color: #354463;
+text-transform: uppercase;">WASH YOUR HAND</p>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+                <div class="safety-instruction-detail distance">
+                    <img src="../../../../assets/images/ico3.svg" alt="ico3">
+                </div>
+                <p class="pt-3 roboto-bold-16" style="text-align: center;
+letter-spacing: 0px;
+color: #354463;
+text-transform: uppercase;">SOCIAL DISTANCING</p>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+                <div class="safety-instruction-detail">
+                    <img src="../../../../assets/images/ico4.svg" alt="ico4">
+                </div>
+                <p class="pt-3 roboto-bold-16" style="text-align: center;
+letter-spacing: 0px;
+color: #354463;
+text-transform: uppercase;">KEEP DISTANCE</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END :   THIS PAGE CODE -->
+
+<app-component-footer></app-component-footer>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

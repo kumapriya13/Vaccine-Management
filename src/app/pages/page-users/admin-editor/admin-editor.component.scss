@@ -1,0 +1,27 @@
+.cancel-btn {
+  background-color: #999999;
+  color: white;
+  width: 119px;
+  height: 46px;
+}
+.save-btn {
+  background-color: #1C8DE8;
+  width: 119px;
+  height: 46px;
+}
+
+.card {
+  width: 363px;
+  height: 345px;
+  background-color: #ffffff;
+  .card-header {
+    background-color: #ffffff;
+    border-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .card-footer {
+    background-color: #ffffff;
+    border-top: 0 !important;
+  }
+}
+

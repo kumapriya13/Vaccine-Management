@@ -1,0 +1,58 @@
+<app-component-dynamic-heading [heading]="'MANAGE RECEPTIONIST'"></app-component-dynamic-heading>
+
+
+<div class="vaccinator-list-container">
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-3">
+        <!-- <p class="roboto-bold-20 m-0">List of Seats</p> -->
+      <p class="roboto-bold-20">List of Receptionist</p>
+        <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1" routerLink="/site-admin/add-receptionist">+
+            Add&nbsp;Receptionist</button>
+    </div>
+    <table class="table table-striped mb-3">
+        <tbody>
+            <tr class="blue-1-bg white-text">
+                <th class="txt roboto-regular-18">Seat</th>
+                <th class="txt roboto-regular-18">Vaccinator</th>
+                <th class="txt roboto-regular-18">Phone</th>
+                <th class="txt roboto-regular-18"></th>
+                <th class="txt roboto-regular-18"></th>
+            </tr>
+            <tr *ngFor="let Receptionist of dataSource; let i =index">
+
+              <td class="txt blue-text roboto-medium-16">{{Receptionist  ? Receptionist  .Seat: ''}}</td>
+              <td class="txt blue-text roboto-medium-16">{{Receptionist  ? Receptionist  .Vaccinator: ''}}</td>
+              <td class="txt blue-text roboto-medium-16">{{Receptionist  ? Receptionist  .Phone: ''}}</td>
+
+
+                          <td class="txt blue-text roboto-medium-16">
+              <div class="d-flex align-items-center justify-content-center">
+                <button type="submit" class="btn edit roboto-regular-11 blue-text mr-2">Edit <i
+                    class="fa fa-pencil-square-o"></i></button>
+                <button type="submit" class="btn delete roboto-regular-11 ml-2"
+                  data-toggle="modal" data-target="#exampleModal2">Delete <i class="fa fa-trash-o blue-text"></i></button>
+              </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe2"
+        aria-hidden="true">
+        <div class="modal-dialog border-0 h-auto delete-popup" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title m-0 text-center roboto-regular-16" id="exampleModalLabe2">Delete Receptionist</h3>
+            </div>
+            <div class="modal-body">
+              <p class="roboto-regular-14 text-center m-0">Are you sure you want to delete receptionist from the list</p>
+            </div>
+            <div class="modal-footer p-0 d-flex justify-content-around align-items-center">
+              <button data-dismiss="modal" aria-label="Close" type="button"
+                class="btn w-50 px-0 rounded-0 shadow-none m-0 border blue-text">No</button>
+              <button data-dismiss="modal" aria-label="Close" type="button"
+                class="btn w-50 px-0 rounded-0 shadow-none m-0 border blue-text"
+                >Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>

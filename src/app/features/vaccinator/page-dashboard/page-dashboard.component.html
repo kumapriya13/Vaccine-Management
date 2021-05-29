@@ -1,0 +1,40 @@
+<app-component-vaccinator-header></app-component-vaccinator-header>
+<div class="container-fluid vaccinator-dashboard">
+    <div class="py-2">
+        <app-component-dynamic-heading [heading]="''" [dashboardHeader]="true" [userTypeLabel]="'(Vaccinator)'"></app-component-dynamic-heading>
+        <!-- <div class="d-flex justify-content-between backgd text-light mb-5 mouse-hover" style="height: 139px;">
+            <div class="p-4 w-75">
+                <h1 class="m-0 roboto-medium-26">Welcome {{ vaccinatorDetails.fname }} {{ vaccinatorDetails.lname }} &nbsp;(Vaccinator)</h1>
+                <hr class="bg-light mb-2" />
+                <p class="m-0 roboto-regular-26">
+                    {{ siteInfo.address1 ? siteInfo.site_name: ''}}
+                   
+                </p>
+            </div> 
+            <img class="mr-5" src="../../../../assets/images/vaccinator/Group 52521.svg" />
+        </div> -->
+        <div class="container">
+            <div class="d-flex row m-0">
+                <div style="width: 200px; height:200px;" class="card py-2 border-0 mr-4 card-nav-box mouse-hover shadow"
+                    [routerLink]="'/vaccinator/schedule'">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div class="d-flex justify-content-end align-items-start">
+                            <img src="../../../../assets/images/appointment.svg" width="43px">
+                        </div>
+                        <p class="roboto-medium-20 letter-spacing-0 blue-text m-0" vmsTooltip="vaccinator_home_schedule"  placement="top" delay="10">Today's Schedule</p>
+                    </div>
+                </div>
+                <!-- <div style="width: 200px; height:200px;" class="card py-2 border-0 mr-4 card-nav-box shadow"
+                    [routerLink]="'/vaccinator/history'">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div class="d-flex justify-content-end align-items-start">
+                            <img src="../../../../assets/images/vaccinator/future.svg" width="43px">
+                        </div>
+                        <p class="roboto-medium-20 letter-spacing-0 blue-text m-0">History</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

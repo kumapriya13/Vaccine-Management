@@ -1,0 +1,43 @@
+<app-component-dynamic-heading [heading]="'Provider'"></app-component-dynamic-heading>
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-md-3 roboto-medium-16"> Name: </div>
+        <div class="col-md-9"> {{(provider$ | async)?.provider_name}} </div>
+        <div class="col-md-3 roboto-medium-16"> Address: </div>
+        <div class="col-md-9">
+            <div class="d-flex">
+                <ng-container *ngIf="(provider$ | async)?.address1">
+                    <span>{{ (provider$ | async)?.address1 }}, </span>
+                </ng-container>&nbsp;
+
+                <ng-container *ngIf="(provider$ | async)?.address2">
+                    <span> {{ (provider$ | async)?.address2 }},</span>
+                </ng-container>&nbsp;
+
+                <ng-container *ngIf="(provider$ | async)?.address3">
+                    <span> {{ (provider$ | async)?.address3 }},</span>
+                </ng-container>&nbsp;
+            </div>
+
+            <ng-container *ngIf="(provider$ | async)?.city">
+                <span> {{ (provider$ | async)?.city }},</span>
+            </ng-container>
+
+            <ng-container *ngIf="(provider$ | async)?.state">
+                <span> {{ (provider$ | async)?.state }},</span>
+            </ng-container>
+            <ng-container *ngIf="(provider$ | async)?.state">
+                <span> {{ (provider$ | async)?.zip }}</span>
+            </ng-container>
+        </div>
+        <div class="col-md-3 roboto-medium-16"> Geo Location: </div>
+        <div class="col-md-9"> {{(provider$ | async)?.geopoint}} </div>
+        <!-- <div class="col-md-3 roboto-medium-16"> Creation time: </div> -->
+        <!-- <div class="col-md-9"> {{(provider$ | async)?.create_time}} </div> -->
+    </div>
+</div>
+<div class="py-5 my-5">
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

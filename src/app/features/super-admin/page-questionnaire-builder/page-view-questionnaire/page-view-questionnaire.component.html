@@ -1,0 +1,116 @@
+<app-component-dynamic-heading [heading]="'View Questionnaire'"></app-component-dynamic-heading>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" aria-current="questionnaire">
+            <a [routerLink]="'/super-admin/questionnaire-builder'" [routerLinkActive]="'active'"title="Walk-in">Questionnaire</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="questionnaire">View Questionnaire</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <section class="my-4 pb-4">
+    <div class="row">
+      <div class="col roboto-regular-20">
+        <h4 class="title">State</h4>
+        <p>{{questionnaire?.state}}</p>
+      </div>
+      <div class="col roboto-regular-20">
+          <h4 class="title">Counties
+            <span *ngIf="countiesEdit === false" (click)="editCounties()"><i class="fa fa-plus-circle fa-lg"></i></span>
+            <span class="pr-3" *ngIf="countiesEdit === true" (click)="editCounties()"><i class="fa fa-times-circle"></i></span>
+            <span *ngIf="countiesEdit === true" (click)="save()"><i class="fa fa-save"></i></span>
+          </h4>
+          <mat-chip-list *ngIf="countiesEdit === false" class="mt-2 mat-chip-list" aria-label="Seat selection">
+              <mat-chip
+                  *ngFor="let c of questionnaire?.county; index as i"
+                  [selectable]="selectable"
+                  [removable]="removable"
+                  (removed)="removeCounty(i)">
+                  {{c}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+          </mat-chip-list>
+          <mat-form-field *ngIf="countiesEdit === true" class="select-state" appearance="outline">
+            <mat-label>Apply To County</mat-label>
+            <mat-select value="" (selectionChange)="saveField('county', $event.value)" multiple [ngModel]="questionnaire?.county">
+              <mat-option *ngFor="let county of counties" [value]="county">{{county}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+    </div>
+  </section>
+
+  <div class="row">
+    <div class="col">
+      <h4 class="title">Instructions</h4>
+      <mat-card>
+        <mat-card-content>
+          <div *ngIf="instructionEdit === false">
+            {{questionnaire?.instructions}}
+          </div>
+          <div *ngIf="instructionEdit === true">
+            <mat-form-field appearance="outline" class="select-state">
+              <mat-label>Instructions<span class="required">*</span></mat-label>
+              <textarea
+                matInput
+                [placeholder]="instructions"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="3"
+                [(ngModel)]="instructionsText"
+                (change)="saveField('instructions', $event.target.value)">{{questionnaire?.instructions}}</textarea>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button *ngIf="instructionEdit === false" type="button" class="btn btn-primary btn-sm mx-3 text-right" (click)="editInstruction()">
+            Edit <i class="fa fa-pencil-square-o"></i>
+          </button>
+          <button *ngIf="instructionEdit === true" type="button" class="btn btn-outline-primary btn-sm mx-3 text-right" (click)="editInstruction()" [disabled]="(!instructionsText) || (instructionsText?.trim()=='')">
+            Cancel
+          </button>
+          <button *ngIf="instructionEdit === true" type="button" class="btn btn-primary btn-sm mx-3 text-right" (click)="save()" [disabled]="(!instructionsText) || (instructionsText?.trim()=='')">
+            Save
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <section class="my-4 section" *ngFor="let question of questionnaire?.dynamic_questionnaire_answers; index as i">
+    <div class="row">
+      <div class="col text-right">
+        <button type="button" class="btn btn-primary btn-sm mx-3" (click)="openDialog(i)">Edit  <i class="fa fa-pencil-square-o"></i></button>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteQuestion(i)">Delete  <i class="fa fa-trash"></i></button>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col roboto-regular-20 line-height">
+        {{question.QuestionnaireAnswer.question_id}}. {{question.QuestionnaireAnswer.question_text}}
+        <span *ngIf="question.QuestionnaireAnswer.question_is_required === 'true'">*</span>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col roboto-regular-16" *ngIf="question.QuestionnaireAnswer.gui_control === 'radio'">
+        <mat-radio-group aria-label="Select an option">
+          <mat-radio-button *ngFor="let option of question.QuestionnaireAnswer.options" class="p-2" [value]="option">{{option}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="col" *ngIf="question.QuestionnaireAnswer.gui_control === 'multiselect'">
+        <ul>
+          <li class="my-2 roboto-regular-18" *ngFor="let option of question.QuestionnaireAnswer.options; index as x">
+            <mat-checkbox color='primary'>
+              {{option}}
+            </mat-checkbox>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>

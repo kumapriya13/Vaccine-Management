@@ -1,0 +1,166 @@
+<app-component-dynamic-heading [heading]="'MANAGE VACCINATOR'" [refererClick]="true"></app-component-dynamic-heading>
+<div class="vms-sign-up">
+  <div class="conatiner pb-5">
+    <form class="container d-flex flex-column align-items-center" [formGroup]="addVaccinatorForm"
+      (ngSubmit)="addVaccinatorFormSub()">
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>First Name *</mat-label>
+          <input matInput placeholder="First Name" formControlName="firstName" />
+          <mat-error *ngIf="!addVaccinatorForm.get('firstName').valid">First Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Last Name *</mat-label>
+          <input matInput placeholder="Last Name" formControlName="lastName" />
+          <mat-error *ngIf="!addVaccinatorForm.get('lastName').valid">Last Name is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Email ID *</mat-label>
+          <!-- [readonly]="isEdit" -->
+          <input matInput placeholder="Email ID" formControlName="email" />
+          <mat-error *ngIf="addVaccinatorForm.get('email').hasError('required')">Email ID is required
+          </mat-error>
+          <mat-error *ngIf="addVaccinatorForm.get('email').hasError('pattern')">Email must be a valid
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="!isEdit" appearance="outline" class="mx-md-4 w-100">
+          <mat-label  class="ml-5 pl-2">Mobile Phone Number *</mat-label>
+          <input matInput placeholder="Mobile Phone Number" formControlName="phone" ng2TelInput
+            [ng2TelInputOptions]="{initialCountry: 'us'}" (countryChange)="onCountryChange($event)" />
+          <mat-error *ngIf="!addVaccinatorForm.get('phone').valid">Mobile Phone Number is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="isEdit" appearance="outline" class="mx-md-4 w-100">
+          <mat-label [ngClass]="{'ml-5 pl-2': !isEdit}">Mobile Phone Number *</mat-label>
+          <input matInput placeholder="Mobile Phone Number" formControlName="phone" />
+          <mat-error *ngIf="!addVaccinatorForm.get('phone').valid">Mobile Phone Number is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput placeholder="Date of Birth" formControlName="dob" (focusout)=getage(dob) [min]="minDate"
+            [max]="maxDate" [matDatepicker]="picker1" />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <!-- <mat-error *ngIf="!addVaccinatorForm.get('dob').valid">Date of Birth is required</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Gender</mat-label>
+          <mat-select matInput placeholder="Gender" formControlName="gender" >
+            <mat-option *ngFor="let item of genderData; let j = index" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="!addVaccinatorForm.get('gender').valid">Gender is required</mat-error> -->
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Address Line 1</mat-label>
+          <input matInput placeholder="Address Line 1" formControlName="address1" />
+          <!-- <mat-error *ngIf="!addVaccinatorForm.get('address1').valid">Address Line 1 is required
+          </mat-error> -->
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Address Line 2</mat-label>
+          <input matInput placeholder="Address Line 2" formControlName="address2" />
+          <!-- <mat-error *ngIf="!addVaccinatorForm.get('address3').valid">Address Line 2 is required
+          </mat-error> -->
+        </mat-form-field>
+
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Apartment,Suite,Unit Number</mat-label>
+          <input matInput placeholder="Apartment,Suite,Unit Number" formControlName="address3" />
+          <!-- <mat-error *ngIf="!addVaccinatorForm.get('address2').valid">Apartment,Suite,Unit Number is required</mat-error> -->
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Zip</mat-label>
+          <input matInput placeholder="Zip" formControlName="zip" />
+          <mat-error *ngIf="!addVaccinatorForm.get('zip').valid">Zip is required</mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Zip</mat-label>
+          <input matInput placeholder="Zip" #zip formControlName="zip" (input)="fetchzipdetails(zip)"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+
+          <!-- <mat-error *ngIf="addVaccinatorForm.get('zip').hasError('required')">Zip is required
+          </mat-error>
+          <mat-error *ngIf="addVaccinatorForm.get('zip').hasError('pattern')">Enter only number
+          </mat-error> -->
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="City" maxlength="25" formControlName="city" />
+          <!-- <mat-error *ngIf="!addVaccinatorForm.get('city').valid">City is required</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>State</mat-label>
+          <input matInput placeholder="state" readonly formControlName="state" *ngIf="show" />
+          <!-- <input matInput placeholder="State" formControlName="state" /> -->
+          <mat-select (selectionChange)="onChangeState($event)" formControlName="state" *ngIf="stateshow">
+            <!-- <mat-option *ngIf="stateInfo == ''" value="-1">--Select State--
+              </mat-option> -->
+            <mat-option *ngFor="let state of stateInfo; let j = index" [value]="state.StateName">
+              {{state.StateName}}
+            </mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="!addVaccinatorForm.get('State').valid">State is required</mat-error> -->
+        </mat-form-field>
+
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Country</mat-label>
+          <input matInput placeholder="country" readonly formControlName="country" *ngIf="show" />
+          <mat-select (selectionChange)="onChangeCountry($event)" formControlName="country" *ngIf="stateshow">
+            <mat-option *ngFor="let country of Countries; let i = index" [value]="country.CountryName">
+              {{country.CountryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>User name *</mat-label>
+          <input [readonly]="isEdit" (keyup)="searchInterest()" matInput placeholder="userName"
+            formControlName="userName" />
+          <mat-error *ngIf="!addVaccinatorForm.get('userName').valid">UserName is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="w-75 d-flex justify-content-start mt-4 ml-4">
+        <button mat-button type="submit" class="roboto-medium-18 white-text mr-2" style="width: 119px;
+    height: 46px;left: 240px; background: #1C8DE8 0% 0% no-repeat padding-box;
+    border-radius: 4px;"> {{ isEdit?'Save':'Add' }} </button>
+        <button mat-button type="button" class="roboto-medium-18 white-text ml-2" style="width: 119px;
+                      height: 46px; left: 250px;background: #999999 0% 0% no-repeat padding-box;
+                        border-radius: 4px;" [routerLink]="'/site-admin/list-vaccinator'">Cancel</button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

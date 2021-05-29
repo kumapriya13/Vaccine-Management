@@ -1,0 +1,355 @@
+@import "assets/styles/mat.scss";
+@import "assets/styles/text.scss";
+@import "assets/styles/utils.scss";
+@import "assets/styles/color.scss";
+@import "assets/styles/quill.scss";
+@import "assets/styles/component.scss";
+@import "assets/styles/variables.scss";
+@import "assets/styles/ng-select.scss";
+@import "~bootstrap/scss/bootstrap";
+// @import "assets/styles/proj-root.scss";
+
+html {
+  font-size: 14px;
+}
+
+.full-screen-modal .mat-dialog-container {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.vms-btn-primary {
+  background-color: #0984e3 !important;
+}
+
+body {
+  font-family: Roboto !important;
+}
+
+a {
+  cursor: pointer;
+}
+
+// buttons
+button:focus {
+  outline: none;
+}
+
+.vms-btn-sm {
+  width: 120px !important;
+  height: 45px !important;
+  border-radius: 40px !important;
+  box-shadow: 0px 8px 20px #052b4852 !important;
+  border: none !important;
+}
+
+.vms-btn {
+  width: 135px !important;
+  height: 45px !important;
+  border-radius: 40px !important;
+  box-shadow: 0px 8px 20px #052b4852 !important;
+  border: none !important;
+}
+
+.verify-btn {
+  width: 239px !important;
+  height: 46px !important;
+  border-radius: 23px !important;
+  border: none !important;
+  // margin-top: 2.5rem !important;
+}
+.back-btn {
+  width: 239px !important;
+  height: 46px !important;
+  border-radius: 23px !important;
+  border: none !important;
+  margin-top: 2.5rem !important;
+  background-color: #999999 !important;
+}
+
+.sign-in-btn {
+  width: 423px !important;
+  height: 48px !important;
+  box-shadow: 0px 3px 6px #00000005 !important;
+  border-radius: 6px !important;
+  border: none !important;
+}
+
+.add-vaccinator-btn {
+  width: 160px;
+  height: 34px;
+  border-radius: 4px;
+  border: none;
+}
+
+.change-password-btn {
+  width: 156px;
+  height: 33px;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid #c7c7c7;
+  border-radius: 23px;
+}
+
+.ml-40 {
+  margin-left: 40px !important;
+}
+
+.mr-40 {
+  margin-right: 40px !important;
+}
+
+.pl-40 {
+  padding-left: 40px !important;
+}
+
+.pr-40 {
+  padding-right: 40px !important;
+}
+
+.pl-80 {
+  padding-left: 80px !important;
+}
+
+.pr-80 {
+  padding-right: 80px !important;
+}
+
+.mb-40 {
+  margin-bottom: 40px !important;
+}
+
+// mat overide styles
+.vms-sign-up {
+  .mat-checkbox-background {
+    background-color: #fff !important;
+  }
+
+  .mat-checkbox-checkmark-path {
+    stroke: #0984e3 !important;
+  }
+
+  .mat-checkbox-inner-container {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 4px !important;
+    border: 1px solid #0984e3 !important;
+  }
+}
+
+.pointer-events-disabled {
+  pointer-events: none;
+}
+
+.green-snackbar {
+  background: green;
+  color: #fff;
+}
+
+.success {
+  background-color: green;
+  font-weight: 600;
+  color: #fff;
+}
+
+.error {
+  background-color: #ec1d24;
+  color: #fff;
+}
+
+.warning {
+  background-color: #f1e14c;
+  color: #fff;
+}
+
+.mat-simple-snackbar {
+  justify-content: center !important;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.error {
+  border: 1px solid red;
+  background: white;
+  color: red;
+}
+
+.mat-stepper-horizontal-line {
+  border-top-color: $white;
+}
+
+// .mat-step-icon-state-done{
+//     background-color: $white !important;
+// }
+// .mat-step-icon-content{
+//     color: $blue;
+// }
+.mat-step-icon-state-done {
+  display: none !important;
+}
+
+.mat-step-icon-state-number {
+  display: none !important;
+}
+
+.mat-step-icon-state-edit {
+  display: none !important;
+}
+
+.mat-step-text-label {
+  margin-left: 70px;
+}
+
+// .mat-horizontal-stepper-header-container {
+//   margin: 0 80px !important;
+// }
+
+// scroll bar
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $blue;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.cdk-overlay-container {
+  z-index: 1200;
+}
+
+.timepicker-overlay {
+  z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 10000000 !important;
+}
+
+.mat-calendar {
+  // width: unset !important;
+  height: unset !important;
+
+  .mat-calendar-body-cell-content {
+    width: 34px !important;
+    height: 34px !important;
+    overflow: hidden !important;
+  }
+}
+
+.mat-datepicker-content .mat-calendar {
+  // width: unset !important;
+  height: unset !important;
+
+  .mat-calendar-controls{
+    margin: 0 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .mat-calendar-body-cell-content {
+    width: 34px !important;
+    height: 34px !important;
+    overflow: hidden !important;
+  }
+
+  .mat-calendar-table-header {
+    tr:nth-child(even) {
+      height: 0 !important;
+      background-color: white !important;
+    }
+  }
+
+  tr:nth-child(even) td {
+    background-color: white !important;
+  }
+}
+
+.tooltip-example {
+  text-align: center;
+  padding: 0 50px;
+}
+.tooltip-example [tooltip] {
+  display: inline-block;
+  margin: 50px 20px;
+  width: 200px;
+  height: 50px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  line-height: 50px;
+  text-align: center;
+}
+.ng-tooltip {
+  position: absolute;
+  max-width: 200px;
+  font-size: 14px;
+  text-align: center;
+  color: #f8f8f2;
+  padding: 3px 8px;
+  background: #0984e3;
+  border-radius: 4px;
+  z-index: 1000;
+  opacity: 0;
+}
+.ng-tooltip:after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+}
+.ng-tooltip-top:after {
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-color: #0984e3 transparent transparent transparent;
+}
+.ng-tooltip-bottom:after {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-color: transparent transparent #0984e3 transparent;
+}
+.ng-tooltip-left:after {
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-color: transparent transparent transparent #0984e3;
+}
+.ng-tooltip-right:after {
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-color: transparent #0984e3 transparent transparent;
+}
+.ng-tooltip-show {
+  opacity: 1;
+}
+
+// new css for cosmetic changes - 19th April 2021
+
+.height_div{
+  height: calc(100vh - 132px);
+}
+
+// .mat-form-field-wrapper {
+//   padding: 0 !important;
+// }
+// .mat-form-field-wrapper {
+//   padding-bottom: 2 !important;
+// }
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0.4em 0 !important;
+}
+// .mat-form-field-appearance-outline .mat-form-field-wrapper{margin:.80em 0!important}

@@ -1,0 +1,154 @@
+<!-- header here -->
+<div class="body">
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 forMob">
+                    <!-- <div class="topText"><a href="#" title="Vaccine Provider">Help</a></div> -->
+                </div>
+                <div class="col-md-3">
+                    <!-- company logo here -->
+                    <div class="logoArea">
+                        <a href="javascript:void(0);" [routerLink]="'/'">
+                            <img src="{{ logo }}"
+                                 alt="logo - 21-20 All Clear" style="width:130px !important; height:50px !important;"/>
+                        </a>
+                        <div class="hamBtn">
+                            <a href="javascript:void(0);"><i class="fa fa-align-justify"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="rightTop">
+                        <!-- right navigation menu here -->
+                        <!-- <div class="topText"><a [routerLink]="'/help'" [routerLinkActive]="'active'"
+                            title="Vaccine Provider">Help</a></div> -->
+
+                            <div class="">&nbsp;</div>
+
+                        <div class="navigationBtm">
+                            <ul>
+                                <li><a [routerLink]="'/home'" [routerLinkActive]="'active'" title="Home">Home</a></li>
+                                <!-- <li><a [routerLink]="'/recipient/appointment'" [routerLinkActive]="'active'"
+                                        title="My Appointment">My Appointment</a></li>
+                                <li><a [routerLink]="'/recipient/pre-vaccinate-check-list'"
+                                        [routerLinkActive]="'active'" title="Checklist">Checklist</a></li>
+                                <li><a [routerLink]="'/recipient/registration'" [routerLinkActive]="'active'"
+                                        title="Walk-in">Walk-in</a></li> -->
+                                <!-- <li><a [routerLink]="'/provider'" [routerLinkActive]="'active'"
+                                        title="Provider">Providers</a></li> -->
+                                <!-- <li class="loginBtn" title="Log in"> -->
+                                <li><a [routerLink]="'/about-us'" [routerLinkActive]="'active'" title="About-us">About
+                                        Us</a></li>
+                                <!-- <li class="loginBtn" title="Log in">
+                                    <a class="text-center" [routerLink]="'/auth/sign-in'" href="javascipt:void(0);">
+                                        <span class="roboto-medium-16 text-light">Log In</span>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="backdrop p-4">
+        <div class="d-table">
+            <div class="d-cell">
+                <div class="loginSection">
+                    <div class="logoAreaX">
+                        <div class="logoPatch">
+                            <a href="#">
+                                <img height="40" src="../../../../assets/images/logo.jpg"
+                                    alt="logo - 21-20 All Clear" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tabBtnsX">
+
+                        <div class="closeBtn">
+                            <a href="javascript:void(0);">
+                                <svg width="44" height="44" viewBox="0 0 44 44">
+                                    <g id="Group_38566" data-name="Group 38566" transform="translate(-886 -206)">
+                                        <g id="Rectangle_5590" data-name="Rectangle 5590" transform="translate(886 206)"
+                                            fill="#fff" stroke="#707070" stroke-width="1">
+                                            <path
+                                                d="M0,0H39a5,5,0,0,1,5,5V44a0,0,0,0,1,0,0H5a5,5,0,0,1-5-5V0A0,0,0,0,1,0,0Z"
+                                                stroke="none" />
+                                            <path
+                                                d="M1,.5H39A4.5,4.5,0,0,1,43.5,5V43a.5.5,0,0,1-.5.5H5A4.5,4.5,0,0,1,.5,39V1A.5.5,0,0,1,1,.5Z"
+                                                fill="none" />
+                                        </g>
+                                        <g id="cancel" transform="translate(892.2 212.348)">
+                                            <g id="Group_38492" data-name="Group 38492">
+                                                <path id="Path_3327" data-name="Path 3327"
+                                                    d="M27.313,4.687A16,16,0,1,0,4.687,27.313,16,16,0,1,0,27.313,4.687Zm-1.286,21.34A14.18,14.18,0,0,1,5.973,5.973,14.18,14.18,0,1,1,26.027,26.027Z"
+                                                    fill="#6e6e6e" />
+                                                <path id="Path_3328" data-name="Path 3328"
+                                                    d="M143.294,129.193a.906.906,0,0,0-1.286,0l-5.764,5.764-5.764-5.764a.909.909,0,0,0-1.286,1.286l5.764,5.764-5.764,5.764a.912.912,0,0,0,.64,1.556.887.887,0,0,0,.64-.269l5.764-5.764L142,143.294a.915.915,0,0,0,.64.269.876.876,0,0,0,.64-.269.906.906,0,0,0,0-1.286l-5.751-5.764,5.764-5.764A.906.906,0,0,0,143.294,129.193Z"
+                                                    transform="translate(-120.243 -120.243)" fill="#6e6e6e" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <!-- main navigation here -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="active" data-toggle="tab" [routerLink]="'/auth/sign-in'"
+                                    href="javascript:void(0)" title="LOG IN">Log In</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a data-toggle="tab" href="#sigunup" title="SIGN UP">SIGN UP</a>
+                            </li> -->
+                        </ul>
+                    </div>
+
+                    <div class="tabsDataX tab-content">
+                        <!-- login detail here -->
+                        <div class="common tab-pane active" id="login">
+                            <div class="loginData">
+                                <div class="form-group">
+                                    <label for="email">Enter Email address</label>
+                                    <input type="text" class="form-control" id="email" placeholder="Email" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password"> Enter Password <a href="#"
+                                            title="Forgot your password?">Forgot
+                                            your password?</a></label>
+                                    <input id="password" type="password" class="form-control" placeholder="Password" />
+                                </div>
+                                <!-- sign in button here -->
+                                <div class="btnSmall">
+                                    <a href="#">Sign in</a>
+                                </div>
+                                <div class="OrText">
+                                    <span>Or Login with</span>
+                                </div>
+                                <!-- soical media link here -->
+                                <div class="loginSocial">
+                                    <ul>
+                                        <li><a href="#" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                                        <li><a href="#" title="google plus"><i class="fa fa-google-plus-circle"></i></a>
+                                        </li>
+                                        <li><a href="#" title="twitter"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" title="facebook"><i class="fa fa-facebook"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sign up detail form here -->
+                        <!-- <div class="common tab-pane fade" id="sigunup">
+
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

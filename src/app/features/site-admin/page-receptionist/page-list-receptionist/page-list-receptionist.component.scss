@@ -1,0 +1,50 @@
+.site-admin-vaccine-header {
+  background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+      font-size: 22px;
+      font-weight: lighter;
+  }
+}
+
+.vaccinator-list-container {
+  margin: 2rem 12.5rem;
+}
+
+.edit {
+  width: 60px;
+  height: 25px;
+  background: #e9efff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.delete {
+  width: 70px;
+  height: 25px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.delete-popup {
+  width: 350px;
+  height: 155px;
+  top: 300px;
+  // left: 525px;
+  // width: 374px;
+  // height: 155px;
+  opacity: 1;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.modal-content {
+  border-radius: 14px 14px 14px 14px !important;
+}
+.add-sch-btn {
+  width: 100px;
+  height: 25px;
+  background: #fff0d6 0% 0% no-repeat padding-box;
+  border: 0.5px solid #f6bb19;
+  color: #ffa300;
+}

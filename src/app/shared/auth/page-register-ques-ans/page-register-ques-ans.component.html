@@ -1,0 +1,75 @@
+<app-component-header></app-component-header>
+<ng-container *ngIf="(responseFlag == true)">
+<div class="page-header mb-5">
+    <div class="recipient-regs-ques-answ mb-2">
+        <div class="container d-flex align-items-center">
+            <h1 class="roboto-medium-40 text-light m-0">Register</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="bottom-border mb-3">
+        <p class="roboto-medium-18">
+            {{instructionText}} 
+               <!--  We'll ask some questions to determine when you are able to get the COVID-19 vaccine.
+                This information will be
+                kept private with the State of New Jersey and only used to register you to receive a COVID-19 vaccine.-->         
+        </p> 
+        <p></p>
+    </div>
+ 
+  <form [formGroup]="qaFormGroup" (ngSubmit)="submit(qaFormGroup)">
+    <div formArrayName="qaFormArray"> 
+    <div *ngFor="let x of this.qaFormGroup.get('qaFormArray').controls; let k=index;" [formGroupName]=k>
+                 <input type="hidden" formControlName="question_id" >  
+                 <input type="hidden" formControlName="question_text" > 
+                 <input type="hidden" formControlName="answer_min" >
+                 <input type="hidden" formControlName="answer_max" >
+                 <input type="hidden" formControlName="gui_control" >                          
+
+            <div class="bottom-border mb-3">    
+            <p class="mb-3 roboto-medium-18" >  {{x.controls["question_text"].value}} </p>                    
+            
+            <ul class="d-flex pl-3" *ngIf="x.controls['gui_control'].value == 'radio'">                
+                <ng-container formArrayName="options">
+                    <li class="pr-2" *ngFor="let ans of x.controls['options'].value; let j=index">
+                        <input type="radio" name="radio{{k}}" [value]=ans (click)="addVal(k,ref)" #ref>                 
+                        <label class="roboto-regular-18">&nbsp;{{ans}}</label>                   
+                    </li> 
+                </ng-container>                
+            </ul>
+
+            <ul *ngIf="x.controls['gui_control'].value =='multiselect'">     
+                <ng-container formArrayName="options">                     
+                        <li class="pr-2" *ngFor="let ans of x.controls['options'].value; let j=index">
+                            <input  type="checkbox" value="{{ans}}" name="checkbox{{k}}" (click)="addVal(k,ref)" #ref>&nbsp;&nbsp;                    
+                            <label class="roboto-regular-18">&nbsp;{{ans}}</label>                          
+                        </li>  
+                        <!-- <mat-error *ngIf="submitted && !formg.get(q.QuestionnaireAnswer.question_id).valid">Please select answers.
+                        </mat-error>     -->
+                </ng-container>                              
+            </ul>
+
+            <ul *ngIf="x.controls['gui_control'].value =='text'">   
+                <ng-container formArrayName="options">           
+                 <li class="pr-2">
+                        <input type="text" style="width:300px;" class="form-control"
+                         placeholder="Enter text here" name="inputBox{{k}}" (change)="addVal(k,ref)">                                                                   
+                 </li>     
+             </ng-container>   
+                 <!-- <mat-error *ngIf="submitted && !formg.get(q.QuestionnaireAnswer.question_id).valid">Please enter your answer.
+                 </mat-error>            -->
+             </ul>            
+         
+    </div> 
+   </div>
+
+    <div class="d-flex align-items-center justify-content-center my-5">
+       <!-- <button class="btn rounded-pill pre-btn mr-3" >PREVIEW</button> -->
+        <button type="submit" [disabled]="!qaFormGroup.valid" class="btn rounded-pill save-btn ml-3">SAVE</button>
+    </div>
+     </div>
+</form>
+</div>
+</ng-container>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,31 @@
+.copyrightText {
+
+  border-top: 1px solid #ddd;
+  padding: 20px 15px;
+
+  a {
+    color: #354463;
+    display: inline-block;
+    margin: 0 40px 0 0;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .copyrightText {
+    font-size: 14px;
+
+    * {
+      text-align: center !important;
+    }
+
+    a {
+      font-size: 14px;
+      margin: 0 10px 5px;
+      display: inline-block;
+    }
+  }
+}

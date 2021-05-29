@@ -1,0 +1,162 @@
+.backgd {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  box-shadow: 0px 10px 15px #05273130;
+  border-radius: 27px;
+}
+.profile {
+  margin: 0 12rem;
+}
+
+.card {
+  width: 200px;
+  height: 200px;
+  // box-shadow: 3px 10px 20px #8992A130;
+  border-radius: 10px;
+  opacity: 1;
+  border: none;
+}
+
+.card-content {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.card-text-content {
+  margin-top: 1rem;
+}
+
+/* Profile sidebar */
+
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #fff;
+}
+
+.profile-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.profile-usertitle {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.mouse-hover:hover {
+  cursor: pointer;
+}
+
+.profile-usertitle-job {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #93a3b5;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+}
+
+/* Profile Content */
+
+.profile-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 460px;
+}
+
+.profile-header-container {
+  height: 127px;
+}
+
+.vaccinator-schedule-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  opacity: 1;
+  padding: 2.2rem 0;
+  .vcn-sch-text {
+    text-align: left;
+    font: normal normal medium 30px/39px Roboto !important;
+    letter-spacing: 0px;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  i {
+    color: #ffffff;
+    font-size: 40px;
+  }
+}
+.detail-box{
+  width: 30% !important;
+}
+@media(max-width: 768px){
+  .detail-box{
+    width: 100% !important;
+  }
+}

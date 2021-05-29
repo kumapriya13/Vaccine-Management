@@ -1,0 +1,100 @@
+<app-component-facility-admin-header></app-component-facility-admin-header>
+<div class="facility-admin-manage-admin-header mb-5">
+    <div class="container d-flex align-items-center">
+        <i class="fa fa-arrow-left white-text"></i>
+        <h1 class="roboto-medium-40 white-text m-0 px-2">MANAGE ADMIN</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="mb-5">
+        <p class="roboto-medium-20">Add user using below tabs</p>
+        <ul class="nav nav-pills text-center">
+            <li class="nav-item">
+                <a class="nav-link rounded-0 active" aria-current="page">Site Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link vaccinator-tab-box rounded-0">Vaccinator</a>
+            </li>
+        </ul>
+    </div>
+    <hr />
+    <p class="roboto-regular-18 text-left">Add Site Admin</p>
+    <form class="container d-flex flex-column align-items-center" [formGroup]="pagesManageSiteForm" (ngSubmit)=pagesManageSiteFormSub()>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" formControlName="firstName" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('firstName').valid">First Name is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" formControlName="lastName" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('lastName').valid">Last Name is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput placeholder="Date of Birth" formControlName="dob" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('address').valid">Date of Birth is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Gender</mat-label>
+                <input matInput placeholder="Gender" formControlName="gender" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('city').valid">Gender is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Email Id</mat-label>
+                <input matInput placeholder="Email Id" formControlName="email" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('country').valid">Email Id is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Phone Number</mat-label>
+                <input matInput placeholder="Phone Number" formControlName="phone" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('State').valid">Phone Number is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Home Address</mat-label>
+                <input matInput placeholder="Home Address" formControlName="address" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('country').valid">Home Address is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>City</mat-label>
+                <input matInput placeholder="City" formControlName="city" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('city').valid">City is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Zip</mat-label>
+                <input matInput placeholder="zip" formControlName="code" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('zip').valid">Zip is required
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+
+        <div class="proceed-div py-3 d-flex justify-content-start form-row-width container">
+            <button mat-button class="btn blue-bg white-text rounded-pill px-5 mx-md-4" type="submit">SAVE</button>
+            <button mat-button class="btn light-grey-bg white-text rounded-pill px-5 mx-md-4" type="submit">CANCEL</button>
+        </div>
+    </form>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

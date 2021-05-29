@@ -1,0 +1,153 @@
+<app-component-dynamic-heading [heading]="'MANAGE SEATS'" [refererClick]="true"></app-component-dynamic-heading>
+
+<div class="container" id="site-recp-list">
+    <div class="d-flex align-items-center justify-content-between pt-3 pb-4 table-action-strip">
+        <div class="d-flex align-items-center">
+            <mat-form-field class="search-form-field" appearance="outline" style="width: 130px;">
+                <mat-label>Search By Seat</mat-label>
+                <input matInput (keyup)="checkIFBlankLoadData(searchInput)" #searchInput
+                    (keyup.enter)="applyFilter(searchInput)" />
+                <button mat-button *ngIf="searchInput.value.trim() !=''" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="(searchInput.value='');applyFilter(searchInput)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3"
+                (click)="applyFilter(searchInput)">Filter</button>
+        </div>
+        <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-primary roboto-medium-16 py-1 ml-3" (click)="openViewSchedule()">
+                View Site Schedule
+            </button>
+            <button type="button" class="btn btn-primary roboto-medium-16 py-1 ml-3" (click)="openManageSchedule()">
+                Manage Schedule
+            </button>
+            <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3"
+                routerLink="/site-admin/add-seat">+
+                Add Seat
+            </button>
+            <button type="button" class="btn roboto-medium-16 white-text btn-success py-1 ml-3"
+                (click)="addMultipleSchedule()">
+                <i class="fa fa-calendar-check-o"></i>
+                Add Schedule(s)
+            </button>
+            <button class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3" style="height: 34px;line-height:0px;"
+                mat-button [matMenuTriggerFor]="menu"><span>Allocation <i class="fa fa-caret-down"></i></span></button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item *ngFor="let ami of allocationMenuItems"
+                    (click)="changeAllocation(ami)">{{ami.label}}</button>
+            </mat-menu>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col w-100">
+            <table mat-table MatSort [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="setSchedule">
+
+
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18 header-align-left">
+                        <!-- <input type="checkbox" (change)="checkUncheckAll($event)"  #elel> -->
+                        <mat-checkbox color="primary" [checked]="checkAll" (change)="checkUncheckAll($event)">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <ng-container *ngIf="disableControl(element); then enabledTemplate else disabledTemplate">
+                        </ng-container>
+                        <ng-template #disabledTemplate>
+                            <mat-checkbox color="primary" [value]="element" [disabled]="true" [readonly]="true"
+                                #children>
+                            </mat-checkbox>
+                        </ng-template>
+                        <ng-template #enabledTemplate>
+                            <mat-checkbox color="primary" [value]="element" [checked]="checkAll" [readonly]="true"
+                                #children>
+                            </mat-checkbox>
+                        </ng-template> <!-- <input type="checkbox" [value]="element" [checked]="checkAll" #children> -->
+                    </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="seat">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Seat </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.seat}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="vaccinator">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Schedule </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.schedule|formatDate}}
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="vaccine">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Vaccine </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.vaccine}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="allocation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Allocation </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.allocation}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Status </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.status.toLowerCase() =='active' ? 'Enable' :element.status |titlecase}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18"> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn add-sch-btn roboto-regular-11 blue-text mr-2 pb-2"
+                                (click)="viewSchedule(element)">View Schedule</button>
+                            <!-- <button type="button" class="btn add-sch-btn roboto-regular-11 blue-text mr-2 pb-2"
+                                (click)="addSchedule(element)">Add Schedule</button> -->
+                            <button type="button" (click)="navToEditSeatPage(element)"
+                                class="btn edit roboto-regular-11 blue-text mr-2">Edit <i
+                                    class="fa fa-pencil-square-o"></i></button>
+                            <!-- <button type="button" class="btn delete roboto-regular-11 ml-2" (click)="seatData = seats"
+                            data-toggle="modal" data-target="#exampleModal2">Delete <i
+                                class="fa fa-trash-o blue-text"></i></button> -->
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="totalCount" [pageIndex]="pageIndex" (page)="getPageSeats($event)"
+                [pageSizeOptions]="opt" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe2"
+    aria-hidden="true">
+    <div class="modal-dialog border-0 h-auto delete-popup" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h3 class="modal-title m-0 text-center roboto-regular-16" id="exampleModalLabe2">Delete Seat</h3>
+            </div>
+            <div class="modal-body">
+                <p class="roboto-regular-14 text-center m-0 pt-2 pb-4">Are you sure you want to delete seat </p>
+            </div>
+            <div class="modal-footer p-0 d-flex justify-content-around align-items-center">
+                <button data-dismiss="modal" aria-label="Close" type="button"
+                    class="btn w-50 px-0 rounded-0 shadow-none m-0 border-right blue-text">No</button>
+                <button data-dismiss="modal" aria-label="Close" type="button"
+                    class="btn w-50 px-0 rounded-0 shadow-none m-0 blue-text"
+                    (click)="onDeleteSeat(seatData)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>
+<app-component-dynamic-model></app-component-dynamic-model>

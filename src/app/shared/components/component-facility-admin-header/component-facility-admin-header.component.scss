@@ -1,0 +1,289 @@
+.body {
+    padding: 0;
+    margin: 108px 0 0 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+}
+img {
+    outline: none !important;
+    &.focus {
+      outline: none !important;
+    }
+    &.active {
+      outline: none !important;
+    }
+  }
+
+/* You can add global styles to this file, and also import other style files */
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.btnSmall {
+    margin: 25px 0 0;
+    p {
+        font-size: 18px;
+        margin: 0;
+        a {
+            color: #375D9D;
+            font-weight: 600;
+            &.green {
+                color: #118484;
+            }
+        }
+    }
+    >a {
+        font-size: 20px;
+        background: #375d9d;
+        display: inline-block;
+        color: #fff;
+        font-weight: 500;
+        padding: 6px 20px;
+        border-radius: 4px;
+        margin: 0 0 25px;
+        &.green {
+            background: #118484;
+        }
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.d-table {
+    display: table;
+    width: 100%;
+    height: 100%;
+    .d-cell {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.form-control {
+    height: 54px;
+    padding: 0 20px;
+}
+
+.hamBtn {
+    display: none;
+}
+
+.loginBtn,
+.btnSmall {
+    >a {
+        transition: 0.3s;
+        &.green {
+            &:hover {
+                background-color: #2a9e9e !important;
+            }
+        }
+        &:hover {
+            background-color: #467bd6 !important;
+        }
+    }
+}
+
+.SmallHam {
+    display: none;
+}
+
+header {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: #fff;
+    z-index: 999;
+    box-shadow: 0 0 15px -5px #999;
+    &.fixed {
+        .logoArea {
+            padding: 13px 0;
+            img {
+                max-height: 50px;
+            }
+        }
+        .rightTop {
+            .topText {
+                margin: 5px 0 10px;
+            }
+        }
+    }
+    .logoArea {
+        padding: 24px 0 22px;
+        transition: 0.4s;
+        img {
+            transition: 0.4s;
+            max-height: 62px;
+        }
+    }
+    .rightTop {
+        text-align: right;
+        .topText {
+            font-size: 13px;
+            transition: 0.4s;
+            margin: 10px 0 36px;
+            a {
+                color: #333;
+            }
+        }
+        .navigationBtm {
+            ul {
+                li {
+                    display: inline-block;
+                    margin: 0 0 0 25px;
+                    &.loginBtn {
+                        position: relative;
+                        top: -3px;
+                        a {
+                            padding: 6px 20px;
+                            font-size: 16px;
+                            background-color: #375d9d;
+                            color: #fff;
+                            border-radius: 4px;
+                            font-weight: 500;
+                            &:before {
+                                display: none;
+                            }
+                        }
+                    }
+                    a {
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: #333333;
+                        position: relative;
+                        display: block;
+                        padding: 0 0 15px;
+                        &.active,
+                        &:hover {
+                            text-decoration: none;
+                            &:before {
+                                height: 3px;
+                            }
+                        }
+                        &:before {
+                            position: absolute;
+                            height: 0;
+                            background-color: #0984E3;
+                            content: "";
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            transition: 0.5s;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.forMob {
+    display: none;
+}
+
+@media only screen and (max-width: 800px) {
+    .forMob {
+        display: block;
+        >div {
+            position: absolute;
+            font-size: 12px;
+            z-index: 1;
+            right: 15px;
+            a {
+                color: #333;
+            }
+        }
+    }
+    .rightTop {
+        .topText {
+            display: none;
+        }
+    }
+    .rightTop {
+        display: none;
+        background: #f1f1f1;
+        padding: 10px 20px;
+        margin: 0 -15px;
+        border-top: 1px solid #ddd;
+    }
+    header {
+        padding: 5px 0 0;
+        .col-md-3 {
+            position: static;
+        }
+    }
+    header .logoArea {
+        padding: 13px 0;
+        img {
+            max-height: 50px;
+        }
+    }
+    .body {
+        margin: 76px 0 0;
+    }
+    header .rightTop .navigationBtm ul li {
+        display: block;
+        margin: 0 0 10px;
+        a {
+            display: inline-block;
+        }
+    }
+    header .rightTop .topText {
+        margin: 10px 0 10px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    header .rightTop {
+        background: none;
+        padding: 25px 30px 0 0;
+        margin: 0;
+        border: 0;
+        ul {
+            li {
+                display: inline-block;
+            }
+        }
+    }
+    header .rightTop .navigationBtm ul li {
+        margin-left: 10px;
+    }
+    .forMob>div {
+        right: 0;
+    }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1920px) {
+    .rightTop {
+        display: block !important;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .hamBtn {
+        position: absolute;
+        z-index: 9;
+        top: 30px;
+        display: block;
+        right: 20px;
+        a {
+            font-size: 25px;
+            color: #002768;
+        }
+    }
+}
+
+@media only screen and (max-width: 340px) {}
+
+@media only screen and (max-width: 280px) {
+    header .logoArea img {
+        max-height: 40px;
+        margin: 5px 0 0;
+    }
+}

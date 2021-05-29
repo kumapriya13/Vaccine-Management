@@ -1,0 +1,68 @@
+<div class="row notification-brief">
+    <div class="col-md-2">
+        <span class="brief-title">Topic Title: </span>
+    </div>
+    <div class="col-md-10">
+        {{notification.email_subject}}
+    </div>
+    <div class="col-md-2">
+        <span class="brief-title">Description: </span>
+    </div>
+    <div class="col-md-10">
+        <div [innerHtml]="notification.email_template"></div>
+    </div>
+    <div class="col-md-2">
+        <span class="brief-title">List of Recipient: </span>
+    </div>
+    <div class="col-md-10">
+        {{ totalCount || 'N/A' }} Recipient
+    </div>
+    <div class="col-md-2">
+        <span class="brief-title">Last Updated: </span>
+    </div>
+    <div class="col-md-10">
+        {{notification.modify_time | date: 'medium'}}
+    </div>
+</div>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr class="blue-bg">
+            <th class="white-text">Recipient</th>
+            <th class="white-text">Mobile number</th>
+            <th class="white-text">Email</th>
+            <th class="white-text">Address</th>
+            <th class="white-text">Delivery Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let recipient of recipients">
+            <td>{{recipient.fname}} {{recipient.lname}}</td>
+            <td>{{recipient.mobile_number}}</td>
+            <td>{{recipient.email}}</td>
+            <td>{{recipient.address1}}</td>
+            <td>{{recipient.email_status | titlecase}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="d-flex">
+    <ngb-pagination class="ml-auto"
+                    (pageChange)="onPageChange($event)"
+                    [maxSize]="5"
+                    [page]="page"
+                    [pageSize]="pageLength"
+                    [collectionSize]="totalCount"></ngb-pagination>
+</div>
+
+
+<div class="d-flex action-buttons">
+    <button type="button" class="btn btn-outline-primary mr-3" (click)="onEdit()">
+        Edit & Resend
+        <span class="fa fa-pencil-square-o"></span>
+    </button>
+    <button type="button" class="btn btn-outline-primary" (click)="onDelete()">
+        Delete
+        <span class="fa fa-trash"></span>
+    </button>
+</div>

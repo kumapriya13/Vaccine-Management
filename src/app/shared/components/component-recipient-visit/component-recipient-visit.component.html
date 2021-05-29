@@ -1,0 +1,413 @@
+<div class="container mb-4" style="padding-left: 20px;">
+    <div class="recipient-info d-flex">
+        <h2 class="blue-text">
+            {{recepientData?.fname}} {{recepientData?.lname}}
+        </h2>
+    </div>
+</div>
+<ng-template #bookAppointment>
+      <div class="no-appointmnet-container py-3" *ngIf="(responseRecived)">
+        <div class="container py-3">
+            <div class="px-0 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+                <div class="vaccine-schedue-details p-0 m-0 w-100">
+                    <div class="card h-100 border-0 shadow" style="max-width: 420px;">
+                        <div class="card-header blue-bg py-4 d-flex justify-content-between">
+                            <!-- <div><b>1st Dose</b></div>
+                        <div><b>Pending</b></div> -->
+                        <!-- Below -->
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <p *ngIf="isEligible" class="roboto-medium-16">This recipient has No Appointment<br />
+                                Please Book an
+                                Appointment </p>
+                            <p *ngIf="!isEligible" class="roboto-medium-16">This recipient is not eligible to book
+                                <br />an
+                                appointment at this time.
+                            </p>
+                            <div class="py-2">
+                                <ng-container *ngIf="checkState(hideActions,'bookappointment')">
+                                <button mat-button [disabled]="!isEligible" (click)="bookNextAppointment()"
+                                    class="edit btn mr-2 blue-bg rounded-pill"
+                                    style="background: 0% 0% no-repeat padding-box;color:white">Book
+                                    Appointment</button>
+                                    </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-container *ngIf="hasVisits; else bookAppointment">
+    <div class="container pb-5 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+        <ng-container *ngFor="let recipientVisitItem of visits;let i = index;let length = count;">
+            <!-- <div>{{ (length) }}</div> -->
+<!-- {{recipientVisitItem.$expanded.vaccinator_fname}} -->
+            <!-- For missed new changes -->
+
+            <ng-container
+                *ngIf="(length<recipientVisitItem.$expanded.no_of_doses_in_series)&&recipientVisitItem.visit_status && (recipientVisitItem.visit_status=='completed' || recipientVisitItem.visit_status=='observation')">
+                <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex align-items-center justify-content-between pt-3">
+                            <div class="roboto-medium-20">2nd Dose</div>
+                            <div class="roboto-medium-20">Pending</div>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <p><b>Second Dose of Vaccination<br />Any time Soon</b></p>
+                            <div class="py-2">
+                                <ng-container *ngIf="checkState(hideActions,'bookappointment')">
+                                <button mat-button class="edit btn rounded-pill mr-2" (click)="bookNextAppointment()"
+                                    style="background:#0984e3 0% 0% no-repeat padding-box;color:white">Book
+                                    Appointment</button>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+
+            <!-- Missed -->
+            <ng-container *ngIf="!recipientVisitItem.visit_status && recipientVisitItem.$expanded.status == 'missed'">
+                <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <div class="roboto-medium-20">
+                                <b>
+                                    {{ length - i }}{{recipientVisitItem.dose_in_series === 1 ? 'st' : 'nd'}} Dose
+                                </b>
+                            </div>
+                            <div *ngIf="recipientVisitItem.$expanded.status == 'missed'"><b>Missed</b></div>
+                        </div>
+
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="p-2 px-4">
+                                    <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                        <b>{{recipientVisitItem.start_time|date:'dd'}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        {{recipientVisitItem.start_time|date:'MMM'}}&nbsp;|&nbsp;{{recipientVisitItem.start_time|date:'EE'}}
+                                    </p>
+                                </div>
+                                <div class="p-2">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.site_name}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.address1}}</b>
+                                    </p>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.city}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.state}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.zip}}
+                                        </p>
+                                    </div>
+                                    <p class="mb-1" style="font-size: 13px !important;">Type of Vaccine :
+                                        {{recipientVisitItem.$expanded.vaccine}}
+                                    </p>
+                                    <p *ngIf="recipientVisitItem.$expanded.batch_no" class="mb-1" style="font-size: 12px !important;">Lot No :
+                                        &nbsp;{{recipientVisitItem.$expanded.batch_no}}                                                                    
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;">Time :
+                                        {{recipientVisitItem.start_time|date:'hh:mm a'}} -
+                                        {{recipientVisitItem.end_time|date:'hh:mm a'}}
+                                    </p>
+                                    <p *ngIf="(recipientVisitItem.$expanded.recipient_dob && recipientVisitItem.$expanded.recipient_dob != '1900-01-01')" class="mb-1" style="font-size: 12px !important;">DOB :
+                                        &nbsp;{{recipientVisitItem.$expanded.recipient_dob |date:'MM-dd-yyyy'}}
+                                    </p>
+                                    <p *ngIf="recipientVisitItem.$expanded.status == 'completed' && recipientVisitItem.$expanded.vaccinator_fname && recipientVisitItem.$expanded.vaccinator_fname.length > 0" class="mb-1" style="font-size: 12px !important;">Vaccinated By :
+                                        &nbsp;{{recipientVisitItem.$expanded.vaccinator_fname}} {{recipientVisitItem.$expanded?.vaccinator_lname}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;" *ngIf="recipientVisitItem?.time_of_administration">Vaccination Time :
+                                        {{recipientVisitItem.time_of_administration | date:'hh:mm a'}}     
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;"
+                                        *ngIf="recipientVisitItem?.$expanded?.checked_in_by_lname && recipientVisitItem?.$expanded?.checked_in_by_fname">
+                                        Checked In By : {{recipientVisitItem.$expanded.checked_in_by_fname}}
+                                        {{recipientVisitItem.$expanded.checked_in_by_lname}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;" *ngIf="recipientVisitItem?.time_of_checkin">
+                                        Checked In Time : {{recipientVisitItem.time_of_checkin | date:'MM-dd-yy hh:mm a'}}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-end pl-4 pb-5 pt-2 h-100">
+                                    <p class="mb-1" style="font-size: 16px !important;"><b>Survey id :</b>
+                                        {{recipientVisitItem.ticket_number}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pb-2">
+
+                                <ng-container *ngIf="checkState(hideActions,'cancelappointment')">
+                                <ng-container *ngIf="(feature !=='vaccinator')">
+                                <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_cancel_appointment"
+                                    placement="bottom" delay="10"
+                                    [disabled]="isCancelClicked"
+                                    *ngIf="!recipientVisitItem.visit_status || !recipientVisitItem.visit_status!='checked-in'"
+                                    (click)="cancleAppointment(recipientVisitItem,$event)"
+                                    style="color: #fff;border: 1px solid #0984E3;color: #0984E3; border-radius: 40px;">
+                                    Cancel Appointment
+                                </button>
+                            </ng-container>
+                        </ng-container>
+
+                                <!--  <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_checkin_appointment" placement="right" delay="10"
+                                    [disabled]="recipientVisitItem.visit_status=='checked-in'"
+                                    [routerLink]="'/recipient/pre-vaccinate-check-list'"
+                                    [ngClass]="{'active-button':recipientVisitItem.visit_status=='checked-in','normal-button':recipientVisitItem.visit_status=='scheduled' || !recipientVisitItem.visit_status}">
+                                    Check In
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Missed end-->
+
+            <ng-container
+                *ngIf="(!recipientVisitItem.visit_status || recipientVisitItem.visit_status=='checked-in' || recipientVisitItem.visit_status=='scheduled') && recipientVisitItem.$expanded.status !== 'missed'">
+                <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <div class="roboto-medium-20">
+                                <b>
+                                    {{ recipientVisitItem.dose_in_series }}{{recipientVisitItem.dose_in_series === 1 ? 'st' : 'nd'}} Dose
+                                </b>
+                            </div>
+                            <div *ngIf="recipientVisitItem.visit_status=='checked-in'"><b>Checked In</b></div>
+                            <div
+                                *ngIf="recipientVisitItem.visit_status=='scheduled' || !recipientVisitItem.visit_status">
+                                <b>Scheduled</b>
+                            </div>
+                        </div>
+
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="p-2 px-4">
+                                    <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                        <b>{{recipientVisitItem.start_time|date:'dd'}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        {{recipientVisitItem.start_time|date:'MMM'}}&nbsp;|&nbsp;{{recipientVisitItem.start_time|date:'EE'}}
+                                    </p>
+                                </div>
+                                <div class="p-2">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.site_name}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.address1}}</b>
+                                    </p>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.city}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.state}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.zip}}
+                                        </p>
+                                    </div>
+                                    <p class="mb-1" style="font-size: 13px !important;">Type of Vaccine :
+                                        {{recipientVisitItem.$expanded.vaccine}}
+                                    </p>
+                                    <p *ngIf="recipientVisitItem.$expanded.batch_no" class="mb-1" style="font-size: 12px !important;">Lot No :
+                                        &nbsp;{{recipientVisitItem.$expanded.batch_no}}                                                                    
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;">Time :
+                                        {{recipientVisitItem.start_time|date:'hh:mm a'}} -
+                                        {{recipientVisitItem.end_time|date:'hh:mm a'}}
+                                    </p>
+                                    <p *ngIf="(recipientVisitItem.$expanded.recipient_dob && recipientVisitItem.$expanded.recipient_dob != '1900-01-01')" class="mb-1" style="font-size: 12px !important;">DOB :
+                                        &nbsp;{{recipientVisitItem.$expanded.recipient_dob |date:'MM-dd-yyyy'}}
+                                    </p>
+                                    <p *ngIf="recipientVisitItem.$expanded.status == 'completed' && recipientVisitItem.$expanded.vaccinator_fname && recipientVisitItem.$expanded.vaccinator_fname.length > 0" class="mb-1" style="font-size: 12px !important;">Vaccinated By :
+                                        &nbsp;{{recipientVisitItem.$expanded.vaccinator_fname}} {{recipientVisitItem.$expanded?.vaccinator_lname}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;" *ngIf="recipientVisitItem.time_of_administration">Vaccination Time :
+                                        {{recipientVisitItem.time_of_administration | date:'hh:mm a'}}     
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;"
+                                        *ngIf="recipientVisitItem?.$expanded?.checked_in_by_lname && recipientVisitItem?.$expanded?.checked_in_by_fname">
+                                        Checked In By : {{recipientVisitItem.$expanded.checked_in_by_fname}}
+                                        {{recipientVisitItem.$expanded.checked_in_by_lname}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;" *ngIf="recipientVisitItem?.time_of_checkin">
+                                        Checked In Time : {{recipientVisitItem.time_of_checkin | date:'MM-dd-yy hh:mm a'}}
+                                    </p>
+                                    
+                                </div>
+                                <div class="d-flex justify-content-end pl-4 pb-5 pt-2 h-100">
+                                    <p class="mb-1" style="font-size: 16px !important;"><b>Survey id :</b>
+                                        {{recipientVisitItem.ticket_number}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pb-2">
+                                <ng-container *ngIf="checkState(hideActions,'cancelappointment')">
+                                <ng-container *ngIf="(feature !=='vaccinator')">
+                                <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_cancel_appointment"
+                                    placement="bottom" delay="10"
+                                    [disabled]="isCancelClicked"
+                                    *ngIf="!recipientVisitItem.visit_status || !recipientVisitItem.visit_status!='checked-in'"
+                                    (click)="cancleAppointment(recipientVisitItem,$event)"
+                                    style="color: #fff;border: 1px solid #0984E3;color: #0984E3; border-radius: 40px;">
+                                    Cancel Appointment
+                                </button>
+                                </ng-container>
+
+
+                                 <ng-container *ngIf="(recipientVisitItem.visit_status=='scheduled' || !recipientVisitItem.visit_status) && (feature !=='site-admin')">
+                                    <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_checkin_appointment" placement="right" delay="10"
+                                        [disabled]="recipientVisitItem.visit_status=='checked-in'"
+                                        [routerLink]="['/'+feature+'/checklist/'+recipientVisitItem.id+'/start']"
+                                        [ngClass]="{'active-button':recipientVisitItem.visit_status=='checked-in','normal-button':recipientVisitItem.visit_status=='scheduled' || !recipientVisitItem.visit_status}">
+                                        Check In
+                                    </button>
+                                 </ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container
+                *ngIf="recipientVisitItem.visit_status && (recipientVisitItem.visit_status=='completed' || recipientVisitItem.visit_status=='observation')">
+                <div class="vaccine-schedue-details p-2">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="roboto-medium-20">
+                                <b>
+                                    {{ length - i }}{{recipientVisitItem.dose_in_series === 1 ? 'st' : 'nd'}} Dose
+                                </b>
+                            </div>
+                            <div *ngIf="recipientVisitItem.visit_status=='completed'"
+                                class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"
+                                style="background-color:#099B4E !important;color: #fff !important;">
+                                Completed</div>
+                            <div *ngIf="recipientVisitItem.visit_status=='observation'"
+                                class="roboto-medium-14 white-bg rounded-pill py-2 px-4 badge" style="color: #0984e3;">
+                                Observation</div>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex align-items-center text-muted">
+                                <div class="p-2 px-4">
+                                    <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                        <b>{{recipientVisitItem.start_time|date:'dd'}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        {{recipientVisitItem.start_time|date:'MMM'}}&nbsp;|&nbsp;{{recipientVisitItem.start_time|date:'EE'}}
+                                    </p>
+                                </div>
+                                <div class="p-2">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.site_name}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.address1}}</b>
+                                    </p>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.city}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.state}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 13px !important;">
+                                            {{recipientVisitItem.$expanded.zip}}
+                                        </p>
+                                    </div>
+                                    <p class="mb-1" style="font-size: 13px !important;">Type of Vaccine :
+                                        {{recipientVisitItem.$expanded.vaccine}}
+                                    </p>
+                                    <p *ngIf="recipientVisitItem.$expanded.batch_no" class="mb-1" style="font-size: 12px !important;">Lot No :
+                                        &nbsp;{{recipientVisitItem.$expanded.batch_no}}                                                                    
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;">Time :
+                                        {{recipientVisitItem.start_time|date:'hh:mm a'}} -
+                                        {{recipientVisitItem.end_time|date:'hh:mm a'}}
+                                    </p>
+                                    <p *ngIf="(recipientVisitItem.$expanded.recipient_dob && recipientVisitItem.$expanded.recipient_dob != '1900-01-01')" class="mb-1" style="font-size: 12px !important;">DOB :
+                                        &nbsp;{{recipientVisitItem.$expanded.recipient_dob |date:'MM-dd-yyyy'}}
+                                    </p>
+                                    <p *ngIf="recipientVisitItem.$expanded.status == 'completed' && recipientVisitItem.$expanded.vaccinator_fname && recipientVisitItem.$expanded.vaccinator_fname.length > 0" class="mb-1" style="font-size: 12px !important;">Vaccinated By :
+                                        &nbsp;{{recipientVisitItem.$expanded.vaccinator_fname}} {{recipientVisitItem.$expanded?.vaccinator_lname}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;" *ngIf="recipientVisitItem?.time_of_administration">Vaccination Time
+                                        :
+                                        {{recipientVisitItem.time_of_administration | date:'hh:mm a'}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;"
+                                        *ngIf="recipientVisitItem?.$expanded?.checked_in_by_lname && recipientVisitItem?.$expanded?.checked_in_by_fname">
+                                        Checked In By : {{recipientVisitItem.$expanded.checked_in_by_fname}}
+                                        {{recipientVisitItem.$expanded.checked_in_by_lname}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;" *ngIf="recipientVisitItem?.time_of_checkin">
+                                        Checked In Time : {{recipientVisitItem.time_of_checkin | date:'MM-dd-yy hh:mm a'}}
+                                    </p>
+                                    
+                                </div>
+                                <div class="d-flex justify-content-end pl-4 pb-5 pt-2 h-100">
+                                    <p class="mb-1" style="font-size: 16px !important;"><b>Survey id :</b>
+                                        {{recipientVisitItem.ticket_number}}
+                                    </p>
+                                </div>
+                            </div>
+
+                                <div class="pb-2">
+                                    <ng-container *ngIf="(feature !=='receptionist' && feature !=='vaccinator' && feature !=='site-admin')">
+                                    <button (click)="adverseEvent(recipientVisitItem.id)" mat-button
+                                        class="roboto-medium-14 btn rounded-pill mr-2"
+                                        style="border: 1px solid #F87D46 !important; color: #F87D46;"
+                                        vmsTooltip="recipient_adverse_event" placement="right" delay="10">
+                                        Report Adverse Events</button>
+                                    </ng-container >
+                                </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="i==(length-1)">
+                <div class="qr-code-details p-2">
+                    <div class="card h-100 border-0 shadow w-100">
+                        <div class="card-body px-5 d-flex flex-column justify-content-center align-items-start">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex flex-column justify-content-center align-items-start pr-5">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>Vaccination QR Code</b>
+                                    </p>
+                                    <ng-container
+                                        *ngIf="!(visits.length>1&&visits[0]['visit_status']=='completed'&&visits[1]['visit_status']=='completed')">
+                                        <p class="mb-1 pt-3" style="font-size: 12px !important; color: #999999;"> Use
+                                            this code to quickly Check in to your appointment when you arrive at
+                                            facility
+                                        </p>
+                                    </ng-container>
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img [src]="qrImageBase64">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>

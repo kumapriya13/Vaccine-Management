@@ -1,0 +1,149 @@
+<app-component-recipient-header></app-component-recipient-header>
+<app-component-dynamic-heading [heading]="'Please fill up the pre- vaccination checklist form'" [refererClick]="true"></app-component-dynamic-heading>
+
+<!-- <div class="container py-4">
+    <p class="roboto-regular-20 mb-3">Question 1 of 10</p>
+    <div class="progress rounded-pill" style="width: 300px;">
+        <div class="progress-bar green1-bg" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+            style="width:10%">
+        </div>
+    </div>
+</div> -->
+
+<form [formGroup]="checkListForm" (ngSubmit)=checkListFormSub()>
+    <div class="container">
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">1. Are you feeling sick today?</p>
+            <ul>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques1">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques1">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">2. Have you ever received a dose of COVID-19 vaccine?</p>
+            <ul>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques2">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques2">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <!-- <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">3. If yes, which vaccine product</p>
+            <ul>
+                <li>
+                    <input type="text" style="width:300px;" formControlName="ques3" class="form-control"
+                        placeholder="Enter text here">
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">4. Have you ever had a severe allergic reaction (e.g. anaphylaxis) to
+                something? For example, a reaction for which you were treated with epinephrine or EpiPen or fow which
+                you
+                had to go to the hospital?</p>
+            <ul cl>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques4">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques4">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">5. Have you received passive antibody therapy (monoclonal antibodies
+                or convalescent serum) ass treatment for COVID-19?</p>
+            <ul cl>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques5">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques5">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">6. Have you received another Vaccine in the last 14 days?</p>
+            <ul cl>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques6">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques6">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">7. Have you had a positive test for COVID-19 or has a doctor ever
+                told you that you had COVID- 19?</p>
+            <ul cl>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques7">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques7">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">8. Do you have a weakened Immune system caused by something such as
+                HV infection or cancer or do you take immunosuppressive drugs or therapies?</p>
+            <ul cl>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques8">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques8">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">9. Do you have a bleeding disorder or are you taking a blood thinner?
+            </p>
+            <ul cl>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques9">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques9">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class=" mb-3 roboto-medium-20">10. Are you pregnant or breastfeeding?</p>
+            <ul cl>
+                <li>
+                    <input type="radio" value="yes" formControlName="ques10">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">Yes</span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <input type="radio" value="no" formControlName="ques10">&nbsp;&nbsp;<span
+                        class="roboto-regular-14">No</span>
+                </li>
+            </ul>
+        </div> -->
+
+        <div>
+            <button *ngIf="checkListForm.valid" [disabled]="!checkListForm.valid" type="submit"
+                class="btn btn-primary mb-4">Save & Check In</button>
+            <button *ngIf="!checkListForm.valid" (click)="checkInVisitStatus()" class="btn btn-primary mb-4">Skip &
+                Check In</button>
+        </div>
+    </div>
+</form>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,49 @@
+@charset "UTF-8";
+.bg-primary {
+    background: #FFFFFF 0% 0% no-repeat padding-box !important;
+}
+
+.vaccinator-schedule-header {
+    // background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    padding: 2.2rem 0;
+    i {
+        color: #FFFFFF;
+        font-size: 40px;
+    }
+}
+
+:host ::ng-deep .mat-checkbox-inner-container {
+    padding: 10px
+}
+
+.term-cond-text {
+    letter-spacing: 0px;
+    opacity: 1;
+    padding-left: 1rem;
+}
+
+.highlight {
+    color: #0984E3;
+}
+
+.check-box-div {
+    margin-top: 12px;
+}
+
+.vms-sign-up {
+    .mat-input-element {
+        font-weight: 500;
+        font-size: 18px;
+    }
+}
+
+.site-admin-vaccine-header {
+  background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+      font-size: 22px;
+      font-weight: lighter;
+  }
+}
+

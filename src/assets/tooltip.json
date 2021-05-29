@@ -1,0 +1,495 @@
+{
+    "status": "success",
+    "data": [
+        {
+            "user_type": ["recipient", "site_admin", "receptionist", "vaccinator", "provider_admin"],
+            "Title": "Enable Multi Factor Authentication",
+            "Keyword": "profile_mfa",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile", "admin_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Link 21-20 Bracelet to your account",
+            "Keyword": "my_profile_update",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Use the QR reader or camera to link Bracelet to your account",
+            "Keyword": "my_profile_update",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Upload Certificate",
+            "Keyword": "my_profile_upload_certificate",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Preview Certificate",
+            "Keyword": "my_profile_preview_certificate",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient", "site_admin", "provider_admin", "receptionist", "vaccinator"],
+            "Title": "Verify Email",
+            "Keyword": "my_profile_verify_email",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile", "admin_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient", "site_admin", "provider_admin", "receptionist", "vaccinator"],
+            "Title": "Verify Mobile",
+            "Keyword": "my_profile_verify_mobile",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile", "admin_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Select the items to display when your QR Code is Viewed",
+            "Keyword": "my_profile_select_QR_information",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Electronic Certificate",
+            "Keyword": "my_profile_electronic_certificate",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Image of Certificate",
+            "Keyword": "my_profile_image__certificate",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_profile"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Get vaccinated at a location near you",
+            "Keyword": "appointment_map",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_map"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Classification Code",
+            "Keyword": "appointment_booking",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Choose from the available time slots",
+            "Keyword": "appointment_booking",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Filter facility by Vaccine",
+            "Keyword": "appointment_booking",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Available Slots Description",
+            "Keyword": "appointment_booking",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Cancel Appointment",
+            "Keyword": "recipient_cancel_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Check-In",
+            "Keyword": "recipient_checkin_appointment",
+            "Value": "Text",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient", "vaccinator"],
+            "Title": "Report Adverse Event",
+            "Keyword": "recipient_adverse_event",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes",
+            "status": "appointment booking not found in vaccinator"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "View Certificate",
+            "Keyword": "recipient_view_certificate",
+            "Value": "TEXT",
+            "Unique_location": ["appointment_booking"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Add Family Member",
+            "Keyword": "family",
+            "Value": "TEXT",
+            "Unique_location": ["family"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Family Member Card Details",
+            "Keyword": "family",
+            "Value": "TEXT",
+            "Unique_location": ["family"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Recipient Registration",
+            "Keyword": "recipient_registration",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_registration"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["recipient"],
+            "Title": "Login Info",
+            "Keyword": "recipient_login",
+            "Value": "TEXT",
+            "Unique_location": ["recipient_login"],
+            "enabled": "yes",
+            "status":"discussion which login"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Dashboard Report",
+            "Keyword": "dashboard_report",
+            "Value": "TEXT",
+            "Unique_location": ["dashboard_report"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Filter",
+            "Keyword": "seat",
+            "Value": "TEXT",
+            "Unique_location": ["seat"],
+            "enabled": "yes",
+            "status": "seat not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Cancel Schedule",
+            "Keyword": "seat",
+            "Value": "TEXT",
+            "Unique_location": ["seat"],
+            "enabled": "yes",
+            "status": "seat not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "View Site Schedule",
+            "Keyword": "seat",
+            "Value": "TEXT",
+            "Unique_location": ["seat"],
+            "enabled": "yes",
+            "status": "seat not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Move Schedule",
+            "Keyword": "seat",
+            "Value": "TEXT",
+            "Unique_location": ["seat"],
+            "enabled": "yes",
+            "status": "seat not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Add Seat",
+            "Keyword": "seat",
+            "Value": "TEXT",
+            "Unique_location": ["seat"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Add Schedule(s)",
+            "Keyword": "seat",
+            "Value": "TEXT",
+            "Unique_location": ["seat"],
+            "enabled": "yes",
+            "status": "seat not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "View Schedule",
+            "Keyword": "seat",
+            "Value": "TEXT",
+            "Unique_location": ["seat"],
+            "enabled": "yes",
+            "status": "seat not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Filter",
+            "Keyword": "vaccine",
+            "Value": "TEXT",
+            "Unique_location": ["vaccine"],
+            "enabled": "yes",
+            "status": "vaccine not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Add Vaccine",
+            "Keyword": "vaccine",
+            "Value": "TEXT",
+            "Unique_location": ["vaccine"],
+            "enabled": "yes",
+            "status": "vaccine not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Filter",
+            "Keyword": "vaccinator",
+            "Value": "TEXT",
+            "Unique_location": ["vaccinator"],
+            "enabled": "yes",
+            "status": "vaccinator not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Add Vaccinator",
+            "Keyword": "vaccinator",
+            "Value": "TEXT",
+            "Unique_location": ["vaccinator"],
+            "enabled": "yes",
+            "status": "vaccinator not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Vaccinator Enable/Disable",
+            "Keyword": "vaccinator",
+            "Value": "TEXT",
+            "Unique_location": ["vaccinator"],
+            "enabled": "yes",
+            "status": "vaccinator not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Filter",
+            "Keyword": "receptionist",
+            "Value": "TEXT",
+            "Unique_location": ["receptionist"],
+            "enabled": "yes",
+            "status": "receptionist not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Add Receptionist",
+            "Keyword": "receptionist",
+            "Value": "TEXT",
+            "Unique_location": ["receptionist"],
+            "enabled": "yes",
+            "status": "receptionist not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Receptionist Enable/Disable",
+            "Keyword": "receptionist",
+            "Value": "TEXT",
+            "Unique_location": ["receptionist"],
+            "enabled": "yes",
+            "status": "receptionist not exist in provider"
+        },
+        {
+            "user_type": ["receptionist"],
+            "Title": "Scan QR Code",
+            "Keyword": "receptionist_qrcode",
+            "Value": "TEXT",
+            "Unique_location": ["receptionist_qrcode"],
+            "enabled": "yes",
+            "status": "not found qr code related page"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin", "receptionist"],
+            "Title": "Filter",
+            "Keyword": "admin_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["admin_appointment"],
+            "enabled": "yes",
+            "status": "admin_appointment not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Bulk Appointment",
+            "Keyword": "admin_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["admin_appointment"],
+            "enabled": "yes",
+            "status": "admin_appointment not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin"],
+            "Title": "Enable Private Slots",
+            "Keyword": "admin_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["admin_appointment"],
+            "enabled": "yes",
+            "status": "admin_appointment not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin", "receptionist"],
+            "Title": "Book Appointments",
+            "Keyword": "admin_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["admin_appointment"],
+            "enabled": "yes",
+            "status": "admin_appointment not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin", "receptionist"],
+            "Title": "New Registration",
+            "Keyword": "admin_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["admin_appointment"],
+            "enabled": "yes",
+            "status": "admin_appointment not exist in provider"
+        },
+        {
+            "user_type": ["site_admin", "provider_admin", "receptionist", "super_admin"],
+            "Title": "Bulk Import",
+            "Keyword": "admin_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["admin_appointment", "user_listing"],
+            "enabled": "yes",
+            "status": "not found bulk import in receptionist and provider_admin"
+  
+        },
+        {
+            "user_type": ["site_admin", "provider_admin", "receptionist"],
+            "Title": "Book Appointment",
+            "Keyword": "admin_appointment",
+            "Value": "TEXT",
+            "Unique_location": ["admin_appointment"],
+            "enabled": "yes",
+            "status": "admin_appointment not exist in provider"
+            
+        },
+        {
+            "user_type": ["site_admin", "provider_admin", "super_admin"],
+            "Title": "Notification",
+            "Keyword": "adhoc_notification",
+            "Value": "TEXT",
+            "Unique_location": ["adhoc_notification"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["receptionist", "vaccinator"],
+            "Title": "Filter",
+            "Keyword": "todays_schedule",
+            "Value": "TEXT",
+            "Unique_location": ["todays_schedule"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["receptionist", "vaccinator"],
+            "Title": "Missed",
+            "Keyword": "todays_schedule",
+            "Value": "TEXT",
+            "Unique_location": ["todays_schedule"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["receptionist", "vaccinator"],
+            "Title": "Upcoming",
+            "Keyword": "todays_schedule",
+            "Value": "TEXT",
+            "Unique_location": ["todays_schedule"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["receptionist", "vaccinator"],
+            "Title": "Checked-In",
+            "Keyword": "todays_schedule",
+            "Value": "TEXT",
+            "Unique_location": ["todays_schedule"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["vaccinator"],
+            "Title": "Observation",
+            "Keyword": "todays_schedule",
+            "Value": "TEXT",
+            "Unique_location": ["todays_schedule"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["vaccinator"],
+            "Title": "Completed",
+            "Keyword": "todays_schedule",
+            "Value": "TEXT",
+            "Unique_location": ["todays_schedule"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["provider_admin", "super_admin"],
+            "Title": "Admin",
+            "Keyword": "user_listing",
+            "Value": "TEXT",
+            "Unique_location": ["user_listing"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["provider_admin", "super_admin"],
+            "Title": "Recipient",
+            "Keyword": "user_listing",
+            "Value": "TEXT",
+            "Unique_location": ["user_listing"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["provider_admin"],
+            "Title": "Manage Site",
+            "Keyword": "manage_site",
+            "Value": "TEXT",
+            "Unique_location": ["manage_site"],
+            "enabled": "yes"
+        },
+        {
+            "user_type": ["provider_admin", "super_admin"],
+            "Title": "Add Site",
+            "Keyword": "manage_site",
+            "Value": "TEXT",
+            "Unique_location": ["manage_site"],
+            "enabled": "yes"
+        }
+    ]
+}

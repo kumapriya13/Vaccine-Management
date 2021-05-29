@@ -1,0 +1,116 @@
+<mat-horizontal-stepper #stepper (selectionChange)="onStepChange($event)">
+
+    <mat-step>
+        <ng-template matStepLabel>
+            <div *ngIf="myStepper && recipientVisit && !recipient_ids">
+                <div *ngIf="recipientVisit">
+                    <ng-container *ngIf="recipientVisit['results'].length<2">
+                        <div *ngIf="myStepper" class="roboto-medium-14 white-bg green-text rounded-pill py-2 badge"
+                            style="position: absolute;
+                    top: 10px;
+                    font-size: 10px !important; width: 71px;
+                    left: 0px;" [ngClass]="{
+                        'dose-complete': recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='completed',
+                        'dose-pre-complete': recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='checked-in' || recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='scheduled' || recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='scheduled'
+                    }">
+                            1st Dose
+                        </div>
+                        <!-- && recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='completed' -->
+                        <div *ngIf="myStepper && (!(recipientVisit['results'].length)||(recipientVisit['results'].length>0 && recipientVisit['results'][0].$expanded.no_of_doses_in_series>1))"
+                            class="roboto-medium-14 white-text rounded-pill py-2 badge border" style="position: absolute;
+                    top: 38px;
+                    font-size: 10px !important; width: 71px;
+                    left: 0px;" [ngClass]="{
+                        'dose-complete': recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='completed',
+                        'dose-pre-complete': recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='checked-in' || recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='scheduled' || recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='scheduled',
+                        'disable-badge' : recipientVisit['results'].length==0 || recipientVisit['results'][0]['visit_status']!='completed'
+                    }">
+                            2nd Dose
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="recipientVisit['results'].length==2">
+                        <div *ngIf="myStepper" class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"
+                            style="position: absolute;
+                    top: 10px;
+                    font-size: 10px !important;
+                    left: 0px;" [ngClass]="{
+                        'dose-complete': recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='completed',
+                        'dose-pre-complete': recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='checked-in' || recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='scheduled' || recipientVisit['results'][1]&&recipientVisit['results'][1]['visit_status']=='scheduled'
+                    }">
+                            1st Dose
+                        </div>
+
+                        <div *ngIf="myStepper" class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"
+                            style="position: absolute;
+                    top: 38px;
+                    font-size: 10px !important;
+                    left: 0px;" [ngClass]="{
+                        'dose-complete': recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='completed',
+                        'dose-pre-complete': recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='checked-in' || recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='scheduled' || recipientVisit['results'][0]&&recipientVisit['results'][0]['visit_status']=='scheduled'
+                    }">
+                            2nd Dose
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div style="padding-left: 80px;"
+                [ngClass]="{'manage-opacity-0-5': !(myStepper&&myStepper.selectedIndex>=0), 'manage-opacity-1-0': (myStepper&&myStepper.selectedIndex>=0)}">
+                <span *ngIf="!(myStepper&&myStepper.selectedIndex>=0)">1</span>
+                <i *ngIf="myStepper&&myStepper.selectedIndex>=0" class="fa fa-check-circle"
+                    aria-hidden="true"></i>&nbsp;Find a Vaccine Site
+            </div>
+        </ng-template>
+        <app-page-vaccine-site-container [myStepper]="myStepper" [selectedIndexFromEvent]="selectedIndexFromEvent"
+            [recipientVisit]="recipientVisit" [materialList]="materialList" [siteList]="siteList"
+            (changeZip)="changeZip($event)" (changeDistanceMiles)="changeDistanceMiles($event)"
+            (changeSite)="changeSite($event)" (searchTrigger)="searchTrigger()"
+            (changeMaterial)="changeMaterial($event)">
+        </app-page-vaccine-site-container>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>
+            <div
+                [ngClass]="{'manage-opacity-0-5': !(myStepper&&myStepper.selectedIndex>=1), 'manage-opacity-1-0': (myStepper&&myStepper.selectedIndex>=1)}">
+                <span *ngIf="!(myStepper&&myStepper.selectedIndex>=1)">2</span>
+                <i *ngIf="myStepper&&myStepper.selectedIndex>=1" class="fa fa-check-circle"
+                    aria-hidden="true"></i>&nbsp; Book Slot
+            </div>
+        </ng-template>
+        <app-page-book-slot [site]="site" [date]="date" [material]="material" [recipientVisit]="recipientVisit" [dateSlotList]="dateSlotList"
+            (changeDate)="changeDate($event)" (changeMonth)="changeMonth($event)"
+            (changeMaterial)="changeMaterialAndGetBookSlot($event)" [checkSlot]="checkSlot"
+            (bookAppointment)="reqBookAppointment($event)" [siteList]="siteList" (changeSite)="changeSite($event)"
+            (changeVaccination)="changeVaccination()">
+        </app-page-book-slot>
+    </mat-step>
+    <mat-step *ngIf="!recipient_ids">
+        <ng-template matStepLabel>
+            <div
+                [ngClass]="{'manage-opacity-0-5': !(myStepper&&myStepper.selectedIndex>=2), 'manage-opacity-1-0': (myStepper&&myStepper.selectedIndex>=2)}">
+                <span *ngIf="!(myStepper&&myStepper.selectedIndex>=2)">3</span>
+                <i *ngIf="myStepper&&myStepper.selectedIndex>=2" class="fa fa-check-circle"
+                    aria-hidden="true"></i>&nbsp; Vaccine Schedule
+            </div>
+        </ng-template>
+        <app-page-vaccine-schedule [myStepper]="myStepper" [recipientVisit]="recipientVisit"
+            (cancleAppointment)="cancleAppointment($event)">
+        </app-page-vaccine-schedule>
+    </mat-step>
+    <ng-container *ngIf="myStepper&&myStepper.selectedIndex>=2 && recipientVisit">
+        <ng-container *ngIf="checkCertificateVisible()">
+            <!-- *ngIf="recipientVisit['results'].length>1&&recipientVisit['results'][0]['visit_status']=='completed'&&recipientVisit['results'][1]['visit_status']=='completed'" -->
+            <mat-step>
+                <ng-template matStepLabel>
+                    <div
+                        [ngClass]="{'manage-opacity-0-5': !(myStepper&&myStepper.selectedIndex>=3), 'manage-opacity-1-0': (myStepper&&myStepper.selectedIndex>=3)}">
+                        <span *ngIf="!(myStepper&&myStepper.selectedIndex>=2)">4</span>
+                        <i *ngIf="myStepper&&myStepper.selectedIndex>=2" class="fa fa-check-circle"
+                            aria-hidden="true"></i>&nbsp; Certificate
+                    </div>
+                </ng-template>
+                <app-page-certificate [recipientVisit]="recipientVisit"></app-page-certificate>
+            </mat-step>
+        </ng-container>
+    </ng-container>
+</mat-horizontal-stepper>

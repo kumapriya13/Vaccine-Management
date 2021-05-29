@@ -1,0 +1,120 @@
+.location-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  opacity: 1;
+  padding: 2.2rem 0;
+  .vcn-sch-text {
+    text-align: left;
+    font: normal normal medium 30px/39px Roboto !important;
+    letter-spacing: 0px;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  i {
+    color: #ffffff;
+    font-size: 40px;
+  }
+}
+input.empty {
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+}
+
+.btn-prm,
+.btn-prm-1 {
+  width: 260px;
+  height: 37px;
+  background-color: #0984e3;
+}
+
+.btn-prm-1 {
+  background-color: #d8dadc54;
+  color: black;
+}
+
+.fa-search {
+  width: 342px;
+}
+
+.edit {
+  width: 60px;
+  height: 25px;
+  background: #e9efff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.delete {
+  width: 70px;
+  height: 25px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.add-state {
+  width: 127px;
+  height: 37px;
+}
+
+.filter-btn {
+  width: 130px;
+  height: 37px;
+  color: white;
+}
+
+.alert-success {
+  width: 163px;
+}
+
+// .search {
+//     width: 342px;
+//     height: 40px;
+//     border-radius: 4px;
+//     border: 1px solid grey;
+//     box-shadow: none;
+// }
+
+.nav-item {
+  width: 272px;
+  height: 47px;
+}
+
+.nav-link {
+  text-align: center;
+  color: #e4f1fd;
+  font-size: 17px !important;
+  font-weight: 600;
+}
+
+.nav-link {
+  text-align: center;
+  font: normal normal medium 18px/7px Roboto;
+  letter-spacing: 0.1px;
+  color: #383638;
+  text-transform: capitalize;
+  background: #f2f3f4 0% 0% no-repeat padding-box;
+  border-radius: 0;
+}
+
+// .search-form-field {
+//     width: 230px;
+// }
+:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  // border: 0 !important;
+  padding: 0.4em 0px !important;
+  padding-bottom: 0.6em !important;
+}
+.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+.mat-form-field-wrapper {
+  padding: 0 !important;
+}
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}

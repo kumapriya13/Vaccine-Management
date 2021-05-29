@@ -1,0 +1,102 @@
+.backgd {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  i {
+    font-size: 25px !important;
+  }
+}
+
+.txt {
+  color: #0984e3;
+}
+
+// input {
+//   border: 0;
+//   width: 400px;
+//   height: 45px;
+//   background: #ffffff 0% 0% no-repeat padding-box;
+//   box-shadow: 0px 1px 3px #78787859;
+//   font-family: FontAwesome;
+//   font-style: normal;
+//   font-weight: normal;
+//   text-decoration: inherit;
+//   &:hover {
+//     color: #ffffff;
+//   }
+// }
+
+// input {
+//   border: 0;
+//   width: 544px;
+//   height: 31px;
+//   background: #ffffff 0% 0% no-repeat padding-box;
+//   box-shadow: 0px 1px 3px #78787859;
+// }
+
+:host ::ng-deep tr:nth-child(even) {
+  height: 48px !important;
+}
+
+:host ::ng-deep tr:nth-child(even) {
+  height: 48px !important;
+  background: #f6f6f6 0% 0% no-repeat padding-box !important;
+  opacity: 1 !important;
+  border: 0 !important;
+
+  td {
+    background: #f6f6f6 0% 0% no-repeat padding-box !important;
+    border: 0 !important;
+    height: 48px !important;
+  }
+}
+
+:host ::ng-deep tr:nth-child(odd) {
+  height: 48px !important;
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+  opacity: 1 !important;
+  border: 0 !important;
+
+  td {
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+    height: 48px !important;
+  }
+}
+
+:host ::ng-deep tr:hover {
+  // background: #00000005 0% 0% no-repeat padding-box !important;
+
+  td {
+    // background: #00000005 0% 0% no-repeat padding-box !important;
+    height: 48px !important;
+  }
+}
+.modal-dialog {
+  width: 420px;
+}
+:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  // border: 0 !important;
+  padding: 0.4em 0px !important;
+  padding-bottom: 0.6em !important;
+}
+.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+.mat-form-field-wrapper {
+  padding: 0 !important;
+}
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+
+// .search-box {
+//   float: right;
+// }
+// .search {
+//   border: 0;
+//   width: 300px;
+//   height: 35px;
+//   background: #ffffff 0% 0% no-repeat padding-box;
+//   border: 1px solid grey;
+// }

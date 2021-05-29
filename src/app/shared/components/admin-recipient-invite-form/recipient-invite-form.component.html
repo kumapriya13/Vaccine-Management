@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Please confirm</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div *ngIf="isActivated">
+        It looks like this recipient already has an active account.
+    </div>
+    <div *ngIf="!isActivated">
+        <ng-container *ngIf="resendInvite else inviteForm;">
+            We already sent invitation to the recipient's {{recipient.userType}} -
+            <strong>{{recipient.userType === 'email' ? recipient.email : recipient.mobile_number}}</strong>.<br />
+            Do you want to re-send invitation?
+        </ng-container>
+        <ng-template #inviteForm>
+            <div *ngIf="!inviteFormVisible">
+                It looks like this recipient already is loaded in our system. Would you like to send an invite?
+            </div>
+            <div *ngIf="inviteFormVisible">
+                <p>Please choose primary login type.</p>
+                <mat-radio-group aria-label="Select an option" (change)="checkValid()" [(ngModel)]="userType"
+                                 class="d-flex">
+                    <mat-radio-button value="email" class="mr-4">Verify using Email ID
+                    </mat-radio-button>
+                    <mat-radio-button value="phone">Verify using Mobile Phone Number
+                    </mat-radio-button>
+                </mat-radio-group>
+                <p class="mt-3">Please choose email</p>
+                <mat-radio-group aria-label="Select an option" (change)="checkValid()" [(ngModel)]="selectedEmail"
+                                 class="d-flex">
+                    <mat-radio-button *ngIf="email" [value]="email" class="mr-4">{{email}}
+                    </mat-radio-button>
+                    <mat-radio-button *ngIf="recipient.email && recipient.email !== email" [value]="recipient.email">
+                        {{recipient.email}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <p class="mt-3">Please choose mobile number</p>
+                <mat-radio-group aria-label="Select an option" (change)="checkValid()"
+                                 [(ngModel)]="selectedMobileNumber"
+                                 class="d-flex">
+                    <mat-radio-button *ngIf="mobile_number" [value]="mobile_number" class="mr-4">{{mobile_number}}
+                    </mat-radio-button>
+                    <mat-radio-button *ngIf="recipient.mobile_number && recipient.mobile_number !== mobile_number"
+                                      [value]="recipient.mobile_number">
+                        {{recipient.mobile_number}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<div class="modal-footer">
+    <div *ngIf="isActivated">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel');">
+            Close
+        </button>
+    </div>
+    <div *ngIf="!isActivated">
+        <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.dismiss('cancel');">
+            No
+        </button>
+        <button *ngIf="!resendInvite && !inviteFormVisible" type="button" class="btn btn-primary"
+                (click)="inviteFormVisible = true">
+            Yes
+        </button>
+        <button *ngIf="resendInvite || inviteFormVisible" type="button" class="btn btn-primary" (click)="confirm()"
+                [disabled]="!valid">
+            Send
+        </button>
+    </div>
+</div>

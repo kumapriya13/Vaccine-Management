@@ -1,0 +1,146 @@
+<app-component-dynamic-heading [heading]="'MANAGE VACCINE'" [refererClick]="true"></app-component-dynamic-heading>
+<div class="vms-sign-up">
+    <div class="vaccinator-schedule-header">
+        <div class="container d-flex align-items-center">
+            <h1 class="roboto-bold-20 m-0 pr-1" style="border-right: 2px solid #9F9F9F;">Add Vaccine</h1>
+            <p class="m-0 roboto-regular-14 pl-1" style="color: #9F9F9F;">
+                <span *ngIf="vaccine">{{ vaccine.$expanded['sites'][0].site_name }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="conatiner pb-1">
+        <form class="container d-flex flex-column align-items-center" [formGroup]="addVaccineForm">
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-select matNativeControl value="select" formControlName="vaccineName">
+                        <mat-option value="" selected>Select Vaccine</mat-option>
+                        <mat-option *ngFor="let material of materialListNames;" [value]="material">{{ material.name
+                            }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!addVaccineForm.get('vaccineName').valid">Vaccine is required Field
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field appearance="outline" class="mx-md-4" style="width: 85% !important;">
+                    <mat-label>Lot Number</mat-label>
+                    <input matInput placeholder="Enter" type="text" formControlName="batchNumber"
+                        [ngStyle]="((cSelected !=='')?{color: cSelected}:'')" />
+                    <mat-error *ngIf="!addVaccineForm.get('batchNumber').valid">Lot Number is required</mat-error>
+                </mat-form-field>
+                <div class="pt-3" style="width: 15% !important;">
+                    <label class="switch">
+                        <input type="checkbox" [checked]="addVaccineForm.value.status=='Enable'"
+                            (change)="enableDisableAction($event)" formControlName="status">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <!-- {{addVaccineForm.value.status }} -->
+
+
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <div style="width: 50%;  margin-bottom: 10px;">
+                    <h6 class="mx-md-4">Select Colour for Lot Number</h6>
+                </div>
+
+                <div class="vertical-seperator" style="width: 50%;  margin-bottom: 10px;">
+                    <ng-container *ngFor="let color of materialColorList">
+                        <span class="unchecked" [ngStyle]="{'background-color': color}"
+                            (click)="colorSelected(color,$event)" #children></span>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Quantity in Vials</mat-label>
+                    <input matInput type="text" (keyup)="quantityVialsno($event)" placeholder="Enter"
+                        formControlName="quantityVials"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                    <mat-error *ngIf="addVaccineForm.get('quantityVials').hasError('required')">Quantity is required
+                    </mat-error>
+                    <mat-error *ngIf="addVaccineForm.get('quantityVials').hasError('pattern')">Quantity in Number
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Dose per vial </mat-label>
+                    <input matInput type="text" (keyup)="dosevialno($event)" placeholder="Enter"
+                        formControlName="dosevial"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                    <mat-error *ngIf="addVaccineForm.get('dosevial').hasError('required')">Dose Vial is required
+                    </mat-error>
+                    <mat-error *ngIf="addVaccineForm.get('dosevial').hasError('pattern')">Dose Vial in Number
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+
+            <div
+                class="form-row-width container d-flex align-items-center justify-content-start flex-column flex-md-row">
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Extra Doses in Vials</mat-label>
+                    <input matInput placeholder="Extra Doses" (keyup)="extraDoseno($event)"
+                        formControlName="extraDoses" />
+                    <!-- <mat-error *ngIf="!addVaccineForm.get('extraDoses').valid">Extra Doses is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>No of Dose </mat-label>
+                    <input matInput type="text" [readonly]="true" placeholder="Enter"
+                        [value]="convertToInt(quantityVialsValue) * convertToInt(dosevialvalue) + convertToInt(extraDoseValue)"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                </mat-form-field>
+            </div>
+            <div
+                class="form-row-width container d-flex align-items-center justify-content-start flex-column flex-md-row">
+                <!-- <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-select matNativeControl value="select" formControlName="status">
+                        <mat-option value="" selected>Change Status</mat-option>
+                        <mat-option *ngFor="let status of statusList;" [value]="status.value">{{ status.name
+                            }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!addVaccineForm.get('status').valid">Status is required Field
+                    </mat-error>
+                </mat-form-field> -->
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Recieved Date</mat-label>
+                    <input matInput placeholder="Recieved Date" formControlName="recievedDate"
+                        [matDatepicker]="picker1" />
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="!addVaccineForm.get('recievedDate').valid">Recieved Date is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Expiry Date</mat-label>
+                    <input matInput placeholder="Expiry Date" formControlName="expiryDate" [matDatepicker]="picker2" />
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error *ngIf="!addVaccineForm.get('expiryDate').valid">Expiry Date is required</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div
+                class="form-row-width container d-flex align-items-center justify-content-start flex-column flex-md-row">
+                <div class="w-75 d-flex justify-content-center mt-2">
+                    <button mat-button type="submit" class="roboto-medium-18 white-text mr-2" style="width: 119px;
+                      height: 46px;left:150px; background: #1D8DE9 0% 0% no-repeat padding-box;
+                      border-radius: 4px;" (click)="addVaccineFormSub()">Save</button>
+                    <button mat-button type="button" class="roboto-medium-18 white-text ml-2" style="width: 119px;
+                      height: 46px;left:160px; background: #999999 0% 0% no-repeat padding-box;
+                      border-radius: 4px;" [routerLink]="'/site-admin/list-vaccine'">Cancel</button>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

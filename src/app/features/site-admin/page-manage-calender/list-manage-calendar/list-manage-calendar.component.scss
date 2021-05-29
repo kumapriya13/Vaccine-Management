@@ -1,0 +1,28 @@
+.schedule-list-container {
+    margin: 2rem 12.5rem;
+}
+
+.edit {
+    width: 60px;
+    height: 25px;
+    background: #E9EFFF 0% 0% no-repeat padding-box;
+    border: 0.5px solid #0984E3;
+    border-radius: 3px;
+}
+
+.delete {
+    width: 70px;
+    height: 25px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 0.5px solid #0984E3;
+    border-radius: 3px;
+}
+
+.delete-popup {
+    width: 270px;
+    height: 98px;
+    border-radius: 14px 14px 1px 1px;
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}

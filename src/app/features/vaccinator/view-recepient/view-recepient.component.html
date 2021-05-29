@@ -1,0 +1,13 @@
+<app-component-vaccinator-header></app-component-vaccinator-header>
+ <div class="vms-sign-up">
+  <app-component-dynamic-heading [heading]="'View Profile'" [refererClick]="true"></app-component-dynamic-heading>
+ 
+  <edit-recepient-common [redirection]="redirection" 
+  [redirectionAfterSave]="redirectionAfterSave" 
+  [(recepient)]="recepientId"
+  [remove_submit]="remove_submit"
+  [disable_form]="disable_form"
+  ></edit-recepient-common>
+ </div>
+ <app-component-footer-copyright-strip></app-component-footer-copyright-strip>
+ 

@@ -1,0 +1,156 @@
+.vaccinator-schedule-header {
+    background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    padding: 2.2rem 0;
+    .vcn-sch-text {
+        text-align: left;
+        font: normal normal medium 30px/39px Roboto !important;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+    i {
+        color: #FFFFFF;
+        font-size: 40px;
+    }
+}
+
+.barcode-box {
+    text-align: right;
+    width: 175px;
+    p {
+        text-align: right !important;
+    }
+}
+
+.check {
+    text-align: left;
+    text-decoration: underline;
+    font: normal normal normal 11px/15px Roboto;
+    letter-spacing: 0.06px;
+    color: #1B4867;
+}
+
+.record-text {
+    text-align: left;
+    font: normal normal medium 20px/26px Roboto !important;
+    letter-spacing: 0px;
+    color: #000000;
+    text-shadow: 0px 6px 6px #FFFCFC29;
+    p {
+        text-align: left;
+        text-decoration: underline;
+        font: normal normal normal 10px/14px Roboto;
+        letter-spacing: 0.06px;
+        color: #0984E3;
+    }
+}
+
+.sch-det-hed-text {
+    text-align: left;
+    font: normal normal normal 18px/12px Roboto;
+    letter-spacing: 0.1px;
+    color: #AFAFAF;
+}
+
+.sch-det-text {
+    text-align: left;
+    font: normal normal medium 18px/13px Roboto;
+    letter-spacing: 0.1px;
+    color: #000000;
+}
+
+.form-group {
+    width: 343px !important;
+    height: 50px;
+    margin-bottom: 30px;
+}
+
+.form-control-text {
+    text-align: left;
+    font: normal normal normal 18px/18px Roboto;
+    letter-spacing: 0px;
+    color: #333333;
+}
+
+.btn {
+    width: 327px;
+    height: 52px;
+    background: #398ce1 0% 0% no-repeat padding-box;
+    text-align: center;
+    font: normal normal medium 18px/26px Roboto;
+    letter-spacing: 0.07px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.appo-time-box {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 20px #8992A130;
+    border: 1px solid #0984E3;
+    border-radius: 5px;
+    width: 250px;
+    height: 97px;
+    .appo-time-inner-box {
+        width: 200px;
+        height: 106px;
+        text-align: center;
+        h1 {
+            font-size: 50px !important;
+            letter-spacing: -1.29px;
+            color: #0984E3;
+            margin: 0;
+            padding-top: 30px;
+        }
+    }
+}
+
+.button1 {
+    height: 52px;
+    background: #71B7FE 0% 0% no-repeat padding-box;
+    text-align: center;
+    font: normal normal medium 18px/26px Roboto;
+    letter-spacing: 0.07px;
+    color: #FFFFFF;
+    font-weight: 500;
+    border: 0;
+}
+
+.button {
+    color: #F87D46;
+    //   width: 327px;
+    height: 52px;
+    text-align: center;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #70707017;
+    border: 1px solid #F87D46C4;
+}
+
+.badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 105px;
+    height: 31px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #FFBB00;
+    border-radius: 16px;
+    opacity: 1;
+    color: black;
+}
+
+.vaccine-dosage-active-btn {
+    background-color: #0984E3;
+}
+
+.proceed-active-btn {
+    background-color: #398ce1;
+}
+.comp-text{
+    background-color: white !important;
+}
+.recipient-details{
+    height: 100px;
+}

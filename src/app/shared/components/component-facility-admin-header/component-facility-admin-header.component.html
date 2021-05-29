@@ -1,0 +1,80 @@
+<!-- header here -->
+<div class="body">
+    <header>
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-md-12 forMob">
+                    <div class="topText"><a [routerLink]="'/recipient/help'" [routerLinkActive]="'active'"
+                            title="Vaccine Provider">Help</a></div>
+                </div> -->
+                <div class="col-md-3">
+                    <!-- company logo here -->
+                    <div class="logoArea">
+                        <!-- <a href="javascript:void(0);" [routerLink]="'/'"> -->
+                        <!-- <img src="/assets/images/2120Check.png"
+                                style="width:200px !important; height:300px !important;" alt="logo - 21-20 All Clear" /> -->
+                        <img src="{{ logo }}"
+                             alt="logo - 21-20 All Clear"
+                            [routerLink]="'/facility-admin/dashboard'" />
+                        <!-- </a> -->
+                        <div class="hamBtn">
+                            <a><i class="fa fa-align-justify"></i>
+                                <!-- href="javascript:void(0);" -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="rightTop">
+                        <!-- right navigation menu here -->
+                        <!-- <div class="topText"><a [routerLink]="'/facility-admin/help'" [routerLinkActive]="'active'"
+                            title="Facility Admin">Help</a></div> -->
+
+                        <div class="topText">&nbsp;</div>
+
+                        <div class="navigationBtm">
+                            <ul>
+                                <!-- <li><a [routerLink]="'/home'" [routerLinkActive]="'active'" title="Home">HOME</a></li> -->
+                                <li><a [routerLink]="'/facility-admin/manage-site'" [routerLinkActive]="'active'"
+                                        title="Manage Site">Manage Site</a></li>
+                                <li><a [routerLink]="'/facility-admin/manage-vaccinator'" [routerLinkActive]="'active'"
+                                        title="Manage Vaccinator">Manage Vaccinator</a></li>
+                                <li><a [routerLink]="'/facility-admin/manage-addmn'" [routerLinkActive]="'active'"
+                                        title="Manage Addmn">Manage Addmn</a></li>
+                                <li><a [routerLink]="'/facility-admin/manage-recipent'" [routerLinkActive]="'active'"
+                                        title="Manage Recipient">Manage Recipient</a></li>
+                                <li><a [routerLink]="'/facility-admin/manage-calender'" [routerLinkActive]="'active'"
+                                        title="Manage Recipient">Manage Calender</a></li>
+                                <!-- <li><a [routerLink]="'/about-us'" [routerLinkActive]="'active'" title="About Us">About Us</a></li> -->
+                                <!-- <li><a [routerLink]="'/facility-admin/notification'" [routerLinkActive]="'active'"
+                                        title="Notification"><i class="fa fa-bell-o" style="font-size: 20px;"></i></a></li> -->
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"
+                                        style="color: #0984E3;">
+                                        <i class="fa fa-user-circle-o" style="font-size: 20px; color: #0984E3;"></i>
+                                    </a>
+                                    <div class="dropdown-menu p-2">
+                                        <ul>
+                                            <li>
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="'/auth/admin-my-profile'"
+                                                    [routerLinkActive]="'active'" title="My Profile">My Profile</a>
+                                            </li>
+                                            <li>
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="'/facility-admin/dashboard'"
+                                                    [routerLinkActive]="'active'" title="Dashboard">Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a class="p-0 pb-1 mb-2" title="Logout">Logout</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

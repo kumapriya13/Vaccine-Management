@@ -1,0 +1,52 @@
+<div class="container blue-text py-4 certificate-header">
+    Your Certificate
+</div>
+<div class="container">
+    <div class="container-fluid py-4 d-flex justify-content-center"
+        style="background-color: rgba(104, 148, 187, 0.356);">
+        <div class="text-center px-4">
+            <!-- <p class="m-0 roboto-medium-16">{{  _recipientVisit['results'].$expanded.site_name }}</p> -->
+            <!-- <hr class="m-0" /> -->
+            <p class="m-0 roboto-medium-18">CERTIFICATE OF COVID-19 VACCINATION</p>
+        </div>
+    </div>
+    <p class="m-0 py-4 roboto-regular-18">
+        This is the certify that <b>{{ userInfo.fname }} {{ userInfo.lname }} </b> residence of {{ userInfo.address1 }} {{ userInfo.address2 }} {{ userInfo.address3 }} is successfully vaccinated for COVID-19
+        as per the schedule below 
+        <!-- <b>DOB:</b> {{ userInfo.dob }} -->
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr class="blue-bg">
+                <th class="white-text">Dose</th>
+                <th class="white-text">Date</th>
+                <!-- <th class="white-text">Vaccinator</th> -->
+                <th class="white-text">Place</th>
+                <th class="white-text">Vaccine</th>
+                <!-- <th class="white-text">Time</th>
+                <th class="white-text">Batch No. </th> -->
+                <th class="white-text">Lot Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let recipientVisitItem of recipientVisit; let i = index; let length = count;">
+                <td class="blue-text">{{ i+1 }}</td>
+                <td class="blue-text">{{ recipientVisitItem.start_time|date:'dd MMM'}}</td>
+                <!-- <td class="blue-text"></td> -->
+                <td class="blue-text">{{ recipientVisitItem.$expanded.site_name }}</td>
+                <td class="blue-text">{{ recipientVisitItem.$expanded.vaccine }}</td>
+                <td class="blue-text">{{ recipientVisitItem.batch_material_name }}</td>
+                <!-- <td class="blue-text"></td> -->
+            </tr>
+        </tbody>
+    </table>
+    <div class="container-fluid py-4 d-flex justify-content-center">
+        <div class="text-center px-4">
+            <img [src]="qrImageBase64">
+                <p class="my-2 roboto-medium-14" vmsTooltip="recipient_appointment_QR_scan" placement="right" delay="10">
+                
+                 Scan This QR Code To Verify
+                </p>
+        </div>
+    </div>
+</div>

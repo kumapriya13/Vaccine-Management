@@ -1,0 +1,80 @@
+<div class="page-header">
+    <h3 class="px-4 m-0">Family Appointment</h3>
+</div>
+
+<ng-container *ngIf="stepperNo === undefined; else appointmentTemplate">
+    <div *ngIf="profile" class="mb-3">
+        <h4>{{profile.fname}} {{profile.lname}}</h4>
+        <div class="d-flex align-items-center">
+            <input type="checkbox" id="currentRecipient" [(ngModel)]="selectionInfo[profile.id]"
+                   [disabled]="!recipientAvailableForAppointment"
+                   (change)="selectChanged(profile.id, $event.target.checked)">
+            <label class="m-0 pl-2" for="currentRecipient">Book appointment for Self</label>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead class="blue-2-bg white-text">
+            <tr>
+                <th></th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date of Birth</th>
+                <th>Relation</th>
+                <th>Slot Time</th>
+                <th>Vaccine</th>
+                <th>Date</th>
+                <th>Dose</th>
+                <th>Survey #</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of members">
+                <td>
+                    <input type="checkbox" [(ngModel)]="selectionInfo[item.id]"
+                           [disabled]="disableControl(item)"
+                           (change)="selectChanged(item.id, $event.target.checked)">
+                </td>
+                <td>{{item.fname}}</td>
+                <td>{{item.lname}}</td>
+                <td>{{item.dob | formatDate}}</td>
+                <td>{{item.primary_relationship}}</td>
+                <td>
+                    <div *ngIf="item.$expanded.booked_visits.length > 0">
+                        {{item.$expanded.booked_visits[0].start_time | date: 'h:mm a' }}
+                    </div>
+                </td>
+                <td>
+                    {{item.$expanded.booked_visits.length > 0 ? item.$expanded.booked_visits[0].material_name
+                    : '' }}
+                </td>
+                <td>
+                    <div *ngIf="item.$expanded.booked_visits.length > 0">
+                        {{item.$expanded.booked_visits[0].start_time | formatDate}}
+                    </div>
+                </td>
+                <td>
+                    {{item.$expanded.booked_visits.length > 0 ? item.$expanded.booked_visits[0].dose_in_series
+                    : '' }}
+                </td>
+                <td>
+                    {{item.$expanded.booked_visits.length > 0 ? item.$expanded.booked_visits[0].ticket_number
+                    : '' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-end">
+        <button mat-button class="edit btn rounded-pill mr-2"
+                (click)="bookNextAppointment()"
+                [disabled]="!selectedIds.length"
+                style="background:#0984e3 0% 0% no-repeat padding-box;color:white">
+            Book Appointment
+        </button>
+    </div>
+</ng-container>
+
+<ng-template #appointmentTemplate>
+    <app-page-appointment-stepper [recipient_ids]="selectedIds" (appointmentResult)="reset()"></app-page-appointment-stepper>
+</ng-template>

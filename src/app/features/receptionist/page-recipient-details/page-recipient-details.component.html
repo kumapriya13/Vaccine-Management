@@ -1,0 +1,124 @@
+<app-component-receptionist-header></app-component-receptionist-header>
+<div class="receptionist-schedule-header mb-2">
+    <div class="container d-flex align-items-center">
+        <h1 class="vcn-sch-text m-0 roboto-medium-30">Recipients Details</h1>
+    </div>
+</div>
+<div class="container py-4">
+    <ng-container *ngIf="rowVisitItem!=null">
+        <div class="d-flex justify-content-between align-items-center shadow-sm p-3">
+            <div class="d-flex align-items-center">
+                <p class="roboto-medium-18 m-0 grey-text">Name&nbsp;:&nbsp;</p>
+                <p class="roboto-medium-18 m-0">{{
+                    rowVisitItem.$expanded.recipient_fname+"&nbsp;"+rowVisitItem.$expanded.recipient_lname }}
+                </p>
+            </div>
+            <div class="d-flex align-items-center">
+                <p class="roboto-medium-18 m-0 grey-text">Appoinment&nbsp;:&nbsp;</p>
+                <p class="roboto-medium-18 m-0">{{ rowVisitItem.start_time | date:'h:mm a' }}</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <p class="roboto-medium-18 m-0 grey-text">Vaccine type&nbsp;:&nbsp;</p>
+                <p class="roboto-medium-18 m-0">{{rowVisitItem.$expanded.vaccine}}</p>
+            </div>
+            <div>
+                <span class="badge">1st Dose</span>
+            </div>
+            <div class="mx-1" [routerLink]="['/receptionist/checklist', rowVisitItem.id, type]">
+                <i class="fa fa-pencil-square-o"></i> checklist
+            </div>
+        </div>
+    </ng-container>
+    <div *ngIf="!isObservation ; else observation" class="conatiner-fluid py-5">
+        <div class="row">
+            <div class="col-5 d-flex justify-content-between record-text pr-5">
+                <h5 class="roboto-medium-20">Record Vaccine Details</h5>
+                <!-- <div class="barcode-box">
+                    <img src="../../../../assets/images/barcode.svg" alt="barcode">
+                    <p>Scan Vial</p>
+                </div> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 pr-5">
+
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Lot Number</mat-label>
+                    <mat-select matInput placeholder="Select" [(ngModel)]="selectedBatchNumber">
+                        <!-- <mat-option value="__other__">Other</mat-option> -->
+                        <mat-option *ngFor="let materialBatchItem of _materialBatchList" [value]="materialBatchItem">
+                            {{materialBatchItem.batch_no}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Site Of Administration</mat-label>
+                    <mat-select matInput placeholder="Select" [(ngModel)]="siteOfAdministration">
+                        <mat-option value="Left Deltoid">Left Deltoid</mat-option>
+                        <mat-option value="Right Deltoid">Right Deltoid</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Dose Amount Administered (in Vials)</mat-label>
+                    <mat-select matInput placeholder="Select" [(ngModel)]="doseAmountAdministeredmMl">
+                        <mat-option value="0.5">5 Vials</mat-option>
+                        <mat-option value="1">10 Vials</mat-option>
+                        <mat-option value="1.5">15 Vials</mat-option>
+                        <mat-option value="2">20 Vials</mat-option>
+                        <mat-option value="2.5">25 Vials</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- <mat-form-field *ngIf="selectedBatchNumber=='__other__'" appearance="outline" class="w-100">
+                    <input matInput placeholder="Type Batch No" [(ngModel)]="selectedBatchNumber__other__" />
+                </mat-form-field> -->
+
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-4 pr-5">
+                <button type="submit" class="btn px-5 roboto-medium-18 rounded-pill"
+                    [ngClass]="{'proceed-active-btn':!enableBtn}" [disabled]="!selectedBatchNumber"
+                    (click)="onProceed()">PROCEED</button>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #observation>
+        <p class="pt-4 roboto-regular-14">Kindly monitor the recipient till the timer completes. In case of any adverse
+            reaction select</p>
+        <div class="appo-time-box d-flex justify-content-center align-items-center mb-4 overflow-hidden">
+            <ng-container *ngIf="counter>0">
+                <div style="width: 338px; height:121px;" class="d-flex justify-content-center align-items-center">
+                    <p class="blue-text" style="text-align: center;
+                    font: normal normal bold 55px/30px Segoe UI;
+                    color: #0984E3;
+                    opacity: 1;">{{ displayTimeInterval }}</p>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="counter<=0">
+                <div style="width: 338px; height:121px;"
+                    class="blue-bg d-flex justify-content-center align-items-center">
+                    <p class="white-text" style="text-align: center;
+                    font: normal normal bold 55px/30px Segoe UI;
+                    opacity: 1;">{{ displayTimeInterval }}</p>
+                </div>
+            </ng-container>
+        </div>
+        <div>
+            <button type="button" class="button px-5 rounded-pill mr-4 roboto-medium-18"
+                [routerLink]="['/receptionist/advert-event', visitId,'recipient']">Report an Adverse
+                Reaction</button>
+            <button *ngIf="!enableBtn" class="bg-light text-success roboto-medium-18 border-0"
+                [ngClass]="{'vaccine-dosage-active-btn':!enableBtn}" [disabled]="enableBtn">VACCINE DOSAGE
+                COMPLETED</button>
+        </div>
+    </ng-template>
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

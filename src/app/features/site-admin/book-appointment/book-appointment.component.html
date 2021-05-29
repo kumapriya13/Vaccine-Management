@@ -1,0 +1,7 @@
+<app-component-dynamic-heading [heading]="'Choose from the available time slots'"></app-component-dynamic-heading>
+<app-book-appointment-shared 
+[(recipient)]="recipient_id"
+[modelContent]="modelContent"
+[redirectAfterSave]="redirectAfterSave"
+(showBookedAppointment)="showAppointment()">
+</app-book-appointment-shared>

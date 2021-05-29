@@ -1,0 +1,251 @@
+<app-component-receptionist-header></app-component-receptionist-header>
+<app-component-dynamic-heading [heading]="'Checklist'" [listIcon]="true"></app-component-dynamic-heading>
+<div class="container">
+    <ng-container>
+        <div class="d-flex justify-content-between pt-3 pb-3">
+            <div class="d-flex">
+                <div>
+                    <!-- <img src="../../../../assets/images/receptionist/Image 5@2x.jpg"> -->
+                </div>
+
+                <div *ngIf="selectedVisit" class="px-2 d-flex flex-column justify-content-center" style="height: 60px;">
+                    <p class="m-0 roboto-medium-20 blue-text">{{
+                        selectedVisit.$expanded.recipient_fname+"&nbsp;"+selectedVisit.$expanded.recipient_lname
+                        }}</p>
+                    <p class="m-0 roboto-regular-18">dose #{{doseInSeries}}</p>
+                </div>
+            </div>
+            <div *ngIf="selectedVisit">
+                <h4 class="m-0 roboto-medium-20">{{ selectedVisit.start_time | date:'EEEE, d-MMMM-y' }}</h4>
+                <small class="roboto-regular-12">Appoinment time </small>
+                <small class="roboto-medium-14">{{ selectedVisit.start_time | date:'h:mm a' }}</small>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="py-2 d-flex justify-content-between" *ngIf="isCheckList && type==='start' ; else viewOnly">
+        <button type="button" class="btn btn-primary px-4" (click)="isCheckList = false;">Edit</button>
+        <button type="button" class="btn btn-success mr-2" [disabled]="!this.checkListForm.valid" (click)="checkListFormSub()">Confirm</button>
+    </div>
+
+    <ng-template #viewOnly>
+        <button *ngIf="isCheckList === true " type="button" class="btn btn-primary px-4"
+            routerLink="'/receptionist/schedule'">Cancel</button>
+    </ng-template>
+
+    <div *ngIf="isCheckList ; else edit">
+        <div class="border left-border p-3 mb-3" *ngFor="let check of checkList">
+            <p class="text-muted m-0 roboto-regular-14">{{check.question_text}}</p>
+            <p class="text-bolt m-0 roboto-regular-19">{{!!check.answers ? check.answers[0]: ''}}</p>
+        </div>
+    </div>
+
+    <hr />
+    <ng-template class="container" #edit>
+        <div class="py-2 d-flex justify-content-between">
+            <!-- [disabled]="checkList.length==0" -->
+            <!-- isCheckList = true; -->
+            <button type="button"  class="btn btn btn-outline-secondary px-4"
+                (click)="_location.back()">Cancel</button>
+                <button type="button" *ngIf="this.checkListForm.valid" [disabled]="!this.checkListForm.valid" class="btn btn-success mr-2"
+                (click)="checkListFormSub()">Save &
+                Confirm</button>
+                <button type="button" *ngIf="!this.checkListForm.valid" class="btn btn-success mr-2"
+                (click)="checkInVisitStatus()">Skip &
+                Confirm</button>
+        </div>
+
+        <form [formGroup]="checkListForm">
+            <div class="container">
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">1. Are you feeling sick today?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques1">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques1">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">2. Have you ever received a dose of COVID-19 vaccine?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques2">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques2">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">3. If yes, which vaccine product</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="text" style="width:300px;" formControlName="ques3" class="form-control"
+                                placeholder="Enter text here">
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">4. Have you ever had a severe allergic reaction (e.g. anaphylaxis)
+                        to
+                        something? For example, a reaction for which you were treated with epinephrine or EpiPen or fow
+                        which
+                        you
+                        had to go to the hospital?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques4">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques4">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">5. Have you received passive antibody therapy (monoclonal
+                        antibodies
+                        or convalescent serum) ass treatment for COVID-19?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques5">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques5">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">6. Have you received another Vaccine in the last 14 days?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques6">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques6">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">7. Have you had a positive test for COVID-19 or has a doctor ever
+                        told you that you had COVID- 19?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques7">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques7">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">8. Do you have a weakened Immune system caused by something such
+                        as
+                        HV infection or cancer or do you take immunosuppressive drugs or therapies?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques8">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques8">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">9. Do you have a bleeding disorder or are you taking a blood
+                        thinner?
+                    </p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques9">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques9">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom-border mb-3">
+                    <p class=" mb-3 roboto-medium-20">10. Are you pregnant or breastfeeding?</p>
+                    <ul style="list-style-type: none; padding-left: 20px;">
+                        <li>
+                            <input type="radio" value="yes" formControlName="ques10">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">Yes</span>
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                            <input type="radio" value="no" formControlName="ques10">&nbsp;&nbsp;<span
+                                class="roboto-regular-14">No</span>
+                        </li>
+                    </ul>
+                </div> -->
+
+                <!-- <div>
+                    <button [disabled]="!checkListForm.valid" type="submit" class="btn btn-primary mb-4">Check In</button>
+                </div> -->
+            </div>
+        </form>
+
+        <!-- <div class="border left-border p-3 mb-3" *ngFor="let check of checkList;let i=index">
+            <p class="text-muted m-0 roboto-regular-14">{{check.question_text}}</p>
+            <div class="d-flex align-items-center">
+                <div class="form-check mr-2">
+                    <input class="form-check-input" [(ngModel)]="check.answers[0]" type="radio" [name]="i" value="Yes">
+                    <label class="form-check-label text-bold">
+                        Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" [(ngModel)]="check.answers[0]" type="radio" [name]="i" value="No">
+                    <label class="form-check-label text-bold">
+                        No
+                    </label>
+                </div>
+            </div>
+        </div> -->
+    </ng-template>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>
+<div *ngIf="selectedVisit" class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h3 class="text-dark" id="exampleModalLabel">Start Appointment</h3>
+                <p class="text-muted">Are you sure want to start the  {{selectedVisit.start_time | date:'h:mm a'}}
+                    appointment, If yes please
+                    Validate ID and Start Appointment</p>
+                <div class="form-group mr-2">
+                    <select class="form-control" [(ngModel)]="selectedOption">
+                        <!-- <option value="" selected>Recipient Identification Type</option> -->
+                        <option value="" selected>Validated</option>
+                        <option value="Passport">Passport</option>
+                        <option value="Driving Lisence">Drivers License</option>
+                        <option value="State ID">State ID</option>
+                        <option value="Bill/Mail">Bill/Mail</option>
+                        <option value="No ID">No ID</option>
+                    </select>
+                </div>                  
+              </div>
+            <div class="modal-footer p-0 m-0 d-flex justify-content-between">
+                <button data-dismiss="modal" aria-label="Close" type="button"
+                    class="btn  px-5 shadow-none">Cancel</button>
+                 <!-- <button data-dismiss="modal" aria-label="Close" type="button" class="btn  px-5 shadow-none"
+                    [routerLink]="['/receptionist/schedule']"
+                    [disabled]="selectedOption.trim()==''">Start</button>  -->
+                    <button data-dismiss="modal" aria-label="Close"  type="button" (click)="identificationData()" class="btn  px-5 shadow-none"
+                    >Start</button>
+                    <!-- [disabled]="selectedOption.trim()==''" -->
+
+                    
+            </div>
+        </div>
+    </div>
+</div>

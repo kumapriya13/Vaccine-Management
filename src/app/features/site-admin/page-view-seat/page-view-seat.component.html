@@ -1,0 +1,135 @@
+<app-component-dynamic-heading [heading]="'Site Schedule'" [refererClick]="true"></app-component-dynamic-heading>
+
+<div class="container" id="site-recp-list">
+    <div *ngIf="routedSeat">
+        <h5><b>Scheduled for -</b> {{routedSeat.id}}</h5>
+    </div>
+    <div class="d-flex align-items-center justify-content-between py-3 table-action-strip">
+        <!-- <div class="d-flex align-items-center">
+            <mat-form-field class="search-form-field" appearance="outline">
+                <mat-label>Search</mat-label>
+                <input matInput #searchInput />
+                <button mat-button *ngIf="searchInput.value.trim() != ''" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="searchInput.value = ''; applyFilter(searchInput)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3">
+                Filter
+            </button>
+        </div> -->
+        <div class="d-flex align-items-center">
+            <form class="mr-3">
+                <mat-form-field appearance="outline">
+                    <input matInput [matDatepicker]="picker1" [formControl]="dateCon" (dateChange)="loadSeat()">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </form>
+            <div class="d-flex ml-3">
+                <p *ngIf="startOfWeek" class="roboto-medium-18 m-0" style="color: #1e8ee9; font-size: 20px">
+                    <b>Scheduled Date :</b> {{startOfWeek | date }} - {{endOfWeek | date }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between py-3">
+        <!-- <div class="d-flex">
+            <p *ngIf="startOfWeek" class="roboto-medium-18 m-0" style="color: #1e8ee9; font-size: 20px">
+                Schedule Date : {{startOfWeek | date }} - {{endOfWeek | date }}
+            </p>
+        </div> -->
+        <!-- <div class="d-flex flex-grow-1 mx-4">
+            <p class="roboto-medium-18 m-0" style="color: #1e8ee9; font-size: 20px">
+
+            </p>
+        </div> -->
+        <div class="w-100 d-flex">
+
+            <button mat-stroked-button class="booked-btn p-0 p-1">
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="m-0">BOOKED </p>
+                    <p class="m-0"> ({{countBooked}})</p>
+                </div>
+                <hr class="inner-book-line my-1"/>
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="m-0">Completed:{{countCompleted}}</p>
+                    <p class="m-0"> Checked In :{{countObservation}}</p>
+                    <p class="m-0">Upcoming:{{countUpcoming}}</p>
+                </div>
+                <!-- <button>Checked In ({{countObservation}})</button> -->
+                <!-- <button>Upcoming ({{countUpcoming}})</button> -->
+            </button>
+
+
+         
+            <button mat-stroked-button class="open mx-5">OPEN ({{countOpen}})</button>
+            <button mat-stroked-button class="missed">MISSED ({{countMissed}})</button>
+           </div>
+        
+    </div>
+    <hr />
+    <div class="py-4">
+
+    </div>
+    <!-- <div class="d-flex justify-content-between pl-2">
+        <span class="rounded-circle border blue-2-bg left-arrow white-text" (click)="table.scrollBy(-200, 0);"><i
+                class="fa fa-chevron-left" aria-hidden="true"></i></span>
+        <span class="rounded-circle border blue-2-bg right-arrow white-text" (click)="table.scrollBy(200, 0);"><i
+                class="fa fa-chevron-right" aria-hidden="true"></i></span>
+    </div> -->
+    <div class="table-responsive overflow-hidden" #table>
+        <table class="table">
+            <thead class="table-head">
+                <tr>
+                    <th>
+                        <button mat-stroked-button class="time-slot">Slot Time</button>
+                    </th>
+                    <th *ngFor="let day of weekDays">
+                        <button mat-stroked-button class="public">{{day}}</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-body">
+                <tr *ngFor="let renderItem of finalRenderDataArr">
+                    <td>
+                        <button mat-stroked-button>{{renderItem.slot_time}}</button>
+                    </td>
+                    <td *ngFor="let renderDayItem of renderItem.days">
+                        <ng-container
+                            *ngIf="renderDayItem['slot'] && renderDayItem['slot']['seatsArr'] && renderDayItem['slot']['seatsArr'][0] && renderDayItem['slot']['seatsArr'][0]['data']; else showNa">
+                            <!-- ({{renderDayItem['slot']['seatsArr'][0]['data'].time_diff}}min) -->
+                            <button *ngIf="renderDayItem['slot']['seatsArr'][0]['data'].status=='booked'"
+                                mat-stroked-button
+                                (click)="showAppointment(renderDayItem)"
+                                class="booked">{{getTicketLabel(renderDayItem['slot']['seatsArr'][0]['data'].ticket_number,renderDayItem['slot']['seatsArr'][0]['data'])}} 
+                            </button>
+                            <button *ngIf="renderDayItem['slot']['seatsArr'][0]['data'].status=='open'"
+                                mat-stroked-button
+                                (click)="showAppointment(renderDayItem)"
+                                 class="open">{{renderDayItem['slot']['seatsArr'][0]['data'].status}} 
+                            </button>
+                            <button *ngIf="renderDayItem['slot']['seatsArr'][0]['data'].status=='missed'"
+                                mat-stroked-button
+                                (click)="showAppointment(renderDayItem)"
+                                class="missed">{{renderDayItem['slot']['seatsArr'][0]['data'].ticket_number}} 
+                            </button>
+                        </ng-container>
+                        <ng-template #showNa>
+                            <button mat-stroked-button>NA</button>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-between pl-2 pb-4 arrow">
+        <span class="rounded-circle border blue-2-bg left-arrow white-text" (click)="table.scrollBy(-200, 0);"><i
+                class="fa fa-chevron-left" aria-hidden="true"></i></span>
+        <span class="rounded-circle border blue-2-bg right-arrow white-text" (click)="table.scrollBy(200, 0);"><i
+                class="fa fa-chevron-right" aria-hidden="true"></i></span>
+    </div>
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>
+<app-component-dynamic-model></app-component-dynamic-model>

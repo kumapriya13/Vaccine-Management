@@ -1,0 +1,23 @@
+.filter-btn {
+  width: 135px !important;
+  height: 37px !important;
+}
+:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  // border: 0 !important;
+  padding: 0.4em 0px !important;
+  padding-bottom: 0.6em !important;
+}
+.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+.mat-form-field-wrapper {
+  padding: 0 !important;
+}
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+.tr:nth-child(odd){
+  background-color: #198be7 !important;
+}

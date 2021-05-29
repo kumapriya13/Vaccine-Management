@@ -1,0 +1,143 @@
+<!-- header here -->
+<div class="body">
+    <header>
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-md-12 forMob">
+                    <div class="topText">
+                        <a [routerLink]="'/recipient/help'" [routerLinkActive]="'active'"
+                           title="Vaccine Provider">Help</a>
+                    </div>
+                </div> -->
+                <div class="col-md-2">
+                    <!-- company logo here -->
+                    <div class="logoArea">
+                        <img src="{{ logo }}" style="
+                                width: 130px !important;
+                                height: auto !important;
+                            " alt="logo - 21-20 All Clear" [routerLink]="
+                                                        '/site-admin/dashboard'
+                                                    " />
+                        <div class="hamBtn">
+                            <a><i class="fa fa-align-justify"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="rightTop">
+                        <!-- right navigation menu here -->
+                        <div class="topText">
+                            <a [routerLink]="'/site-admin/help'" [routerLinkActive]="'active'"
+                                title="site-admin">&nbsp;</a>
+                            <!-- help -->
+                        </div>
+
+                        <div class="navigationBtm">
+                            <ul>
+                                <li *ngIf="isFromProviderSite">
+                                    <a [routerLink]="['/provider/site']" [routerLinkActive]="'active'" title="Home"><i
+                                            class="fa fa-arrow-left"></i></a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="'/site-admin/dashboard'" [routerLinkActive]="'active'"
+                                        title="Home">Home</a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="'/site-admin/list-seat'" [routerLinkActive]="'active'"
+                                        title="Seats">Seats</a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="
+                                            '/site-admin/list-vaccine'
+                                        " [routerLinkActive]="'active'" title="Vaccine">Vaccine</a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="
+                                            '/site-admin/list-vaccinator'
+                                        " [routerLinkActive]="'active'" title="Vaccinator">Vaccinator</a>
+                                </li>
+                                <!-- <li><a [routerLink]="'/site-admin/manage-calender'" [routerLinkActive]="'active'" title="Calender">Calender</a></li> -->
+                                <!-- <li><a [routerLink]="'/site-admin/vaccination'" [routerLinkActive]="'active'" title="Vaccination">Vaccination</a></li> -->
+                                <li>
+                                    <a [routerLink]="
+                                            '/site-admin/list-receptionist'
+                                        " [routerLinkActive]="'active'" title="Vaccinator">Receptionist</a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="'/site-admin/appointment'" [routerLinkActive]="'active'"
+                                        title="Appointment">Appointment</a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="
+                                            '/site-admin/dailysite'
+                                        " [routerLinkActive]="'active'" title="dailysite">Daily Site Vaccination</a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="
+                                            '/site-admin/notification-setting'
+                                        " [routerLinkActive]="'active'" title="Appointment">Notification</a>
+                                </li>
+                                <li><a [routerLink]="'/site-admin/analytics'" [routerLinkActive]="'active'"
+                                        title="Analytics">Analytics</a></li>
+                                <!-- <li><a [routerLink]="'/about-us'" [routerLinkActive]="'active'" title="About Us">About Us</a></li> -->
+                                <!-- <li>
+                                    <a><i class="fa fa-bell-o" style="font-size: 20px"></i></a>
+                                </li> -->
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"
+                                        style="color: #0984e3">
+                                        <i class="fa fa-user-circle-o" style="
+                                                font-size: 20px;
+                                                color: #0984e3;
+                                            "></i>
+                                    </a>
+                                    <div class="dropdown-menu p-2">
+                                        <ul>
+                                            <li class="ml-0 px-1">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="
+                                                        '/auth/admin-my-profile'
+                                                    " [routerLinkActive]="
+                                                        'active'
+                                                    " title="My Profile"><i class="fa fa-user-circle-o"></i>&nbsp; My
+                                                    Profile</a>
+                                            </li>
+                                            <li class="ml-0 px-3">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="
+                                                        '/site-admin/dashboard'
+                                                    " [routerLinkActive]="
+                                                        'active'
+                                                    " title="Dashboard">&nbsp; Dashboard</a>
+                                            </li>
+                                            <li class="ml-0 pl-3" *ngIf="
+                                                    userDetails$ | async as user
+                                                ">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="[
+                                                        '/auth/admin-change-password'
+                                                    ]" [routerLinkActive]="
+                                                        'active'
+                                                    " title="Change password">&nbsp;&nbsp;Change&nbsp;password</a>
+                                            </li>
+                                            <!-- <li class="ml-0 px-1">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="
+                                                        '/site-admin/site-setting'
+                                                    " [routerLinkActive]="
+                                                        'active'
+                                                    " title="Site Settings"><i class="fa fa-cog"></i>&nbsp; Site
+                                                    Settings</a>
+                                            </li> -->
+                                            <li class="ml-0 px-4">
+                                                <a class="p-0 pb-1 mb-2" (click)="logout()" title="Logout">Logout</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

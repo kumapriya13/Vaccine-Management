@@ -1,0 +1,560 @@
+<app-component-vaccinator-header></app-component-vaccinator-header>
+<app-component-dynamic-heading [heading]="vaccinatorDetails.fname+' '+vaccinatorDetails.lname+' (Vaccinator) Your Today\'s Appointments'"></app-component-dynamic-heading>
+<div class="container-fluid">
+    <div class="py-3" >
+        <!-- <div class="d-flex justify-content-between backgd text-light mb-5" style="height: 139px;">
+            <div class="p-4 w-75">
+                <h1 class="m-0 roboto-medium-24">Welcome {{ vaccinatorDetails.fname }} {{ vaccinatorDetails.lname }}
+                    <span class="roboto-medium-24">, Your Today's Appointments &nbsp;(Vaccinator)</span>
+
+                </h1>
+                <hr class="bg-light mb-2" />
+                <h1 class="m-0">
+                    <span class="roboto-regular-24"
+                        *ngIf="vaccinatorDetails">{{vaccinatorDetails.$expanded.sites[0].site_name}} </span>
+                    
+                </h1>
+            </div>
+            <img class="mr-5" src="../../../../assets/images/vaccinator/Group 52521.svg" />
+        </div> -->
+        <div class="container" id="vacc-list">
+
+            <div class="d-flex align-items-center justify-content-between" >       
+                <select class="form-control" style="width: 250px;" id="site" name="site" (change)="siteChanged($event.target.value)"
+                  [(ngModel)]="selectedSiteId">
+                       <option *ngFor="let data of sites; let j = index" [value]="data.site_id">                    
+                        {{data.site_name}}
+                       </option>
+                </select>
+            </div>
+            
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center pt-3 pb-3">
+                    <h5 class="appointment-hed-text roboto-medium-20">Appointments</h5>
+                    <h5 class="appointment-hed-text roboto-medium-20 px-3">|</h5>
+                    <h5 class="appointment-hed-text roboto-regular-20">{{todayDate | date:'EEEE, dd-MMMM-yyyy'}}</h5>
+                </div>
+
+
+                <div class="d-flex align-items-center">
+
+                    <mat-form-field appearance="outline" class="search-form-field ml-1">
+                        <mat-label>Search By Recipient/Survey Id</mat-label>
+                        <input matInput [(ngModel)]="searchInput" name="filter"
+                        (keyup.enter)="filterList(searchInput,false);"
+                        (keyup)="checkIFBlankLoadData(searchInput,true)"/>
+                        <button mat-button *ngIf="searchInput" matSuffix mat-icon-button
+                            aria-label="Clear" (click)="(searchInput='');filterList(searchInput,false);">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+
+                    <div class="pb-3">
+                        <button class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3 filter-btn"
+                            (click)="filterList(searchInput,false)">Filter</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <!-- {{currentTab | json}} -->
+            <div class="d-flex my-0 py-0 justify-content-center">
+                <ul class="nav my-0 nav-pills d-flex w-100" id="myTab" role="tablist">
+
+                    <li *ngFor="let tab of tabs" class="nav-item m-0 h-100 w-25">
+                        <a [ngClass]="{'active': tab.status=='active'}" class="nav-link roboto-medium-18"
+                            (click)="tabActive(tab)" data-toggle="tab" href="#{{tab.href}}" role="tab"
+                            [attr.aria-controls]="tab.href" aria-selected="false">
+                            {{tab.name}} ({{ tab.total }})
+                        </a>
+                    </li>
+
+                    <!-- <li class="nav-item m-0 h-100 w-25">
+                        <a class="nav-link roboto-medium-18" data-toggle="tab" href="#upcoming" role="tab" aria-controls="upcoming" aria-selected="true">
+                            Upcoming({{ upcomingList.length }})
+                        </a>
+                    </li>
+                    <li class="nav-item m-0 h-100 w-25">
+                        <a class="nav-link active roboto-medium-18" data-toggle="tab" href="#checkedin" role="tab" aria-controls="checkedin" aria-selected="false">
+                            Checked-in({{ checkedInList.length }})
+                        </a>
+                    </li>
+                    <li class="nav-item m-0 h-100 w-25">
+                        <a class="nav-link roboto-medium-18" data-toggle="tab" href="#observation" role="tab" aria-controls="observation" aria-selected="false">
+                            Observation({{ observationList.length }})
+                        </a>
+                    </li>
+                    <li class="nav-item m-0 h-100 w-25">
+                        <a class="nav-link roboto-medium-18" data-toggle="tab" href="#completed" role="tab" aria-controls="completed" aria-selected="false">
+                            Completed({{ completedList.length }})
+                        </a>
+                    </li> -->
+
+
+                </ul>
+            </div>
+
+            <div class="tab-content my-0" id="myTabContent">
+
+                <div *ngIf="currentTab && currentTab.href=='upcoming'"
+                    [ngStyle]="{'display':currentTab.href=='upcoming' ? 'block': 'none'}" 
+                    class="tab-pane" id="upcoming" role="tabpane2" aria-labelledby="upcoming">
+                    <table class="table  text-center" *ngIf="upcomingList.length>0">
+                        <thead>
+                            <tr>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Time</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Recipient</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">DOB</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Dose</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Seat</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;name&nbsp;</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Survey&nbsp;Id</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Vaccine</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;Admin</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let upcomingListItem of upcomingList;"
+                                (click)="setVisitRowToLocalStorage(upcomingListItem,upcomingListItem.id,'start')">
+                                <td class="txt text-left" style="width: 15%;">
+                                    <span class="roboto-medium-16">{{ upcomingListItem.start_time |
+                                        date:'hh:mm a'}}</span>
+                                </td>
+                                <td class="text-left" width="25%">
+                                    <div class="d-flex align-items-center">
+                                        <!-- <img src="../../../../assets/images/vaccinator/Image 5.png"> -->
+                                        <p class="txt roboto-medium-16 m-0 ml-1">{{
+                                            upcomingListItem.$expanded.recipient_fname+"&nbsp;"+upcomingListItem.$expanded.recipient_lname
+                                            }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    <span *ngIf="upcomingListItem.$expanded.recipient_dob != '1900-01-01'">
+                                        {{ upcomingListItem.$expanded.recipient_dob|formatDate }}
+                                    </span>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    {{ upcomingListItem.dose_in_series }}
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    {{ upcomingListItem.$expanded.seat_name }}
+                                </td>
+
+                                <!-- <td class="roboto-regular-16 txt">{{ upcomingListItem.$expanded.site_name }}</td> -->
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ upcomingListItem.ticket_number }}
+                                </td>
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ upcomingListItem.$expanded.vaccine }}
+                                </td>
+                                <!-- <td class="roboto-regular-16 txt">Chandler</td> -->
+                                <td class="txt d-flex align-items-center justify-content-start roboto-regular-16 cursor-pointer">
+                                    <!-- <span class="badge badge-blue mx-2">Walk-in</span> -->
+                                    <!-- <div class="roboto-regular-14 cursor-pointer"
+                                        [routerLink]="['/vaccinator/view-recepient',upcomingListItem.recipient_id]">
+                                        <i class="fa fa-pencil"></i>&nbsp;View
+                                    </div> -->
+                                    <div class="mx-2 my-2 cursor-pointer"
+                                        (click)="showAppointment(upcomingListItem,$event)">
+                                         <i class="fa fa-eye"></i>
+                                      </div>
+                                      <div class="mx-2 my-2 cursor-pointer"
+                                        [routerLink]="['/vaccinator/view-recepient',upcomingListItem.recipient_id]">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between">
+                        <!-- <small class="text-muted roboto-regular-12">
+                            Showing {{(pageIndex -1) * pageLength + 1}} to {{currentTab.total > (pageLength * pageIndex)
+                            ?(pageLength *
+                            pageIndex)
+                            : totalCount }} of {{totalCount}}
+                            entries</small> -->
+                        <ngb-pagination *ngIf="currentTab && currentTab.total" class="ml-auto" (pageChange)="onPageChange($event)" [page]="pageIndex"
+                            [pageSize]="pageLength" [collectionSize]="currentTab.total"></ngb-pagination>
+                    </div>
+                </div>
+
+                <div *ngIf="currentTab && currentTab.href=='checkedin'"
+                    [ngStyle]="{'display':currentTab.href=='checkedin' ? 'block': 'none'}" class="tab-pane active"
+                    id="checkedin" role="tabpane2" aria-labelledby="checkedin">
+
+                    <table class="table  text-center" *ngIf="checkedInList.length>0">
+                        <thead>
+                            <tr>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Time</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Recipient</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">DOB</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Dose</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Seat</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;name</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Survey&nbsp;Id</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Vaccine</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;Admin</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let checkedInItem of checkedInList;"
+                                (click)="setVisitRowToLocalStorage(checkedInItem,checkedInItem.id,'start',checkedInItem?.id_validation)">
+                                <td class="txt text-left" style="width: 15%;">
+                                    <span class="roboto-medium-16">{{ checkedInItem.start_time |
+                                        date:'hh:mm a'}}</span>
+                                </td>
+                                <td class="text-left" width="25%">
+                                    <div class="d-flex align-items-center">
+                                        <!-- <img src="../../../../assets/images/vaccinator/Image 5.png"> -->
+                                        <p class="txt roboto-medium-16 m-0 ml-1">{{
+                                            checkedInItem.$expanded.recipient_fname+"&nbsp;"+checkedInItem.$expanded.recipient_lname
+                                            }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    <span *ngIf="checkedInItem.$expanded.recipient_dob != '1900-01-01'">
+                                        {{ checkedInItem.$expanded.recipient_dob|formatDate }}
+                                    </span>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    {{ checkedInItem.dose_in_series }}
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    {{ checkedInItem.$expanded.seat_name }}
+                                </td>
+
+
+                                <!-- <td class="roboto-regular-16 txt">{{ checkedInItem.$expanded.site_name }}</td> -->
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ checkedInItem.ticket_number }}
+                                </td>
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ checkedInItem.$expanded.vaccine }}
+                                </td>
+                                <!-- <td class="roboto-regular-16 txt">Chandler</td> -->
+                                <td class="txt d-flex align-items-center justify-content-start roboto-regular-16 cursor-pointer">
+                                    <!-- <span class="badge badge-blue mx-2">Walk-in</span> -->
+                                    <!-- <div class="roboto-regular-14 cursor-pointer mr-2"
+                                        (click)="setVisitRowToLocalStorage(checkedInItem,checkedInItem.id,'checkedin')">
+                                        <i class="fa fa-pencil-square-o"></i>&nbsp;checklist
+                                    </div> -->
+                                    <!-- <div class="roboto-regular-14 cursor-pointer ml-2"
+                                        [routerLink]="['/vaccinator/view-recepient',checkedInItem.recipient_id]">
+                                        <i class="fa fa-eye"></i>&nbsp;View
+                                    </div> -->
+                                    <div class="mx-2 my-2 cursor-pointer"
+                            (click)="showAppointment(checkedInItem,$event)">
+                            <i class="fa fa-eye"></i> 
+                        </div>
+                        <div class="mx-2 my-2 cursor-pointer"
+                                        [routerLink]="['/vaccinator/view-recepient',checkedInItem.recipient_id]">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between">
+                        <!-- <small class="text-muted roboto-regular-12">
+                            Showing {{(pageIndex -1) * pageLength + 1}} to {{currentTab.total > (pageLength * pageIndex)
+                            ?(pageLength *
+                            pageIndex)
+                            : totalCount }} of {{totalCount}}
+                            entries</small> -->
+                        <ngb-pagination *ngIf="currentTab && currentTab.total" class="ml-auto" (pageChange)="onPageChange($event)" [page]="pageIndex"
+                            [pageSize]="pageLength" [collectionSize]="currentTab.total"></ngb-pagination>
+                    </div>
+                </div>
+
+                <div *ngIf="currentTab && currentTab.href=='observation'"
+                    [ngStyle]="{'display':currentTab.href=='observation' ? 'block': 'none'}" class="tab-pane"
+                    id="observation" role="tabpane3" aria-labelledby="observation">
+                    <!-- {{observationList | json }} -->
+                    <table class="table" *ngIf="observationList.length>0">
+                        <thead>
+                            <tr>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Time</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Recipient</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">DOB</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Dose</th>
+                                <th class="roboto-regular-18 blue-bg white-text">Seat</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;name</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Survey&nbsp;Id</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Vaccine</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;Admin</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let observationItem of observationList;"
+                                (click)="setVisitRowToLocalStorageForObservation(observationItem)">
+                                <td class="txt text-left" width="15%;">
+                                    <span class="roboto-medium-16">{{ observationItem.start_time |
+                                        date:'hh:mm a'}}</span>
+                                </td>
+                                <td class="text-left" width="25%">
+                                    <div class="d-flex align-items-center">
+                                        <!-- <img src="../../../../assets/images/vaccinator/Image 5.png"> -->
+                                        <p class="txt roboto-medium-16 m-0 ml-1">{{
+                                            observationItem.$expanded.recipient_fname+"&nbsp;"+observationItem.$expanded.recipient_lname
+                                            }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    <span *ngIf="observationItem.$expanded.recipient_dob != '1900-01-01'">
+                                        {{ observationItem.$expanded.recipient_dob|formatDate }}
+                                    </span>
+                                </td>
+
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ observationItem.dose_in_series }}
+                                </td>
+                                <td class="roboto-regular-16 txt">
+                                    {{ observationItem.$expanded.seat_name }}
+                                </td>
+                                <!-- <td class="roboto-regular-16 txt">{{ observationItem.$expanded.site_name }}</td> -->
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ observationItem.ticket_number }}
+                                </td>
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ observationItem.$expanded.vaccine }}
+                                </td>
+                                <!-- <td class="roboto-regular-16 txt">Chandler</td> -->
+                                <td class="txt d-flex align-items-center justify-content-start roboto-regular-16 cursor-pointer">
+                                    <!-- <div class="mx-3 text-left" style="width: 360px;">
+                                <span class="badge badge-danger mx-3" [routerLink]="['/vaccinator/advert-event', observationItem.id]">Report an adverse reaction</span>
+                            </div> -->
+                                    <!-- <div class="roboto-regular-14 cursor-pointer"
+                                        [routerLink]="['/vaccinator/view-recepient',observationItem.recipient_id]">
+                                        <i class="fa fa-eye"></i>&nbsp;View
+                                    </div> -->
+                                    <div class="mx-2 my-2 cursor-pointer"
+                                    (click)="showAppointment(observationItem,$event,{'action':'cancelappointment',status: false})">
+                            <i class="fa fa-eye"></i> View
+                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between">
+                        <!-- <small class="text-muted roboto-regular-12">
+                            Showing {{(pageIndex -1) * pageLength + 1}} to {{currentTab.total > (pageLength * pageIndex)
+                            ?(pageLength *
+                            pageIndex)
+                            : totalCount }} of {{totalCount}}
+                            entries</small> -->
+                        <ngb-pagination *ngIf="currentTab.total" class="ml-auto" (pageChange)="onPageChange($event)" [page]="pageIndex"
+                            [pageSize]="pageLength" [collectionSize]="currentTab.total"></ngb-pagination>
+                    </div>
+                </div>
+
+                <div *ngIf="currentTab && currentTab.href=='completed'"
+                    [ngStyle]="{'display':currentTab.href=='completed' ? 'block': 'none'}" class="tab-pane"
+                    id="completed" role="tabpanel" aria-labelledby="completed">
+                    <table class="table  text-center" *ngIf="completedList.length>0">
+                        <thead>
+                            <tr>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Time</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left px-3">Recipient</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">DOB</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Dose</th>
+                                <th class="roboto-regular-18 blue-bg white-text">Seat</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;name</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Survey&nbsp;Id</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Vaccine</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;Admin</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let completedItem of completedList;" data-toggle="modal">
+                                <td class="txt text-left" style="width: 15%;">
+                                    <span class="roboto-medium-16">{{ completedItem.start_time |
+                                        date:'hh:mm a'}}</span>
+                                </td>
+                                <td class="text-left" width="25%">
+                                    <div class="d-flex align-items-center">
+                                        <!-- <img src="../../../../assets/images/vaccinator/Image 5.png"> -->
+                                        <p class="txt roboto-medium-16 m-0 ml-1">{{
+                                            completedItem.$expanded.recipient_fname+"&nbsp;"+completedItem.$expanded.recipient_lname
+                                            }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    <span *ngIf="completedItem.$expanded.recipient_dob != '1900-01-01'">
+                                        {{ completedItem.$expanded.recipient_dob|formatDate }}
+                                    </span>
+                                </td>
+
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ completedItem.dose_in_series }}
+                                </td>
+                                <td class="roboto-regular-16 txt">
+                                    {{ completedItem.$expanded.seat_name }}
+                                </td>
+                                <!-- <td class="roboto-regular-16 txt">{{ completedItem.$expanded.site_name }}</td> -->
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ completedItem.ticket_number }}
+                                </td>
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ completedItem.$expanded.vaccine }}
+                                </td>
+                                <!-- <td class="roboto-regular-16 txt">Chandler</td> -->
+                                <td class="txt d-flex align-items-center justify-content-start roboto-regular-16 cursor-pointer">
+                                    <!-- <div class="mx-3 text-left" style="width: 200px;">
+                                <span class="badge badge-blue mx-3">Walk-in</span>
+                            </div> -->
+                                    <!-- <div class=" text-left roboto-regular-14 cursor-pointer mr-2"
+                                        (click)="setVisitRowToLocalStorage(completedItem, completedItem.id,'completed')">
+                                        <i class="fa fa-pencil-square-o"></i>&nbsp;checklist
+                                    </div> -->
+                                    <!-- <div class="roboto-regular-14 cursor-pointer ml-2"
+                                        [routerLink]="['/vaccinator/view-recepient',completedItem.recipient_id]">
+                                        <i class="fa fa-eye"></i>&nbsp;View
+                                    </div> -->
+                                    <div class="mx-2 my-2 cursor-pointer"
+                            (click)="showAppointment(completedItem,$event)">
+                            <i class="fa fa-eye"></i> View
+                        </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between">
+                        <!-- <small class="text-muted roboto-regular-12">
+                            Showing {{(pageIndex -1) * pageLength + 1}} to {{currentTab.total > (pageLength * pageIndex)
+                            ?(pageLength *
+                            pageIndex)
+                            : totalCount }} of {{totalCount}}
+                            entries</small> -->
+                        <ngb-pagination *ngIf="currentTab && currentTab.total" class="ml-auto" (pageChange)="onPageChange($event)" [page]="pageIndex"
+                            [pageSize]="pageLength" [collectionSize]="currentTab.total"></ngb-pagination>
+                    </div>
+                </div>
+
+                <div *ngIf="currentTab && currentTab.href=='missed'"
+                    [ngStyle]="{'display':currentTab.href=='missed' ? 'block': 'none'}" class="tab-pane" id="missed"
+                    role="tabpane2" aria-labelledby="missed">
+                    <table class="table  text-center" *ngIf="missedList.length>0">
+                        <thead>
+                            <tr>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Time</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Recipient</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">DOB</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Dose</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Seat</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;name&nbsp;</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Survey&nbsp;Id</th>
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Vaccine</th>
+                                <!-- <th class="roboto-regular-18 blue-bg white-text">Site&nbsp;Admin</th> -->
+                                <th class="roboto-regular-18 blue-bg white-text text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let missedListItem of missedList;"
+                                (click)="setVisitRowToLocalStorage(missedListItem,missedListItem.id,'start')"
+                               >
+                                <td class="txt text-left" style="width: 15%;">
+                                    <span class="roboto-medium-16">{{ missedListItem.start_time |
+                                        date:'hh:mm a'}}</span>
+                                </td>
+                                <td class="text-left" width="25%">
+                                    <div class="d-flex align-items-center">
+                                        <!-- <img src="../../../../assets/images/vaccinator/Image 5.png"> -->
+                                        <p class="txt roboto-medium-16 m-0 ml-1">{{
+                                            missedListItem.$expanded.recipient_fname+"&nbsp;"+missedListItem.$expanded.recipient_lname
+                                            }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    <span *ngIf="missedListItem.$expanded.recipient_dob != '1900-01-01'">
+                                        {{ missedListItem.$expanded.recipient_dob|formatDate }}
+                                    </span>
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    {{ missedListItem.dose_in_series }}
+                                </td>
+                                <td class="roboto-regular-16 txt text-left">
+                                    {{ missedListItem.$expanded.seat_name }}
+                                </td>
+
+                                <!-- <td class="roboto-regular-16 txt">{{ upcomingListItem.$expanded.site_name }}</td> -->
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ missedListItem.ticket_number }}
+                                </td>
+                                <td class="roboto-regular-16 text-left txt">
+                                    {{ missedListItem.$expanded.vaccine }}
+                                </td>
+                                <!-- <td class="roboto-regular-16 txt">Chandler</td> -->
+                                <td class="txt d-flex align-items-center justify-content-start roboto-regular-16 cursor-pointer">
+                                    <!-- <span class="badge badge-blue mx-2">Walk-in</span> -->
+                                    <div class="mx-2 my-2 cursor-pointer"
+                                    (click)="showAppointment(missedListItem,$event)">
+                                        <i class="fa fa-eye"></i>&nbsp;View
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between">
+                        <!-- <small class="text-muted roboto-regular-12">
+                            Showing {{(pageIndex -1) * pageLength + 1}} to {{currentTab.total > (pageLength * pageIndex)
+                            ?(pageLength *
+                            pageIndex)
+                            : totalCount }} of {{totalCount}}
+                            entries</small> -->
+                        <ngb-pagination *ngIf="currentTab && currentTab.total" class="ml-auto" (pageChange)="onPageChange($event)" [page]="pageIndex"
+                            [pageSize]="pageLength" [collectionSize]="currentTab.total"></ngb-pagination>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 1 -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h3 class="text-dark" id="exampleModalLabel">Start Appointment</h3>
+                <p class="text-muted">Are you sure want to start the {{currentVisitRow.start_time|date:'hh:mm a'}}
+                    appointment, If yes please Validate ID and Start Appointment</p>
+                <div class="form-group mr-2">
+                    <select class="form-control" [(ngModel)]="selectedOption">
+                        <!-- <option value="" selected>Recipient Identification Type</option> -->
+                        <option value="" selected>Validated</option>
+                        <option value="Passport">Passport</option>
+                        <option value="Driving Lisence">Drivers License</option>
+                        <option value="State ID">State ID</option>
+                        <option value="Bill/Mail">Bill/Mail</option>
+                        <option value="No ID">No ID</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer p-0 m-0 d-flex justify-content-between">
+                <button data-dismiss="modal" aria-label="Close" type="button"
+                    class="btn blue-text px-5 shadow-none">Cancel</button>
+                <button data-dismiss="modal" aria-label="Close" type="button" class="btn blue-text px-5 shadow-none"
+                    (click)="identificationData('/vaccinator/checklist', currentVisitRow.id, 'start')">Start</button>
+                <!-- [disabled]="selectedOption.trim()==''" -->
+            </div>
+            <!-- //[routerLink]="['/vaccinator/checklist', currentVisitRow.id, 'start']" -->
+        </div>
+    </div>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>
+<app-component-dynamic-model></app-component-dynamic-model>

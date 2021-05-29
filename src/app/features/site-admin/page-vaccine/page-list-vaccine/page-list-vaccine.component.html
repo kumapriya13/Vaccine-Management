@@ -1,0 +1,138 @@
+<app-component-dynamic-heading [heading]="'MANAGE VACCINE'" [refererClick]="true"></app-component-dynamic-heading>
+<div class="container" id="site-recp-list">
+    <div class="d-flex align-items-center justify-content-between pt-3 table-action-strip">
+        <div class="d-flex align-items-center">
+            <mat-form-field class="search-form-field" appearance="outline">
+                <mat-label>Search by lot number / vaccine</mat-label>
+                <input matInput (keyup)="checkIFBlankLoadData(searchInput)" #searchInput 
+                
+                (keyup.enter)="applyFilter(searchInput)"/>
+                
+                <button mat-button *ngIf="searchInput.value.trim() !=''"  matSuffix mat-icon-button aria-label="Clear" (click)="(searchInput.value='');applyFilter(searchInput)"
+                >
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3"
+                (click)="applyFilter(searchInput)">Filter</button>
+        </div>
+        <div class="d-flex align-items-center">
+            <!-- <a class="roboto-medium-20 mr-3" [routerLink]="'/site-admin/vaccine-report'">View vaccine report </a> -->
+            <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3"
+                [routerLink]="['/site-admin/add-vaccine']">+ Add Vaccine</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col w-100">
+            <table mat-table MatSort [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                <!-- Position Column -->
+                <ng-container matColumnDef="batch_no">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Lot&nbsp;Number
+                    </th>
+
+                    <td style="word-break: break-all;" mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <span [ngClass]="{'greendot': element.batch_no.status=='Enable','reddot': element.batch_no.status=='Disable' || element.expiry_date < currntdate}" title="{{element.batch_no.status}}"></span>
+                          &nbsp; <span [ngStyle]="((element.cSelected !=='')?{color: element.cSelected}:'')">{{element.batch_no.name}} </span>
+                    </td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="material_name">
+                    <th [ngClass]="'w-75'" mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Vaccine </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.material_name}}
+                    </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="no_of_doses_in_batch">
+                    <th [ngClass]="'w-75'" mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18">
+                        Quantity&nbsp;in&nbsp;vials </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.no_of_vials}} </td>
+                </ng-container>
+                <!-- Dose per vails -->
+                <ng-container matColumnDef="material_no_of_doses_per_vial">
+                    <th [ngClass]="'w-75'" mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18">
+                        Dose&nbsp;per&nbsp;vials </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.material_no_of_doses_per_vial}} </td>
+                </ng-container>
+
+                
+                <!-- No of Dose  -->
+                <ng-container matColumnDef="no_of_vials">
+                    <th [ngClass]="'w-75'" mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18">
+                        No&nbsp;of&nbsp;Dose</th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.no_of_doses_in_batch}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="doses_consumed">
+                    <th [ngClass]="'w-75'" mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18">
+                        Doses&nbsp;Consumed</th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                       
+                        {{ (element.doses_consumed?element.doses_consumed:'0')  }}
+                    
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="expected_availability_date">
+                    <th [ngClass]="'w-75'" mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Received&nbsp;Date
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.expected_availability_date}} </td>
+                    <!-- | date:'MM-dd-yyyy -->
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="expiry_date">
+                    <th [ngClass]="'w-75'" mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Expiry&nbsp;Date </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.expiry_date}}
+                    </td>
+                    <!-- |date:'MM-dd-yyyy' -->
+                </ng-container>
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef  class="roboto-regular-18"> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn edit roboto-regular-11 blue-text mr-2"
+                                [routerLink]="['/site-admin/edit-vaccine',element.id]">Edit <i
+                                    class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" class="btn delete roboto-regular-11 ml-2"
+                                (click)="deleteVaccineMaterial(element.id)">Delete <i
+                                    class="fa fa-trash-o blue-text"></i></button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+        <mat-paginator class="w-100" [length]="totalCount" [pageIndex]="pageIndex" (page)="getPageVaccine($event)"
+            [pageSize]="pageSize" [pageSizeOptions]="[10,25,50,100]" showFirstLastButtons></mat-paginator>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe2"
+        aria-hidden="true">
+        <div class="modal-dialog border-0 h-auto delete-popup" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title m-0 text-center roboto-regular-16" id="exampleModalLabe2">Delete Vaccine</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="roboto-regular-14 text-center m-0">Are you sure you want to Delete vaccine from the list
+                    </p>
+                </div>
+                <div class="modal-footer p-0 d-flex justify-content-around align-items-center">
+                    <button type="button" class="btn w-50 px-0 rounded-0 shadow-none m-0 border blue-text">No</button>
+                    <button type="button" class="btn w-50 px-0 rounded-0 shadow-none m-0 border blue-text">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

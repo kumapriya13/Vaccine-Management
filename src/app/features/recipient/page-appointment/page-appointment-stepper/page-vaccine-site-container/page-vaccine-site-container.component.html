@@ -1,0 +1,134 @@
+<div data-message="Map" class="mapSection">
+    <!-- <iframe title="google maps"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96873.73653467487!2d-74.01503701272314!3d40.64522284241859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24416947c2109%3A0x82765c7404007886!2sBrooklyn%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1609790386802!5m2!1sen!2sin"
+        width="100%" height="390" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+        tabindex="0"></iframe> -->
+
+    <!-- google map intigration start -->
+    <ng-container *ngIf="(this.myStepper === null && this.stepperFromLocalStorage === 0)">
+        <google-map height="390px" width="100%" [zoom]="zoom" [center]="center" [options]="options">
+            <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
+                [title]="marker.title" [options]="marker.options">
+            </map-marker>
+        </google-map>
+    </ng-container>
+    <ng-container *ngIf="myStepper">
+        <ng-container *ngIf="(this.myStepper.selectedIndex === 0)">
+            <google-map height="390px" width="100%" [zoom]="zoom" [center]="center" [options]="options">
+                <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position"
+                    [label]="marker.label" [title]="marker.title" [options]="marker.options">
+                </map-marker>
+            </google-map>
+        </ng-container>
+    </ng-container>
+    <!-- google map intigration end -->
+
+
+    <div class="form-container" style="margin-top: 6px;">
+        <h1 class="form-heading roboto-bold-30 blue-text">Get vaccinated<br />at a location near you</h1>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <!-- zip detail here -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <!-- (change)="zipHandler($event.target.value)" -->
+                        <input class="form-control" type="search" [(ngModel)]="zipValue" name="zipValue" id="zip"
+                            placeholder="enter zip to find nearest vaccination center" />
+                    </div>
+                </div>
+                <!-- search area here -->
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="distanceMiles" id="search_area" name="search_area">
+                            <option selected [value]="100">Search Near By Sites</option>
+                            <option [value]="5">Search Sites within 05 Miles</option>
+                            <option [value]="10">Search Sites within 10 Miles</option>
+                            <option [value]="15">Search Sites within 15 Miles</option>
+                            <option [value]="20">Search Sites within 20 Miles</option>
+                            <option [value]="25">Search Sites within 25 Miles</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- search button here -->
+                <div class="col-md-4">
+                    <button class="btn btn-primary blue-bg light-text rounded-pill w-100"
+                        (click)="searchTriggerHandler();">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="pt-3">
+            <p class="form-footer roboto-medium-16">PROTECT YOURSELF, FAMILY AND YOUR LOVED ONES FROM COVID-19</p>
+        </div>
+    </div>
+</div>
+
+<div class="vaccine-container py-2">
+
+    <div class="filter-row d-lg-flex justify-content-end">
+        <div *ngIf="selectedVaccine">
+            <span class="text"><b>Filter facility by Vaccine</b></span>
+
+            <mat-form-field appearance="outline" class="filter-input">
+                <mat-label>Select Vaccine</mat-label>
+                <!-- <mat-label *ngIf="material">{{material.name}}</mat-label> -->
+                <mat-select ([ngModel])="material" (selectionChange)="changeMaterialHandler($event.value)">
+                    <mat-option *ngFor="let materialItem of materialList" [value]="materialItem">
+                        {{ materialItem.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="vaccine-list conatiner">
+        <ng-container *ngIf="_siteList.length===0;">
+            <h1>No list found</h1>
+        </ng-container>
+        <ng-cotainer *ngIf="_siteList.length!==0;">
+            <mat-list>
+                <mat-list-item *ngFor="let site of _siteList">
+                    <div class="d-md-flex w-100 justify-content-between align-items-center">
+                        <div class="col-md-6">
+                            <div mat-line class="roboto-medium-20"><b>{{site ? site.site_name: ''}}</b></div>
+                            <div mat-line class="roboto-regular-14"> <span>{{site ? site.address1: ''}}</span></div>
+                            <div class="d-flex align-items-center">
+                                <div mat-line class="roboto-regular-14"> <span>{{site ? site.city: ''}},&nbsp;</span>
+                                </div>
+                                <div mat-line class="roboto-regular-14"> <span>{{site ? site.state: ''}},&nbsp;</span>
+                                </div>
+                                <div mat-line class="roboto-regular-14"> <span>{{site ? site.zip: ''}}</span></div>
+                            </div>
+                            <div mat-line class="list-item-text roboto-medium-14 grey-text">
+                                <ng-container *ngIf="selectedVaccine">
+                                    <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                                    <span class="roboto-regular-14" style="color: #636E72;"
+                                        *ngFor="let vaccine of site.$expanded.availableVaccines; let last = last;">{{vaccine.name}}
+                                        <span *ngIf="!last">,</span>
+                                        &nbsp;</span>
+                                </ng-container>
+                                <ng-container *ngIf="!selectedVaccine">
+                                    <span class="roboto-regular-14" style="color: #333333;">Vaccine : </span>
+                                    <span class="roboto-regular-14" style="color: #636E72;">&nbsp;{{ material.name
+                                        }}</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center justify-content-between">
+                            <div mat-line style="background-color: white;"
+                            class="mr-5 badge badge-light py-2 px-4 rounded-pill border">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{ site.$expanded.distance | number
+                            : '1.2-2' }}&nbsp;Miles
+                        </div>
+                        <div>
+                            <button [disabled]="!site.$expanded.availableVaccines.length>0"
+                                [class.opacity-0]="!site.$expanded.availableVaccines.length>0" mat-button
+                                class="btn2 ml-3 roboto-medium-18 blue-bg white-text" type="submit"
+                                (click)="siteHandler(site)">Select</button>
+                        </div>
+                        </div>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </ng-cotainer>
+    </div>
+</div>

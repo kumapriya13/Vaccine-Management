@@ -1,0 +1,260 @@
+<app-component-recipient-header></app-component-recipient-header>
+<app-component-dynamic-heading [heading]="'Vaccine Adverse Event Reporting'"></app-component-dynamic-heading>
+
+<div class="container">
+    <form class="mb-4" [formGroup]="adverseFormGroup" (ngSubmit)="adverseFormGroupSub()">
+        <div>
+            <p class="roboto-regular-18" style="margin-left: 40px;">Describe the adverse event(s), treatment, and
+                outcome(s), if any: (symptoms, signs, time course, etc.)</p>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Type here</mat-label>
+                    <input matInput formControlName="describeAdveseEvent" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="bottom-border mb-3">
+            <p class="roboto-regular-18" style="margin-left: 40px;">Medical tests and laboratory results related to the
+                adverse event(s): (include dates)</p>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Type here</mat-label>
+                    <input matInput formControlName="result" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('country').valid">Home Address is required
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <div class="bottom-border mb-3">
+                <p class="roboto-regular-18" style="margin-left: 40px;">Has the patient recovered from the adverse
+                    event(s)? <span class="required">*</span>
+                </p>
+                <ul class="d-flex">
+                    <li class="pr-2">
+                        <input type="radio" formControlName="patientrecoveredInput" value="Yes">
+                        <mat-label class="roboto-regular-14">&nbsp;Yes</mat-label>
+                    </li>
+                    <li class="pr-2">
+                        <input type="radio" formControlName="patientrecoveredInput" value="No">
+                        <mat-label class="roboto-regular-14">&nbsp;No</mat-label>
+                    </li>
+                    <li>
+                        <input type="radio" formControlName="patientrecoveredInput" value="Unknown">
+                        <mat-label class="roboto-regular-14">&nbsp;Unknown</mat-label>
+                    </li>
+
+                </ul>
+                <p class="roboto-regular-18" style="margin-left: 40px;">
+                    <mat-error *ngIf="adverseFormGroup.get('patientrecoveredInput').hasError('required') && adverseFormGroup.dirty"> Please select required answer.
+                    </mat-error>
+                </p>
+
+            </div>
+            <div class="bottom-border mb-3 form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>Date of Adverse even started<span class="required">*</span></mat-label>
+                    <input matInput placeholder="Date of Birth" formControlName="date" [matDatepicker]="picker1"  [min]="minDate" [max]="maxDate"/>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+
+                    <mat-error *ngIf="adverseFormGroup.get('date').hasError('required') && adverseFormGroup.dirty"> Please select date.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>Time</mat-label>
+                    <input matInput  [ngxTimepicker]="starttimepicker" formControlName="time" />
+                    <ngx-material-timepicker (timeSet)="setTime('start_time', $event)" #starttimepicker></ngx-material-timepicker>
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('city').valid">City is required</mat-error> -->
+                </mat-form-field>
+                <!-- <ul class="d-flex p-0 py-3">
+                    <li class="pr-2 d-flex">
+                        <input type="radio" class="mt-2" formControlName="clockType" value="AM">
+                        <mat-label class="roboto-regular-18">&nbsp;AM</mat-label>
+                    </li>
+                    <li class="d-flex">
+                        <input type="radio" class="mt-2" formControlName="clockType" value="PM">
+                        <mat-label class="roboto-regular-18">&nbsp;PM</mat-label>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+        <div classs="bottom-border mb-3">
+            <p class="roboto-regular-18" style="margin-left: 40px;">Age at Vaccination <span class="required">*</span></p>
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>Years</mat-label>
+                    <input matInput formControlName="years" />
+                    <mat-error *ngIf="adverseFormGroup.get('years').hasError('required')"> Please enter age in years.
+                    </mat-error>
+                    <mat-error *ngIf="adverseFormGroup.get('years').hasError('min')"> Please enter age equal and above 18.
+                    </mat-error>
+                    <mat-error *ngIf="adverseFormGroup.get('years').hasError('max')"> Please enter age below 120.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>Months</mat-label>
+                    <input matInput formControlName="months" />
+                    <mat-error *ngIf="adverseFormGroup.get('months').hasError('min')"> Please enter month equal and above 0.
+                    </mat-error>
+                    <mat-error *ngIf="adverseFormGroup.get('months').hasError('max')"> Please enter month below 12.
+                    </mat-error>
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('city').valid">City is required</mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <p></p>
+        <div class="bottom-border mb-3">
+            <p class="roboto-regular-18" style="margin-left: 40px;">Pregnant at time of vaccination? <span class="required">*</span>
+                <span class="roboto-regular-14">(If yes, describe the event, any pregnancy complications, and estimated due date if known in item 18)
+                </span>
+            </p>
+            <ul class="d-flex">
+                <li class="pr-2">
+                    <input type="radio" formControlName="pregnantattimeofvaccination" value="Yes">
+                    <mat-label class="roboto-regular-14">&nbsp;Yes</mat-label>
+                </li>
+                <li class="pr-2">
+                    <input type="radio" formControlName="pregnantattimeofvaccination" value="No">
+                    <mat-label class="roboto-regular-14">&nbsp;No</mat-label>
+                </li>
+                <li>
+                    <input type="radio" formControlName="pregnantattimeofvaccination" value="Unknown">
+                    <mat-label class="roboto-regular-14">&nbsp;Unknown</mat-label>
+                </li>
+            </ul>
+            <p class="roboto-regular-18" style="margin-left: 40px;">
+                <mat-error *ngIf="adverseFormGroup.get('pregnantattimeofvaccination').hasError('required') && adverseFormGroup.dirty"> Please select answer.
+            </mat-error></p>
+
+        </div>
+
+        <div classs="bottom-border mb-3">
+            <p class="roboto-regular-18" style="margin-left: 40px;">Prescriptions, over-the-counter medications, dietary
+                supplements, or herbal remedies being taken at the time of vaccination: <span class="required">*</span></p>
+            <ul class="d-flex">
+                <li class="pr-2">
+                    <input type="radio" formControlName="Prescriptionsoverthecountermedications" value="Yes">
+                    <mat-label class="roboto-regular-14">&nbsp;Yes</mat-label>
+                </li>
+                <li class="pr-2">
+                    <input type="radio" formControlName="Prescriptionsoverthecountermedications" value="No">
+                    <mat-label class="roboto-regular-14">&nbsp;No</mat-label>
+                </li>
+                <li>
+                    <input type="radio" formControlName="Prescriptionsoverthecountermedications" value="Unknown">
+                    <mat-label class="roboto-regular-14">&nbsp;Unknown</mat-label>
+                </li>
+            </ul>
+            <p class="roboto-regular-18" style="margin-left: 40px;">
+                <mat-error *ngIf="adverseFormGroup.get('Prescriptionsoverthecountermedications').hasError('required')
+                                   && adverseFormGroup.dirty"> Please select answer.
+                </mat-error>
+            </p>
+
+        </div>
+        <div>
+            <p class="roboto-regular-18" style="margin-left: 40px;">Allergies to medications, food, or other products:
+            </p>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Type here</mat-label>
+                    <input matInput formControlName="Allergiestomedications" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('country').valid">Home Address is required
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <p class="roboto-regular-18" style="margin-left: 40px;">Other illnesses at the time of vaccination and up to
+                one month prior:</p>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Type here</mat-label>
+                    <input matInput formControlName="OtherillnessesInput" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('country').valid">Home Address is required
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <p class="roboto-regular-18" style="margin-left: 40px;">Chronic or long-standing health conditions:</p>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Type here</mat-label>
+                    <input matInput formControlName="ChronicorlongInput" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('country').valid">Home Address is required
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <div>
+                <p class="roboto-regular-18" style="margin-left: 40px;">Result or outcome of adverse event(s): (Check
+                    all
+                    that apply)</p>
+                <div class="roboto-regular-14">
+                <ul formArrayName="resultCheckBox">
+                    <li class="pr-2" *ngFor="let item of  adverseEventCheckBoxList; let i = index">
+
+                        <ng-container *ngIf="fromPage !=='recipient' || (fromPage =='recipient' && item.name != 'Patient died')">
+                            <input type="checkbox" [value]="item.value" (change)="addSelected(item.value, $event.target.checked)" [checked]="selectedList.includes(item.value)">
+                            <mat-label class="roboto-regular-14">&nbsp;{{item.name}}</mat-label>
+                        </ng-container>
+
+                    </li>
+                </ul>
+               </div>
+            </div>
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>Number of days (if known)</mat-label>
+                    <input matInput formControlName="numberOfDays" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('city').valid">City is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>Hospital name</mat-label>
+                    <input matInput formControlName="hospitalName" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('city').valid">City is required</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('city').valid">City is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>State</mat-label>
+                    <input matInput formControlName="state" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('city').valid">City is required</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="fromPage !='recipient'" class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 343px !important;">
+                    <mat-label>Date of Death</mat-label>
+                    <input matInput placeholder="Date of Birth" formControlName="dod" [matDatepicker]="picker12" [max]="dodMaxDate"/>
+                    <mat-datepicker-toggle matSuffix [for]="picker12"></mat-datepicker-toggle>
+                    <mat-datepicker #picker12></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center py-3"> <!-- [disabled]="!adverseFormGroup.valid" -->
+            <button [disabled]="adverseFormGroup.invalid" mat-button class="btn" type="submit" >Save</button>
+            &nbsp;&nbsp;
+            <ng-container *ngIf="fromPage=='recipient' else visits">
+                <button mat-button class="btn cancel-btn ml-5 can-btn" type="button"
+                (click)="location.back()">Cancel</button>
+            </ng-container>
+
+           <ng-template #visits>
+                <button mat-button class="btn roboto-medium-15 ml-2 can-btn"  type="button"
+                (click)="location.back()">Cancel</button>
+           </ng-template>
+
+        </div>
+    </form>
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

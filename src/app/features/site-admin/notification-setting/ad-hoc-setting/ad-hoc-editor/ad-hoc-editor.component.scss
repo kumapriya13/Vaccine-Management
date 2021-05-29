@@ -1,0 +1,24 @@
+:host ::ng-deep {
+  quill-editor {
+    .ql-editor {
+      min-height: 200px;
+    }
+
+    .ql-toolbar.ql-snow {
+      display: flex;
+      align-items: center;
+    }
+
+    .ql-snow .ql-formats {
+      display: flex;
+    }
+
+    app-recipient-field-selector {
+      button {
+        padding: 0 10px !important;
+        height: inherit !important;
+        width: inherit !important;
+      }
+    }
+  }
+}

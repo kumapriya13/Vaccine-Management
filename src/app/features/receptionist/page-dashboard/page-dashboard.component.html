@@ -1,0 +1,37 @@
+<app-component-receptionist-header></app-component-receptionist-header>
+<div class="container-fluid">
+  <div class="py-2">
+    <app-component-dynamic-heading [heading]="''" [dashboardHeader]="true" [userTypeLabel]="'(Receptionist)'"></app-component-dynamic-heading>
+    <!-- <div class="d-flex justify-content-between backgd text-light mb-5" style="height: 139px;">
+      <div class="p-4 w-50">
+        <h1 class="m-0 roboto-medium-26">Welcome <span *ngIf="receptionistDetails">{{ receptionistDetails.fname }} {{
+            receptionistDetails.lname }} &nbsp;(Receptionist)</span>
+        </h1>
+        <hr class="bg-light mb-2" />
+        <h1 class="m-0">
+          <span class="roboto-regular-26"
+            *ngIf="receptionistDetails">{{receptionistDetails?.$expanded?.sites[0]?.site_name}} </span>
+        </h1>
+      </div>
+      <img class="mr-5" src="../../../../assets/images/receptionist/Group 52521.svg" />
+    </div> -->
+    <div class="container">
+      <div class="d-flex row m-0">
+        <div style="width: 200px; height:200px;" class="card py-2 border-0 mr-4 card-nav-box mouse-hover shadow"
+          [routerLink]="'/receptionist/schedule'">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-end align-items-start">
+              <img src="../../../../assets/images/appointment.svg" width="43px">
+            </div>
+            <p class="roboto-medium-20 letter-spacing-0 blue-text m-0">
+                 <span vmsTooltip="receptionist_home_schedule" placement="top" delay="10">Today's Schedule </span>
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

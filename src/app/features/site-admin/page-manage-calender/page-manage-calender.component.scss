@@ -1,0 +1,63 @@
+.site-admin-manage-calender-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+    font-size: 22px;
+    font-weight: lighter;
+  }
+}
+.light-black {
+  color: #545454 !important;
+}
+.day-badge {
+  width: 40px;
+  height: 40px;
+  padding-top: 10px;
+}
+.day-b-col {
+  background-color: #0984e3 !important;
+  color: white !important;
+}
+
+ul {
+  padding: 0 !important;
+  li {
+    list-style: none;
+  }
+}
+.prev-btn {
+  width: 100px;
+  height: 44px;
+  background: #0984e3 0% 0% no-repeat padding-box;
+  border: 1px solid #0984e3;
+  color: white;
+}
+.can-btn {
+  width: 104px;
+  height: 44px;
+  border: 1px solid #0984e3;
+  color: #0984e3;
+}
+
+.tab-box {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+}
+
+.mat-tab-label-active {
+  background-color: #CCC !important;
+}
+
+.time-box {
+  width: 110px;
+}
+
+.slot-box {
+  width: 90px;
+}
+
+.multiseat {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}

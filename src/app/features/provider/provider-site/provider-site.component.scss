@@ -1,0 +1,43 @@
+.add-site {
+  width: 130px;
+  height: 37px;
+}
+.tr:nth-child(odd) {
+  background-color: #198be7 !important;
+}
+.search-form-field {
+  width: 280px;
+}
+
+.filter-btn {
+  width: 135px;
+  height: 37px;
+}
+:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  // border: 0 !important;
+  padding: 0.4em 0px !important;
+  padding-bottom: 0.6em !important;
+}
+.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+.mat-form-field-wrapper {
+  padding: 0 !important;
+}
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+
+:host ::ng-deep .cus-search-form-field .mat-form-field-wrapper {
+  .mat-form-field-infix {
+    border-top-width: 5px !important;
+  }
+  .mat-form-field-flex {
+    height: 40px !important;
+  }
+  .mat-form-field-outline {
+    height: 40px !important;
+  }
+}

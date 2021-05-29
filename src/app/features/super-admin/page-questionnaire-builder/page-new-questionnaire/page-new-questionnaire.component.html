@@ -1,0 +1,95 @@
+<app-component-dynamic-heading [heading]="'Add New'"></app-component-dynamic-heading>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" aria-current="questionnaire">Questionnaire</li>
+          <li class="breadcrumb-item active" aria-current="questionnaire">Add New</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      <mat-form-field class="select-state" appearance="outline">
+        <mat-label>Apply To State <span class="required">*</span></mat-label>
+        <mat-select value="" (selectionChange)="saveField('state', $event.value)" [(ngModel)]="stateSelected">
+          <mat-option *ngFor="let state of states" [value]="state.abbreviation+'_'+state.name">{{state.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="select-state" appearance="outline">
+        <mat-label>Apply To County <span class="required">*</span></mat-label>
+        <mat-select value="" (selectionChange)="saveField('county', $event.value)" multiple [(ngModel)]="countySelected">
+          <mat-option *ngFor="let county of counties" [value]="county">{{county}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col">
+      <mat-form-field appearance="outline" class="select-state">
+        <mat-label>Instructions <span class="required">*</span></mat-label>
+        <textarea
+          matInput
+          [placeholder]="instructions"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="3"
+          [(ngModel)]="instructionsText"
+          (change)="saveField('instructions', $event.target.value)"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="my-3 roboto-regular-14" *ngFor="let question of questionnaire.dynamic_questionnaire_answers; index as i">
+    <div class="row">
+      <div class="col text-right">
+        <button type="button" class="btn btn-danger btn-sm" (click)="deleteQuestion(i)">Delete  <i class="fa fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col">
+        <div>{{question.QuestionnaireAnswer.question_id}}. {{question.QuestionnaireAnswer.question_text}}<span *ngIf="question.QuestionnaireAnswer.question_is_required === 'true'">*</span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col" *ngIf="question.QuestionnaireAnswer.gui_control === 'radio'">
+        <mat-radio-group aria-label="Select an option" *ngFor="let option of question.QuestionnaireAnswer.options">
+          <mat-radio-button class="p-2" name="radio" [value]="option">{{option}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="col" *ngIf="question.QuestionnaireAnswer.gui_control === 'multiselect'">
+        <ul>
+          <li *ngFor="let option of question.QuestionnaireAnswer.options; index as x">
+            <mat-checkbox color='primary'>
+              {{option}}
+            </mat-checkbox>
+            <span>{{getType(i, x)}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <question-builder-block [questions]="questionnaire.dynamic_questionnaire_answers" [rules]="questionnaire.classification_rules"></question-builder-block>
+
+  <div class="row">
+    <div class="col">
+      <button mat-flat-button color="primary" (click)="save()" 
+      
+      [disabled]="(!countySelected) || (!stateSelected) || (questionnaire.dynamic_questionnaire_answers.length==0)
+      || (!instructionsText) || (instructionsText?.trim()=='')">
+    
+      Publish
+    </button>
+    </div>
+  </div>
+
+</div>

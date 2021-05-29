@@ -1,0 +1,39 @@
+.site-admin-manage-seat-header {
+  background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+      font-size: 22px;
+      font-weight: lighter;
+  }
+}
+
+
+ul {
+  list-style: none;
+  padding-inline-start: 5px;
+}
+
+
+.line-height {
+  line-height: 1.5em;
+}
+
+.title {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.section {
+  border-bottom: 1px solid #CCC;
+  padding-bottom: 10px;
+}
+
+.select-state {
+  width: 100%;
+}
+
+.required
+{
+    color: red;
+}

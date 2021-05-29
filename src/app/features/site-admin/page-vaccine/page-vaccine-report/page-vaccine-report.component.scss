@@ -1,0 +1,131 @@
+.site-admin-vaccine-header {
+    background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+    padding: 2.2rem 0;
+    i {
+        font-size: 22px;
+        font-weight: lighter;
+    }
+}
+
+  .appointment-hed-text {
+    text-align: left;
+    //    font: normal normal normal 20px/16px Roboto;
+    letter-spacing: 0.11px;
+    color: #222222;
+    //    font-weight: 600;
+  }
+
+  .nav-item {
+    width: 272px;
+    height: 47px;
+  }
+
+  .nav-link {
+    text-align: center;
+    color: #e4f1fd;
+    font-size: 17px !important;
+    font-weight: 600;
+  }
+
+  .txt {
+    color: #0984e3 !important;
+  }
+
+  input {
+    border: 0;
+    width: 544px;
+    height: 31px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 1px 3px #78787859;
+  }
+
+  :host ::ng-deep tr:nth-child(even) {
+    height: 60px;
+  }
+
+  .nav-link {
+    text-align: center;
+    font: normal normal medium 18px/7px Roboto;
+    letter-spacing: 0.1px;
+    color: #383638;
+    text-transform: capitalize;
+    background: #f2f3f4 0% 0% no-repeat padding-box;
+    border-radius: 0;
+  }
+
+  .badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 97px;
+    height: 26px;
+    border-radius: 13px;
+    opacity: 1;
+
+    &.badge-blue {
+      color: #000592;
+      background: #bfe8ea 0% 0% no-repeat padding-box;
+    }
+
+    &.badge-grey {
+      color: #000000;
+      background: #70707063 0% 0% no-repeat padding-box;
+    }
+
+    // &.badge-green {
+    //   color: #0A9200;
+    //   background: #DCFFE9 0% 0% no-repeat padding-box;
+    // }
+
+    &.badge-danger {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 250px;
+      color: #f87d46;
+      background: #ffffff 0% 0% no-repeat padding-box;
+      box-shadow: 0px 3px 6px #70707017;
+      border: 1px solid #f87d46c4;
+      border-radius: 52px;
+      opacity: 1;
+    }
+  }
+
+  .time-left-box {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 1px 6px #142e6e1a;
+    border: 1px solid #70707017;
+    opacity: 1;
+  }
+
+  :host ::ng-deep tr:nth-child(even) {
+    height: 62px !important;
+    background: #f6f6f6 0% 0% no-repeat padding-box !important;
+    opacity: 1 !important;
+    border: 0 !important;
+
+    td {
+      background: #f6f6f6 0% 0% no-repeat padding-box !important;
+      border: 0 !important;
+    }
+  }
+
+  :host ::ng-deep tr:nth-child(odd) {
+    height: 62px !important;
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+    opacity: 1 !important;
+    border: 0 !important;
+
+    td {
+      background: #ffffff 0% 0% no-repeat padding-box !important;
+    }
+  }
+
+  :host ::ng-deep tr:hover {
+    background: #00000005 0% 0% no-repeat padding-box !important;
+
+    td {
+      background: #00000005 0% 0% no-repeat padding-box !important;
+    }
+  }
+

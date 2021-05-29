@@ -1,0 +1,120 @@
+<app-component-facility-admin-header></app-component-facility-admin-header>
+<div class="facility-admin-manage-site-header mb-4">
+    <div class="container d-flex align-items-center">
+        <i class="fa fa-arrow-left white-text"></i>
+        <h1 class="roboto-medium-40 white-text m-0 px-2">MANAGE SITE</h1>
+    </div>
+</div>
+
+<div class="container">
+    <p class="mx-md-4 roboto-regular-18 text-left">Add Site</p>
+    <form class="d-flex flex-column justify-content-start align-items-center" [formGroup]="pagesManageSiteForm"
+        (ngSubmit)=pagesManageSiteFormSub()>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Site Name</mat-label>
+                <input matInput placeholder="Site Name" formControlName="siteName" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('siteName').valid">Site Name is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Site Address</mat-label>
+                <input matInput placeholder="Site Address" formControlName="siteAddress" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('siteAddress').valid">Site Name is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Assign Site Admin</mat-label>
+                <input matInput placeholder="Assign Site Admin" formControlName="siteAdmin" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('siteAdmin').valid">Site Name is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Vaccine</mat-label>
+                <input matInput placeholder="Vaccine" formControlName="vaccine" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('vaccine').valid">Site Name is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Longitute</mat-label>
+                <input matInput placeholder="Longitute" formControlName="gpsLongitute" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('gpsLongitute').valid">Site Name is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Latitudce</mat-label>
+                <input matInput placeholder="Latitudce" formControlName="gpsLatitudce" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('gpsLatitudce').valid">Site Name is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="proceed-div py-3 d-flex justify-content-start form-row-width container">
+            <button mat-button class="btn blue-bg white-text rounded-pill px-5 mx-md-4" type="submit">SAVE</button>
+            <button mat-button class="btn light-grey-bg white-text rounded-pill px-5 mx-md-4"
+                type="submit">CANCEL</button>
+        </div>
+    </form>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>
+
+<!-- <p class="roboto-regular-18 text-left">Edit Site</p>
+<form class="container d-flex flex-column align-items-center" [formGroup]="pagesManageSiteForm"
+    (ngSubmit)=pagesManageSiteFormSub()>
+    <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+            <mat-label>Site Name</mat-label>
+            <input matInput placeholder="Site Name" formControlName="siteName" />
+            <mat-error *ngIf="!pagesManageSiteForm.get('siteName').valid">Site Name is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+            <mat-label>Site Address</mat-label>
+            <input matInput placeholder="Site Address" formControlName="siteAddress" />
+            <mat-error *ngIf="!pagesManageSiteForm.get('siteAddress').valid">Site Name is required
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+            <mat-label>Assign Site Admin</mat-label>
+            <input matInput placeholder="Assign Site Admin" formControlName="siteAdmin" />
+            <mat-error *ngIf="!pagesManageSiteForm.get('siteAdmin').valid">Site Name is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+            <mat-label>Vaccine</mat-label>
+            <input matInput placeholder="Vaccine" formControlName="vaccine" />
+            <mat-error *ngIf="!pagesManageSiteForm.get('vaccine').valid">Site Name is required
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+            <mat-label>Longitute</mat-label>
+            <input matInput placeholder="Longitute" formControlName="gpsLongitute" />
+            <mat-error *ngIf="!pagesManageSiteForm.get('gpsLongitute').valid">Site Name is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+            <mat-label>Latitudce</mat-label>
+            <input matInput placeholder="Latitudce" formControlName="gpsLatitudce" />
+            <mat-error *ngIf="!pagesManageSiteForm.get('gpsLatitudce').valid">Site Name is required
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="proceed-div py-3 d-flex justify-content-start form-row-width container">
+        <button mat-button class="btn blue-bg white-text rounded-pill px-5 mx-md-4" type="submit">SAVE</button>
+        <button mat-button class="btn light-grey-bg white-text rounded-pill px-5 mx-md-4" type="submit">CANCEL</button>
+    </div>
+</form> -->

@@ -1,0 +1,117 @@
+<div class="container my-5">
+    <div class="d-flex align-items-center mb-4 " *ngIf="showsite" >
+        <p class="roboto-bold-20 m-0">Site :</p>
+        <p class="roboto-regular-20 m-0" style="color: #9F9F9F;">&nbsp;New York Presbyterian Hospital</p>
+    </div>
+    <p class="roboto-medium-20">Do all seats have same schedule?</p>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" [(ngModel)]="flag" [value]="1" type="radio" >
+        <mat-label class="form-check-label roboto-regular-16">Yes</mat-label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" [(ngModel)]="flag" [value]="0" type="radio">
+        <mat-label class="form-check-label roboto-regular-16" for="inlineRadio2">No</mat-label>
+    </div>
+ 
+
+        <mat-accordion *ngFor="let seat of seats">
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <a class="d-flex justify-content-between align-items-center" aria-expanded="true">
+                        <h5 class="mb-0 card-header-text roboto-medium-20" >{{seat}}</h5>
+                    </a>
+                </mat-panel-title>   
+              </mat-expansion-panel-header>
+
+              <div class="my-5">
+                <p class="roboto-medium-20">Days of operation</p>
+            </div>
+            <div class="schedule-text roboto-regular-16"> All Days have the same schdule?
+                <mat-slide-toggle >
+        
+                </mat-slide-toggle>
+            </div>
+            <!-- <div  class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"> -->
+            <mat-button-toggle-group multiple="true" #group="matButtonToggleGroup" (change)="OnToggleChanged(group.value)">
+                <mat-button-toggle *ngFor="let day of days" [value]="day">
+                    <button mat-fab class="mat-fab-button">{{day}}</button>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        
+            <!-- </div> -->
+            <div class="row">
+                <div *ngFor="let selectedDay of selectedDays">
+                    <div class="selectedDay roboto-medium-18"> {{selectedDay}} </div>
+                </div>
+            </div>
+        
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title>Holiday's</mat-card-title>
+                </mat-card-header>
+        
+                <mat-card-content>
+                    <mat-radio-group aria-label="Select an option">
+                        <span class="radio-button-border">
+                            <span class="term-cond-text">Exclude Nationa Holiday's</span>
+                            <mat-radio-button value="1"></mat-radio-button>
+                        </span>
+                        <span class="radio-button-border">
+                            <span class="term-cond-text">Exclude State Holiday's</span>
+                            <mat-radio-button value="2"></mat-radio-button>
+                        </span>
+                    </mat-radio-group>
+                </mat-card-content>
+        
+                <mat-card-header>
+                    <mat-card-title>Hours of operation</mat-card-title>
+                </mat-card-header>
+                <mat-radio-group aria-label="Select an option" class="mb-10">
+                    <mat-radio-button value="1" style="margin-right: 20px;">24 Hour's</mat-radio-button>
+                    <mat-radio-button value="2">Certain hours of the day only</mat-radio-button>
+                </mat-radio-group>
+                <div>
+                    <mat-form-field appearance="outline" class="start-end-time">
+                        <mat-label>Start time</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <span style="padding: 20px;">TO</span>
+                    <mat-form-field appearance="outline" class="start-end-time">
+                        <mat-label>End Time</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <mat-card-subtitle>Break time(s)</mat-card-subtitle>
+                <mat-card-subtitle>Use the add break time button to add details of the break</mat-card-subtitle>
+                <button type="submit" class="add-break-btn roboto-regular-16 white-text">Add Break</button>
+                <div>
+                    <mat-form-field appearance="outline" class="hours-minutes">
+                        <mat-label>Hours</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="outline" class="hours-minutes white-text">
+                        <mat-label>Minutes</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+        
+                </div>
+        
+                <mat-card-actions>
+                    <div class="proceed-div py-3">
+                        <button type="button" class="cancel-btn">Cancel</button>
+        
+                        <button type="button" class="save-btn">Save </button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+        
+        <!--end Accordion card 1 -->
+
+
+</div>

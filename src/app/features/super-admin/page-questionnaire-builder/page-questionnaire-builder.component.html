@@ -1,0 +1,65 @@
+<app-component-dynamic-heading [heading]="'Questionnaire'"></app-component-dynamic-heading>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="questionnaire">Questionnaire</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col text-right">
+      <button mat-flat-button color="primary" (click)="addNew()">Add New</button>
+    </div>
+  </div> -->
+
+  <div class="d-flex align-items-center justify-content-between mt-4 mb-1">
+    <div>
+      <h5>Questionnaires: ( {{dataSource?.results.length}} )</h5>
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="roboto-regular-16 blue-text cursor-pointer mr-2">
+        <!-- <i class="fa fa-download"></i>&nbsp;Download -->
+      </div>
+      <div class="roboto-regular-16 blue-text cursor-pointer ml-2">
+        <!-- <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Bulk Import -->
+        <button mat-flat-button color="primary" (click)="addNew()">Add New Questionnaire
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover">
+        <thead class="blue-2-bg white-text">
+          <tr>
+            <th scope="col" class="txt roboto-regular-18 text-left">State</th>
+            <th scope="col" class="txt roboto-regular-18 text-left">County</th>
+            <th scope="col" class="txt roboto-regular-18 text-left">Number of Questions</th>
+            <th scope="col" class="txt roboto-regular-18 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dataSource?.results">
+            <td class="txt blue-text roboto-medium-16 text-left blue-text">{{data.state}}</td>
+            <td class="txt blue-text roboto-medium-16 text-left blue-text">{{data.county}}</td>
+            <td class="txt blue-text roboto-medium-16 text-left blue-text">{{data.dynamic_questionnaire_answers?.length}}
+            </td>
+            <td class="txt blue-text roboto-medium-16 text-center blue-text">
+              <button type="button" class="btn btn-primary btn-sm mr-2" (click)="viewQuestionnaire(data.id)">View <i
+                  class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="deleteQuestionnaire(data.id)">Delete <i
+                  class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

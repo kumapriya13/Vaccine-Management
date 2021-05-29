@@ -1,0 +1,102 @@
+<div class="page-header">
+    <div class="px-4">
+        <h3 class="roboto-medium-20">Enable Private Slots</h3>
+    </div>
+</div>
+
+<ng-container *ngIf="!notificationEditorVisible; else sendNotification">
+    <div class="mb-3">
+        <mat-slide-toggle color="primary"
+                          [(ngModel)]="checked">
+            Enable recipients to view private slots
+        </mat-slide-toggle>
+    </div>
+
+    <recipient-list-input #recipientList></recipient-list-input>
+
+    <div class="d-flex justify-content-center proceed-div py-3">
+        <button mat-button class="btn mr-3 roboto-medium-18" type="submit"
+                [disabled]="!recipientList.selectedRecipients?.length"
+                (click)="save()">
+            Submit
+        </button>
+        &nbsp;
+        <button type="button" mat-button (click)="dialogRef.close()"
+                class="btn preview-btn roboto-medium-16">Close</button>
+    </div>
+</ng-container>
+
+<ng-template #sendNotification>
+
+    <div>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Topic Title</mat-label>
+            <input matInput
+                   placeholder="Slot For The 10 March Got Cancelled Due To Some Issue"
+                   [maxlength]="30"
+                   [(ngModel)]="notificationTitle" />
+        </mat-form-field>
+    </div>
+
+    <div class="mb-4">
+        <quill-editor [(ngModel)]="notificationMessage" [styles]="{height: '280px'}">
+            <div quill-editor-toolbar>
+                <span class="ql-formats">
+                    <select class="ql-font">
+                        <option selected></option>
+                        <option value="serif"></option>
+                        <option value="monospace"></option>
+                    </select>
+                    <select class="ql-size">
+                        <option value="small"></option>
+                        <option selected></option>
+                        <option value="large"></option>
+                        <option value="huge"></option>
+                    </select>
+                </span>
+                <span class="ql-formats">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                    <button class="ql-strike"></button>
+                </span>
+                <span class="ql-formats">
+                    <select class="ql-color"></select>
+                    <select class="ql-background"></select>
+                </span>
+                <span class="ql-formats">
+                    <button class="ql-list" value="ordered"></button>
+                    <button class="ql-list" value="bullet"></button>
+                    <select class="ql-align">
+                        <option selected></option>
+                        <option value="center"></option>
+                        <option value="right"></option>
+                        <option value="justify"></option>
+                    </select>
+                </span>
+                <span class="ql-formats">
+                    <button class="ql-link"></button>
+                    <button class="ql-image"></button>
+                </span>
+                <span class="ql-formats">
+                    <button mat-button [matMenuTriggerFor]="menu">Merge Fields</button>
+                    <mat-menu #menu="matMenu">
+                        <button *ngFor="let field of fields"
+                                mat-menu-item
+                                (click)="recipientFieldSelected(field)">{{field}}</button>
+                    </mat-menu>
+                </span>
+            </div>
+        </quill-editor>
+    </div>
+    <div class="d-flex justify-content-center proceed-div py-3">
+        <button mat-button class="btn mr-3 roboto-medium-18" type="submit"
+                [disabled]="!isNotificationValid()"
+                (click)="send()">
+            Send
+        </button>
+        &nbsp;
+        <button type="button" mat-button (click)="dialogRef.close()"
+                class="btn preview-btn roboto-medium-16">Close</button>
+    </div>
+</ng-template>

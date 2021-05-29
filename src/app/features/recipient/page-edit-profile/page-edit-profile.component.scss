@@ -1,0 +1,102 @@
+@charset "UTF-8";
+.bg-primary {
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+}
+
+.vaccinator-schedule-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  opacity: 1;
+  padding: 2.2rem 0;
+  .vcn-sch-text {
+    text-align: left;
+    font: normal normal medium 30px/39px Roboto !important;
+    letter-spacing: 0px;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  i {
+    color: #ffffff;
+    font-size: 40px;
+  }
+}
+
+.btn {
+  width: 239px;
+  height: 46px;
+  background: #0984e3 0% 0% no-repeat padding-box;
+  box-shadow: 0px 8px 20px #052b4852;
+  border-radius: 23px;
+  color: white;
+  i {
+    font-size: 20px;
+  }
+}
+
+:host ::ng-deep .mat-checkbox-inner-container {
+  padding: 10px;
+}
+
+.term-cond-text {
+  letter-spacing: 0px;
+  opacity: 1;
+  padding-left: 1rem;
+}
+
+.highlight {
+  color: #0984e3;
+}
+
+.check-box-div {
+  margin-top: 12px;
+}
+
+.bottom-border {
+  border-bottom: 1px solid #707070 !important;
+  ul {
+    list-style: none;
+    padding: 0;
+    padding-left: 20px;
+  }
+}
+.vms-sign-up {
+  .mat-input-element {
+    font-weight: 500;
+    font-size: 18px;
+  }
+}
+
+.form-group {
+  width: 343px;
+  height: 50px;
+}
+ul {
+  list-style: none;
+}
+
+// input[readonly]{
+//     background-color: red !important;
+// }
+// :host ::ng-deep .mat-form-field-outline-start, :host ::ng-deep .mat-form-field-outline-gap, :host ::ng-deep .mat-form-field-outline-end{
+//     border-color: #0984E3 !important;
+// }
+// :host ::ng-deep .mat-form-field-appearance-outline [readonly] {
+//   background-color: yellow;
+//   padding-top: 0 !important;
+//   padding-bottom: 0 !important;
+// }
+// :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix [readonly] {
+//   background-color: #dee0df;
+// }
+// :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline [readonly] {
+//   background-color: yellow !important;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap{
+//     background-color: yellow !important;
+// }
+// :host ::ng-deep .mat-form-field-appearance-outline:read-only(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline {
+// background-color: red;
+// }
+// :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick{
+//     background-color: red !important;
+// }

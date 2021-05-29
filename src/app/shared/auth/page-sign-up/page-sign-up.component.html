@@ -1,0 +1,426 @@
+<app-component-header></app-component-header>
+<div class="vms-sign-up">
+    <!-- <div class="vaccinator-schedule-header mb-4">
+        <div class="container d-flex align-items-center">
+            <h1 class="roboto-medium-40 text-light m-0">Register</h1>
+        </div>
+    </div> -->
+    <app-component-dynamic-heading [heading]="'Register'"></app-component-dynamic-heading>
+
+    <div class="conatiner py-2">
+        <form autocomplete="off" class="container d-flex flex-column align-items-center"
+            [formGroup]="authRecipientSignUpForm">
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>First Name *</mat-label>
+                    <input matInput placeholder="First Name" maxlength="50" (keypress)="omit_special_char($event)"
+                        formControlName="firstName" />
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('firstName').valid">First Name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Last Name *</mat-label>
+                    <input matInput placeholder="Last Name" maxlength="50" (keypress)="omit_special_char($event)"
+                        formControlName="lastName" />
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('lastName').valid">Last Name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Email ID *</mat-label>
+                    <input matInput placeholder="Email ID" (change)="checkUserEmailExist()" formControlName="email" />
+                    <mat-error *ngIf="authRecipientSignUpForm.get('email').hasError('required')">Email ID is required
+                    </mat-error>
+                    <mat-error *ngIf="authRecipientSignUpForm.get('email').hasError('existingRecipient')">Email ID
+                        already exists
+                    </mat-error>
+                    <mat-error *ngIf="authRecipientSignUpForm.get('email').hasError('email')">Email must be a valid
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput placeholder="Phone Number" formControlName="phone" />
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('phone').valid">Phone Number is required</mat-error>
+                </mat-form-field> -->
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label class="ml-5 pl-2">Mobile Phone Number *</mat-label>
+                    <input autocomplete="off" type="text" formControlName="phone" matInput ng2TelInput
+                        [ng2TelInputOptions]="{initialCountry: 'us'}" (countryChange)="onCountryChange($event)"
+                        (change)="checkUserPhoneExist()" />
+
+                    <mat-error *ngIf="authRecipientSignUpForm.get('phone').hasError('pattern')">Enter valid mobile phone
+                        number.
+                    </mat-error>
+                    <mat-error *ngIf="authRecipientSignUpForm.get('phone').hasError('required')"> mobile phone number is
+                        required
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+
+            <div class="form-row-width container">
+                <mat-radio-group aria-label="Select an option" formControlName="primaryType"
+                    class="d-flex justify-content-center flex-column flex-md-row">
+                    <mat-radio-button value="email" class="mx-md-4 w-100">Verify using Email ID
+                    </mat-radio-button>
+                    <mat-radio-button value="phone" class="mx-md-4 w-100">Verify using Mobile Phone Number
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Password *</mat-label>
+                    <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'"
+                        formControlName="password"
+                        (keyup)="authRecipientSignUpForm.get('confirmPassword').updateValueAndValidity()" />
+                    <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">{{hide ?
+                        'visibility_off':'visibility' }}</mat-icon>
+                    <mat-error *ngIf="authRecipientSignUpForm.get('password').hasError('required')">
+                        {{getErrorMessageForPassword()}}
+                    </mat-error>
+                    <mat-error *ngIf="authRecipientSignUpForm.get('password').hasError('pattern')">
+                        {{getErrorMessageForPassword()}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Confirm Password *</mat-label>
+                    <input matInput placeholder="Confirm Password" appConfirmEqualValidator="password"
+                        [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" />
+                    <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">{{hide ?
+                        'visibility_off':'visibility' }}</mat-icon>
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('confirmPassword').valid">
+                        {{getErrorMessageForConfirmPassword()}}</mat-error>
+                    <!-- <mat-error *ngIf="authRecipientSignUpForm.get('confirmPassword').hasError('pattern')">{{getErrorMessageForConfirmPassword()}}
+                        </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Date of Birth *</mat-label>
+                    <input matInput placeholder="Date of Birth" [max]="maxDate" #dob
+                        (focusout)="getage()" formControlName="dob" [matDatepicker]="picker1" />
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="authRecipientSignUpForm.get('dob').hasError('required')">Date of Birth is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Gender *</mat-label>
+                    <mat-select matInput placeholder="Gender" formControlName="gender">
+                        <mat-option *ngFor="let item of genderData; let j = index" [value]="item">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('gender').valid">Gender is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Address Line 1 *</mat-label>
+                    <input matInput placeholder="Address Line 1" (keypress)="omit_special_char($event)"
+                        (paste)="onPaste($event)" formControlName="address1" />
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('address1').valid">Address Line 1 is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Address Line 2 </mat-label>
+                    <input matInput placeholder="Address Line 2" (keypress)="omit_special_char($event)"
+                        (paste)="onPaste($event)" formControlName="address2" />
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('address2').valid">Address Line 2 is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Apartment,Suit,Unit Number </mat-label>
+                    <input matInput placeholder="Apartment,Suit,Unit Number" (keypress)="omit_special_char($event)"
+                        (paste)="onPaste($event)" formControlName="address3" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('address1').valid">Apartment,Suit,Unit Number is required
+                    </mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Home Phone Number</mat-label>
+                    <input matInput placeholder="Home Mobile Phone Number" formControlName="homePhoneNumber" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('homePhoneNumber').valid">Home Mobile Phone Number is
+                        required
+                    </mat-error> -->
+                </mat-form-field>
+
+
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Zip *</mat-label>
+                    <input matInput placeholder="Zip" #zip formControlName="zip" (input)="fetchzipdetails(zip)"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                    <mat-error *ngIf="authRecipientSignUpForm.get('zip').hasError('required')">Zip is required
+                    </mat-error>
+                    <mat-error *ngIf="authRecipientSignUpForm.get('zip').hasError('pattern')">Enter only number
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>City *</mat-label>
+                    <input matInput placeholder="City" maxlength="25" formControlName="city" />
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('city').valid">City is required</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>State *</mat-label>
+                    <input matInput placeholder="state" readonly formControlName="state" *ngIf="show" />
+                    <!-- <input matInput placeholder="State" formControlName="state" /> -->
+                    <mat-select (selectionChange)="onChangeState($event)" formControlName="state" *ngIf="stateshow">
+                        <!-- <mat-option *ngIf="stateInfo == ''" value="-1">--Select State--
+                        </mat-option> -->
+
+                        <mat-option *ngFor="let statess of stateInfo" [value]="statess">
+                            {{statess}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('state').valid">State is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Country *</mat-label>
+                    <input matInput placeholder="country" readonly formControlName="country"  />
+                    <!-- <mat-select (selectionChange)="onChangeCountry($event)" formControlName="country" *ngIf="stateshow">
+                        <mat-option *ngFor="let country of countryInfo; let i = index" [value]="country.CountryName">
+                            {{country.CountryName}}
+                        </mat-option>
+                    </mat-select> -->
+                </mat-form-field>
+            </div>
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <!-- (click)="onChangeCounty($event)" -->
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>County *</mat-label>
+                    <input matInput placeholder="county" readonly formControlName="county" *ngIf="show" />
+                    <mat-select formControlName="county" *ngIf="stateshow">
+                        <mat-option *ngFor="let county of countyAd; let i = index" [value]="county">{{county}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!authRecipientSignUpForm.get('county').valid">County is required</mat-error>
+                </mat-form-field>
+                <mat-form-field class="mx-md-4 w-100">
+                    <input matInput readonly class="empty-input" />
+
+                </mat-form-field>
+            </div>
+            <div formGroupName="answers">
+
+                <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row p-0">
+                    <div class="w-100">
+                        <div class="bottom-border mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">1. Which of the following best describes your ethnic
+                                group? *
+                            </p>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label></mat-label>
+
+                                <mat-select matInput formControlName="ethnicgroup">
+                                    <!-- <mat-option>Select</mat-option> -->
+                                    <mat-option value="Hispanic or Latino">Hispanic or Latino</mat-option>
+                                    <mat-option value="Not Hispanic or Latino">Not Hispanic or Latino</mat-option>
+                                    <mat-option value="Prefer not to answer">Prefer not to answer</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="!authRecipientSignUpForm.get('answers.ethnicgroup').valid">ethnic
+                                    group
+                                    is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="bottom-border mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">2. Which of the following best describes your race?
+                                Please select all that apply? *</p>
+                            <ul class="p-2">
+                                <li *ngFor="let race of raceList">
+                                    <input type="checkbox"
+                                        (change)="onRaceCheckboxChange(race.value, $event.target.checked)"
+                                        [value]="race.value">&nbsp;&nbsp;
+                                    <span class="roboto-regular-14">{{race.name}}</span>
+                                </li>
+                                <mat-error
+                                    *ngIf="isSubmit && authRecipientSignUpForm.get('answers')['controls']['raceFormArray'].status=='INVALID'">
+                                    Select atleast one checkbox.</mat-error>
+                            </ul>
+
+
+                        </div>
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">3. Select all that apply</p>
+                            <ul class="p-2">
+                                <li *ngFor="let applicable of applicableList">
+                                    <input type="checkbox"
+                                        (change)="onSelectAllCheckboxChange(applicable.value, $event.target.checked)"
+                                        [value]="applicable.value">&nbsp;&nbsp;<span
+                                        class="roboto-regular-14">{{applicable.name}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">4. Have you ever had any of the following medical
+                                conditions? - Asthama(moderate to severe) - Cancer - Cerebrovascular disease - Chronic
+                                Kidney Disease - Chronic obstructive pulmonary disease (COPD) - Cystic fibrosis - Down
+                                Syndrome - Heart conditions, such as coronary artery disease or cardiomyopathies -
+                                Hypertension or high blood pressure - Immunocompromised state (weakened immune system) -
+                                Liver disease - Neurologic conditions, (such as dementia) - Nicotine/smoking addiction -
+                                Obesity - Overweight - Pulmonary fibrosis (damaged or scarred lung tissues) - Sickle
+                                cell disease - Thalassemia (type of blood disorder) - Type 1 diabetes mellitus - Type 2
+                                diabetes mellitus.
+                            </p>
+                            <ul class="p-2">
+                                <li *ngFor="let medical of medicalList">
+                                    <input type="radio" name="medical"
+                                    (change)="onSelectAllRadioChange(medical.value, $event.target.checked)"
+                                        [value]="medical.value">&nbsp;&nbsp;
+                                    <span class="roboto-regular-14">{{medical.name}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <div class="w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Prescription, over-the- counter medications, dietary supplements, or herbal remedies
+                                being taken at the time of Vaccination.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class=" w-100">
+
+                        <input matInput formControlName="prescriptionQ" placeholder="Type here" />
+
+                    </mat-form-field>
+                </div> -->
+
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <div class="w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Allergies to medications, food, or other products:
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class=" w-100">
+                        <!-- <mat-label>Type here</mat-label> -->
+                        <input matInput formControlName="allergiestomedications" placeholder="Type here" />
+                        <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('country').valid">Home Address is required
+                    </mat-error> -->
+                    </mat-form-field>
+                </div>
+
+                <!-- <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <div class="w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Other illnesses at the time of vaccination and up to one month
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input matInput formControlName="otherillnesses" placeholder="Type here" />
+                    </mat-form-field>
+                </div> -->
+
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <div class="w-100">
+                        <div class="mb-3">
+                            <p class="pb-3 m-0 roboto-medium-18">
+                                Chronic or long-standing health conditions prior
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <!-- <mat-label>Type here</mat-label> -->
+                        <!-- <mat-label>Insurance</mat-label> -->
+                        <input matInput formControlName="chronicorlongstanding" placeholder="Type here" />
+                        <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('country').valid">Home Address is required
+                    </mat-error> -->
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <!--Ins-->
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <div class="mx-md-4 w-100">
+                    <div class="mb-3">
+                        <p class="pb-3 m-0 roboto-medium-18">Insurance Information</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Insurance</mat-label>
+                    <input matInput placeholder="Insurance" maxlength="25" formControlName="insurance" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('country').valid">Home Address is required
+                    </mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Insurance Provider name</mat-label>
+                    <input matInput placeholder="Insurance provider name" maxlength="25"
+                        formControlName="insuranceprovidername" />
+                    <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('zip').valid">Zip is required
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Medical Group Number</mat-label>
+                    <input matInput placeholder="Medical Group Number" maxlength="25"
+                        formControlName="medicalGroupNumber" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Medical Id</mat-label>
+                    <input matInput placeholder="Medical Id" maxlength="25" formControlName="memberId" />
+                </mat-form-field>
+            </div>
+            <p class="roboto-medium-20 pt-5">Please check the box below to proceed</p>
+            <div class="pt-2">
+                <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (success)="handleSuccess($event)"
+                    formControlName="recaptcha">
+                </ngx-recaptcha2>
+            </div>
+            <div class="py-5">
+                <mat-checkbox class="t-c-chk-box" formControlName="termandCondition"></mat-checkbox>
+                <span class="term-cond-text">Please indicate your acceptance of the
+                    <span class="highlight terms-cursor" (click)="openModal2()">Terms of Service</span> and the
+                    <span class="highlight policy-cursor" (click)="openModal1()"> Privacy
+                        Policy</span> by clicking the check box.
+                </span>
+            </div>
+            <div class="d-flex align-items-center proceed-div py-3">
+                <button mat-button (click)="authRecipientSignUpFormSub()" class="btn mr-3 roboto-medium-18">
+                    Next&nbsp;&nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </button>
+                <button (click)="viewPreview()" class="btn preview-btn roboto-medium-18">Preview</button>
+            </div>
+        </form>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

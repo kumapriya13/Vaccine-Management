@@ -1,0 +1,23 @@
+<div class="terms-use-header mb-4">
+    <div class="container">
+        <h1 class="roboto-medium-30 white-text m-0 px-2">Certificate Preview</h1>
+    </div>
+</div>
+
+<div class="py-5" *ngIf="(responseFlag==true && profileImage!='')">
+    <img class="img-responsive" [src]="profileImage ? profileImage : '/assets/images/vaccinator/Image 5@2x.jpg'">
+</div>
+
+
+
+<div class="container">
+    <ng-container *ngIf="(profileImage=='' && responseFlag==true) ">
+        <div class="py-5">
+            Certificate image is unavailable OR you may not have configured to display image certificate in public profile.
+        </div>
+    </ng-container>
+
+    <div class="d-flex justify-content-end pl-5 pb-4">
+        <button class="btn bg-blue px-5 white-text" (click)="onNoClick()">Close</button>
+    </div>
+</div>

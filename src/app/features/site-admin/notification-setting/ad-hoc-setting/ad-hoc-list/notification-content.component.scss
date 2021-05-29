@@ -1,0 +1,19 @@
+.notification-brief {
+  font-size: 1rem;
+
+  & > div {
+    margin-bottom: 1rem;
+  }
+
+  .brief-title {
+    font-weight: 500;
+  }
+}
+
+.action-buttons {
+  button {
+    font-size: .85rem;
+    padding: 5px 10px;
+  }
+}
+

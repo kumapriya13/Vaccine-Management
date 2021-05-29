@@ -1,0 +1,46 @@
+<app-component-receptionist-header></app-component-receptionist-header>
+<div class="site-admin-vaccine-header mb-5">
+  <div class="container d-flex align-items-center">
+    <h1 class="roboto-medium-30 white-text m-0 px-2">Hello Chandler</h1>
+  </div>
+</div>
+
+<div class="vaccinator-list-container my-5 py-5">
+  <input type="text" placeholder="Enter Recipient ID/ Name" class="search" />
+  <br><br><br><br>
+  <p class="roboto-bold-20 m-0">Appointments |Thursday, 14-January-2021</p>
+
+  <table class="table table-striped mb-3">
+    <tbody>
+      <tr class="blue-1-bg white-text">
+        <th class="txt roboto-regular-18 text-left">Time</th>
+        <th class="txt roboto-regular-18 text-left">Recipient</th>
+        <th class="txt roboto-regular-18 text-left">Dose</th>
+        <th class="txt roboto-regular-18 text-left">Seat</th>
+        <th class="txt roboto-regular-18 text-left">Site name</th>
+        <th class="txt roboto-regular-18 text-left">Recipient ID</th>
+        <th class="txt roboto-regular-18 text-left">Action</th>
+      </tr>
+      <tr *ngFor="let Appointment of dataSource; let i =index">
+
+        <td class="txt blue-text roboto-medium-16 text-left">{{Appointment ? Appointment .start_time: ''}}</td>
+        <td class="txt blue-text roboto-medium-16 text-left">{{Appointment ? Appointment .$expanded.recipient_fname: ''}}</td>
+        <td class="txt blue-text roboto-medium-16 text-left">{{Appointment ? Appointment .dose_in_series: ''}}</td>
+        <td class="txt blue-text roboto-medium-16 text-left">{{Appointment ? Appointment .$expanded.seat_name: ''}}</td>
+        <td class="txt blue-text roboto-medium-16 text-left">{{Appointment ? Appointment .$expanded.site_name: ''}}</td>
+        <td class="txt blue-text roboto-medium-16 text-left">{{Appointment ? Appointment .$expanded.recipient_id: ''}}</td>
+        <td class="txt blue-text roboto-medium-16 text-left">
+          <div class="d-flex align-items-center justify-content-center cursor-pointer text-left">
+            <button type="submit" class="btn delete roboto-regular-11 ml-2 cursor-pointer" (click)="vaccinatorInfo = Appointment"
+              data-toggle="modal" data-target="#exampleModal2">Check-in</button>
+            <button type="button" class="btn edit roboto-regular-11 blue-text mr-2 cursor-pointer"
+              [routerLink]="['/receptionist/edit-info',Appointment.recipient_id]">Edit <i
+                class="fa fa-pencil-square-o"></i></button>
+          </div>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

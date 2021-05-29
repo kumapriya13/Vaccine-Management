@@ -1,0 +1,103 @@
+<app-component-recipient-header></app-component-recipient-header>
+<div class="container-fluid">
+    <app-component-dynamic-heading [heading]="''" [dashboardHeader]="true" [userTypeLabel]="''">
+    </app-component-dynamic-heading>
+    <!-- <div class="pt-5 pb-3">
+        <div class="d-flex align-items-center justify-content-between backgd text-light mb-5" style="height: 110px;">
+            <div class="p-4 w-75">
+                <h1 *ngIf="userDetails.fname && userDetails.lname" class="roboto-medium-30 white-text m-0">Welcome {{
+                    userDetails.fname+" "+userDetails.lname}} {{ userDetails.classification }}</h1>
+            </div>
+            <img class="mr-5" src="../../../../assets/images/receptionist/Group 52521.svg" />
+        </div>
+    </div> -->
+</div>
+<!-- <div class="vaccinator-schedule-header mb-4">
+    <div class="container d-flex align-items-center">
+        <h1 *ngIf="userDetails.fname && userDetails.lname" class="roboto-medium-40 white-text m-0">Welcome {{ userDetails.fname+" "+userDetails.lname}} {{ userDetails.classification }}</h1>
+    </div>
+</div> -->
+
+<!-- <li><a [routerLink]="'/recipient/dashboard'" [routerLinkActive]="'active'"
+	title="Home">HOME</a></li>
+<li><a  [routerLinkActive]="'active'"
+	title="My Appointment">My Appointment</a></li>
+<li><a [routerLink]="'/recipient/pre-vaccinate-check-list'"
+	[routerLinkActive]="'active'" title="Checklist">Checklist</a></li>
+<li><a [routerLink]="'/recipient/notification'" [routerLinkActive]="'active'"
+	title="Walk-in">Walk-in</a></li>
+<li><a [routerLink]="'/about-us'" [routerLinkActive]="'active'"
+	title="About-us">About-us</a></li> -->
+<div class="container pt-3 pb-5">
+    <div class="d-lg-flex justify-content-between m-0 mb-sm-3">
+        <div [routerLink]="'/recipient/appointment'" style="width: 200px; height:200px;"
+            class="card py-2 border-0 mr-4 card-nav-box mouse-hover shadow">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-end align-items-start">
+                    <img src="/assets/images/Group 52537.svg" width="54px" height="54px">
+                </div>
+                <p class="roboto-medium-20 letter-spacing-0 blue-text m-0">
+                    <span vmsTooltip="recipient_home_appointment" placement="top" delay="10">
+                        My Appointment</span>
+                </p>
+            </div>
+        </div>
+        <div style="width: 200px; height:200px;"
+            class="card py-2 border-0 mr-4 card-nav-box mouse-hover shadow"
+            (click)="onFamilyAppointment()">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-end align-items-start">
+                    <img src="/assets/images/Group 52537.svg" width="54px" height="54px">
+                </div>
+                <p class="roboto-medium-20 letter-spacing-0 blue-text m-0">
+                    <span placement="top" delay="10">
+                        Family Appointment</span>
+                </p>
+            </div>
+        </div>
+        <div class="card shadow detail-box p-3" style="background-color: rgba(175, 175, 175, 0.11); width: 100%;">
+            <div class="col-md-12">
+                <div class="pt-3 d-lg-flex justify-content-center">
+                    <p class="px-2 align-items-center">
+                        <ng-container *ngIf="userDetails">
+                            <span class="roboto-medium-18">{{userDetails.fname}} {{userDetails.lname}} {{
+                                userDetails.classification }}</span> <br>
+                            Email ID : &nbsp;<span class="roboto-medium-16">{{userDetails.email}}</span><br>
+                            Mobile Phone Number : &nbsp;<span
+                                class="roboto-medium-16">{{userDetails.mobile_number}}</span><br>
+                            <!-- Address : &nbsp;<span class="roboto-medium-16">{{userInfo.address1}}</span> <br>
+                                &nbsp;&nbsp;&nbsp;<span class="pl-5 ml-2 roboto-medium-16">{{userInfo.address2}}</span> <br>
+                                &nbsp;&nbsp;&nbsp;<span class="pl-5 ml-2 roboto-medium-16">{{userInfo.address3}}</span> <br> -->
+                        </ng-container>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- <div [routerLink]="'/recipient/providers'" style="width: 200px; height:200px;" class="card py-2 border-0 mr-4 card-nav-box mouse-hover shadow" >
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-end align-items-start">
+                    <img src="/assets/images/Group 52431.svg" width="54px" height="54px">
+                </div>
+                <p class="roboto-medium-20 letter-spacing-0 blue-text m-0">Search Provider</p>
+            </div>
+        </div> -->
+        <!-- <div style="width: 200px; height:200px;" class="card py-2 border-0 mr-4 card-nav-box mouse-hover" [routerLink]="'/recipient/pre-vaccinate-check-list'">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-end align-items-start">
+                    <img src="/assets/images/marking.svg" width="54px" height="54px">
+                </div>
+                <p class="roboto-medium-20 letter-spacing-0 blue-text m-0">Checklist</p>
+            </div>
+        </div> -->
+        <!-- <div style="width: 200px; height:200px;" class="card py-2 border-0 mr-4 card-nav-box mouse-hover">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-end align-items-start">
+                    <img src="/assets/images/walk.svg" width="54px" height="54px">
+                </div>
+                <p class="roboto-medium-20 letter-spacing-0 blue-text m-0">Walk - in</p>
+            </div>
+        </div> -->
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

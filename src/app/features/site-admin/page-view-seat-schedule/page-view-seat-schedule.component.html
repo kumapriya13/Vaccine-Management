@@ -1,0 +1,157 @@
+<app-component-dynamic-heading [heading]="'Site Schedule'" [refererClick]="true"></app-component-dynamic-heading>
+<div class="container" id="site-recp-list">
+    <!-- <div>
+        <h4>Schdule Seat 1</h4>
+    </div> -->
+    <div class="d-flex align-items-center py-3 table-action-strip">
+        <!-- <div class="d-flex align-items-center">
+            <mat-form-field class="search-form-field" appearance="outline">
+                <mat-label>Search</mat-label>
+                <input matInput #searchInput />
+                <button mat-button *ngIf="searchInput.value.trim() != ''" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="searchInput.value = ''; applyFilter(searchInput)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 mx-3">
+                Filter
+            </button>
+        </div> -->
+        <div class="d-flex align-items-center w-100 pl-3">
+            <form class="mr-3">
+                <mat-form-field appearance="outline">
+                    <input matInput [matDatepicker]="picker1" [formControl]="dateCon" (dateChange)="loadSeat()">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </form>
+
+            <div class="d-flex ml-3">
+                <p class="roboto-medium-18 m-0" style="color: #1e8ee9; font-size: 20px">
+                    <b>Scheduled Date :</b> {{ calenderDate | date }}
+                </p>
+            </div>
+            <!-- todo:- need to uncomment this once API is present -->
+            <a class="ml-auto" (click)="downloadDailySiteSchedule()">Daily Site Schedule</a>
+            <a class="ml-3" (click)="downloadInventoryReport()">Vaccine Inventory Report</a>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between py-3">
+        <!-- <div class="d-flex flex-grow-1 mx-4">
+            <p class="roboto-medium-18 m-0" style="color: #1e8ee9; font-size: 20px">
+
+            </p>
+        </div> -->
+        <div class="w-100 d-flex justify-content-around">
+            <div>
+                <button mat-stroked-button class="booked-btn p-0 p-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="m-0">BOOKED</p>
+                        <p class="m-0">
+                            ({{countBooked}})
+                        </p>
+                    </div>
+                    <hr class="inner-book-line my-1" />
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="m-0">Completed:{{countCompleted}}</p>
+                        <p class="m-0"> Checked In :{{countObservation}}</p>
+                        <p class="m-0">Upcoming:{{countUpcoming}}</p>
+                    </div>
+                </button>
+            </div>
+            <div class="d-flex flex-column vaccine-status">
+                <div>
+                    <button mat-stroked-button class="mx-3 open">OPEN ({{countOpen}})</button>
+                    <button mat-stroked-button class="missed">MISSED ({{countMissed}})</button>
+                    <button mat-stroked-button class="mx-3 private">PRIVATE</button>
+                    <button mat-stroked-button class="public">PUBLIC</button>
+                </div>
+                <div class="row mx-0 pt-2">
+                    <mat-form-field appearance="outline" class="col-6 mat-focused pr-0">
+                        <mat-label>Doses Booked</mat-label>
+                        <input matInput disabled [value]="availableDosesStr" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-6 mat-focused pr-0">
+                        <mat-label>Doses Consumed </mat-label>
+                        <input matInput disabled [value]="consumedDosesStr" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="py-4">
+
+    </div>
+    <!-- <div class="d-flex justify-content-between pl-2">
+        <span class="rounded-circle border blue-2-bg left-arrow white-text" (click)="table.scrollBy(-200, 0);"><i
+                class="fa fa-chevron-left" aria-hidden="true"></i></span>
+        <span class="rounded-circle border blue-2-bg right-arrow white-text" (click)="table.scrollBy(200, 0);"><i
+                class="fa fa-chevron-right" aria-hidden="true"></i></span>
+    </div> -->
+
+    <div class="table-responsive overflow-hidden">
+        <div id="table-scroll" class="table-scroll">
+            <div class="table-wrap" #tableScroll id="style-1">
+                <table class="main-table">
+                    <thead>
+                        <tr>
+                            <th class="fixed-side">
+                                <button mat-stroked-button class="time-slot">Slot Time</button>
+                            </th>
+                            <th *ngFor="let seatItem of finalSeatDataArr">
+                                <ng-container *ngIf="seatItem.seat_info">
+                                    <ng-container *ngIf="seatItem.seat_info.seat_allocation_type=='public'">
+                                        <button mat-stroked-button class="public">{{seatItem.seat_name}}</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="seatItem.seat_info.seat_allocation_type=='private'">
+                                        <button mat-stroked-button class="private">{{seatItem.seat_name}}</button>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="!seatItem.seat_info">
+                                    <button mat-stroked-button class="public">{{seatItem.seat_name}}</button>
+                                </ng-container>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr *ngFor="let renderItem of finalRenderDataArr">
+                            <td class="fixed-side">
+                                <button mat-stroked-button>{{renderItem.slotDateTime | date : 'h:mm a'}}</button>
+                            </td>
+                            <td *ngFor="let renderSeatItem of renderItem.seatsArr">
+                                <ng-container *ngIf="renderSeatItem['data'];">
+                                    <!-- ({{renderSeatItem.data.time_diff}}min) -->
+                                    <button *ngIf="renderSeatItem['data'].status=='booked'" mat-stroked-button
+                                        class="booked" (click)="showAppointment(renderSeatItem?.data)">
+                                        {{getBookedTicketLabel(renderSeatItem?.data?.ticket_number,renderSeatItem?.data)}}
+                                    </button>
+                                    <button *ngIf="renderSeatItem['data'].status=='open'" mat-stroked-button
+                                        class="open">
+                                        {{renderSeatItem?.data?.status}}
+                                    </button>
+                                    <button *ngIf="renderSeatItem['data'].status=='missed'" mat-stroked-button
+                                        class="missed" (click)="showAppointment(renderSeatItem?.data)">
+                                        {{getMissedTicketLabel(renderSeatItem?.data)}}
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="!renderSeatItem['data'];">
+                                    <button mat-stroked-button>NA</button>
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between pl-2 pb-4 arrow">
+        <span class="rounded-circle border blue-2-bg left-arrow white-text" style="margin-left: -33px;"
+            (click)="moveRight()"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>
+        <span class="rounded-circle border blue-2-bg right-arrow white-text" style="margin-right: -33px;"
+            (click)="moveLeft()"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>
+
+<app-component-dynamic-model></app-component-dynamic-model>

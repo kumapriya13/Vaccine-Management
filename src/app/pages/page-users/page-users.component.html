@@ -1,0 +1,16 @@
+<app-component-dynamic-heading [heading]="'Users'"></app-component-dynamic-heading>
+<div class="container">
+    <div class="row mb-3">
+        <div class="tab-navigation col-6">
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" routerLink="./admins">Admins</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" routerLink="./recipients">Recipients</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

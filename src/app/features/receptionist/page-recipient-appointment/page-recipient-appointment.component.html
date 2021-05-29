@@ -1,0 +1,14 @@
+<app-component-dynamic-heading [heading]="'Appointment'" [refererClick]="true"></app-component-dynamic-heading>
+
+<!-- <div class="container mb-4">
+    <div class="recipient-info d-flex">
+        <h2 class="blue-text">
+            {{recipient?.fname}} {{recipient?.lname}}
+        </h2>
+    </div>
+</div> -->
+
+<component-recipient-visit [(recipient)]="recipient"
+                           [feature]="feature"
+                           (bookAppointment)="bookAppointment()"
+                           (adverseEventReport)="adverseEventReport($event)"></component-recipient-visit>

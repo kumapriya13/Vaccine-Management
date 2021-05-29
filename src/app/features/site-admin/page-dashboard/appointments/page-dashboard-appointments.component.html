@@ -1,0 +1,90 @@
+
+    <div class="container">
+
+        <!-- <div class="d-flex align-items-center justify-content-between" style="padding-left: 20px;">
+
+            <h5 class="appointment-hed-text roboto-medium-20">Select Date</h5>
+
+        </div> -->
+
+
+        <div>
+            <!-- <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row"> -->
+
+                <!-- <mat-form-field appearance="outline" class="mx-md-4 w-50" style="width: 320px !important;">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date" (dateChange)="startChange($event)">
+                    <input matEndDate placeholder="End date" (dateChange)="endChange($event)">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field> -->
+        <mat-form-field class="search-form-field ml-1" appearance="outline" style="width: 300px;">
+            <mat-label><b>Choose Date</b></mat-label>
+            <input [(ngModel)]="date" (dateChange)="dateChange($event)" matInput [matDatepicker]="dp3" [readonly]="true">
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <site-admin-page-dashboard-tab></site-admin-page-dashboard-tab>
+    <div class="tab-content my-0 pt-5 mt-3" id="myTabContent">
+        <!-- class="tab-pane" id="appointments" role="tabpane2" aria-labelledby="appointments" -->
+        <div class="pb-5">
+            <table class="table table-striped w-100">
+                <thead class="w-100">
+                    <tr>
+                        <th class="roboto-regular-18 blue-bg white-text text-left pr-5">Details</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Sunday</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Monday</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Tuesday</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Wednesday</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Thursday</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Friday</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Saturday</th>
+                        <th class="roboto-regular-18 blue-bg white-text text-left">Total</th>
+                        <!-- <th class="blue-bg"></th> -->
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let appointment of appointmentsList">
+                        <td class="txt text-left" style="width: 20%;">
+                            <span class="roboto-medium-16">{{appointment.Detail}}</span>
+                        </td>
+                        <td class="txt text-left" style="width: 10%;">
+                            <span class="roboto-medium-16">{{appointment.Sunday}}</span>
+                        </td>
+                        <td class="txt text-left" style="width: 10%;">
+                            <span class="roboto-medium-16">{{appointment.Monday}}</span>
+                        </td>
+                        <td class="txt text-left" style="width: 10%;">
+                            <span class="roboto-medium-16">{{appointment.Tuesday}}</span>
+                        </td>
+                        <td class="txt text-left" style="width: 10%;">
+                            <span class="roboto-medium-16">{{appointment.Wednesday}}</span>
+                        </td>
+                        <td class="txt text-v" style="width: 10%;">
+                            <span class="roboto-medium-16">{{appointment.Thursday}}</span>
+                        </td>
+                        <td class="txt text-left" style="width: 10%;">
+                            <span class="roboto-medium-16">{{appointment.Friday}}</span>
+                        </td>
+                        <td class="txt text-left" style="width: 10%;">
+                            <span class="roboto-medium-16">{{appointment.Saturday}}</span>
+                        </td>
+                        <td class="txt text-left" style="width: 10%;">
+                            <span class="roboto-medium-16" *ngIf="appointment.Total==null;else showTotal;">null</span>
+                            <ng-template #showTotal>
+                                <span class="roboto-medium-16">{{appointment.Total}}</span>
+                            </ng-template>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>

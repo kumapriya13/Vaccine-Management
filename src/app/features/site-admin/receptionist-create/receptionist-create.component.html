@@ -1,0 +1,157 @@
+<app-component-dynamic-heading [heading]="'MANAGE RECEPTIONIST'" [refererClick]="true"></app-component-dynamic-heading>
+<div class="container my-3 pb-2">
+  <h2 style="margin-left: 40px;">{{receptionistUserSave?'Add Receptionist':'Edit Receptionist'}}</h2>
+  <div>
+    <form class="container d-flex flex-column align-items-center" [formGroup]="receptionistSignUpForm"
+      (ngSubmit)='providerAdminSave()'>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>First Name *
+          </mat-label>
+          <input matInput placeholder="Enter First Name" formControlName="fname" />
+          <mat-error *ngIf="receptionistSignUpForm.get('fname').hasError('required')"> First Name is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Last Name *
+          </mat-label>
+          <input matInput placeholder="Enter Last Name" formControlName="lname" />
+          <mat-error *ngIf="receptionistSignUpForm.get('lname').hasError('required')">Last Name is
+            required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-50">
+          <mat-label>Email ID *
+          </mat-label>
+          <input matInput placeholder="Enter Email Address" formControlName="email" />
+          <mat-error *ngIf="receptionistSignUpForm.get('email').hasError('required')">Email Id is required
+          </mat-error>
+
+          <mat-error *ngIf="receptionistSignUpForm.get('email').hasError('pattern')">Email Id must be a valid
+          </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-50">
+          <mat-label [ngClass]="{'ml-5 pl-2': receptionistUserSave}">Mobile Phone Number *</mat-label>
+          <div *ngIf="!receptionistUserSave">
+            <input matInput placeholder="Mobile Phone Number" formControlName="phoneNo" />
+          </div>
+
+          <div *ngIf="receptionistUserSave">
+            <input matInput placeholder="Mobile Phone Number" formControlName="phoneNo" ng2TelInput
+              [ng2TelInputOptions]="{initialCountry: 'us'}" (countryChange)="onCountryChange($event)" />
+          </div>
+
+          <mat-error *ngIf="receptionistSignUpForm.get('phoneNo').hasError('pattern')">Enter valid Mobile Phone Number
+            .
+          </mat-error>
+          <mat-error *ngIf="receptionistSignUpForm.get('phoneNo').hasError('required')">Mobile Phone Number is
+            required
+          </mat-error>
+
+        </mat-form-field>
+      </div>
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput placeholder="Date of Birth" formControlName="dob" [min]="minDate" [max]="maxDate"
+            [matDatepicker]="picker1" />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Gender</mat-label>
+          <mat-select matInput placeholder="Gender" formControlName="gender">
+            <mat-option *ngFor="let item of genderData; let j = index" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Address Line 1</mat-label>
+          <input matInput placeholder="Address Line 1" formControlName="address1" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Address Line 2</mat-label>
+          <input matInput placeholder="Address Line 2" formControlName="address2" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Apartment,Suite,Unit Number</mat-label>
+          <input matInput placeholder="Apartment,Suite,Unit Number" formControlName="address3" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="City" maxlength="25" formControlName="city" />
+        </mat-form-field>
+
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Zip</mat-label>
+          <input matInput placeholder="Zip" #zip formControlName="zip" (input)="fetchzipdetails(zip)"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>State</mat-label>
+          <input matInput placeholder="state" readonly formControlName="state" />
+          <!-- <mat-select (selectionChange)="onChangeState($event)" formControlName="state" *ngIf="stateshow">
+            <mat-option *ngFor="let state of stateInfo; let j = index" [value]="state.StateName">
+              {{state.StateName}}
+            </mat-option>
+          </mat-select> -->
+        </mat-form-field>
+
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Country</mat-label>
+          <input matInput placeholder="country" readonly formControlName="country" />
+          <!-- <mat-select (selectionChange)="onChangeCountry($event)" formControlName="country">
+            <mat-option *ngFor="let country of Countries; let i = index" [value]="country.CountryName">
+              {{country.CountryName}}
+            </mat-option>
+          </mat-select> -->
+
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>User Name *
+          </mat-label>
+          <input matInput (keyup)="searchInterest()" placeholder="Enter UserName" formControlName="user_name" />
+          <mat-error *ngIf="receptionistSignUpForm.get('user_name').hasError('required')"> User name is
+            required
+          </mat-error>
+
+        </mat-form-field>
+      </div>
+
+      <div class="w-75 d-flex align-items-center justify-content-start pt-3 pb-5">
+        <button mat-button class="roboto-medium-18 white-text mr-3" style="width: 119px;
+                    height: 46px;left: 240px; background: #1C8DE8 0% 0% no-repeat padding-box;
+                    border-radius: 4px;" type="submit">{{receptionistUserSave?'Save':'Update'}}
+        </button>
+
+        <button mat-button class="roboto-medium-18 white-text ml-3" style="width: 119px;
+                    height: 46px; left: 250px;background: #999999 0% 0% no-repeat padding-box;
+                      border-radius: 4px;" type="button" [routerLink]="'/site-admin/list-receptionist'">Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

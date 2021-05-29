@@ -1,0 +1,20 @@
+<recipient-list-grid (addFilteredRecipients)="addFilteredRecipients($event)"
+    [onlyFirstAppointment]="onlyFirstAppointment" [selectedVaccine]="selectedVaccine"></recipient-list-grid>
+
+    <ng-select appearance="outline" placeholder="Add Recipient" [multiple]="true" [(ngModel)]="selectedRecipients"
+    [minTermLength]="3" [compareWith]="compareRecipient" [typeahead]="recipientFilter$">
+    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+        <span class="ng-value-label">
+            <ng-container *ngIf="item.isFilterQuery; else itemTemplate">
+                Filtered {{item.count}} recipients
+            </ng-container>
+            <ng-template #itemTemplate>
+                {{item.fname}} {{item.lname}}
+            </ng-template>
+        </span>
+        <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+    </ng-template>
+    <ng-option *ngFor="let item of filteredRecipients" [value]="item">
+        {{item.fname}} {{item.lname}}
+    </ng-option>
+</ng-select>

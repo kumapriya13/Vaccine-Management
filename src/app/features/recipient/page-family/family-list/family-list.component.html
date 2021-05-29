@@ -1,0 +1,72 @@
+<app-component-dynamic-heading [heading]="'Family Details'"></app-component-dynamic-heading>
+<div class="container">
+    <div class="action-buttons d-flex justify-content-end">
+        <div class="dropdown">
+            <button mat-stroked-button
+                    color="primary"
+                    class="mr-3 rounded-pill dropdown-toggle"
+                    data-toggle="dropdown">
+                Add Family Member
+            </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item" [routerLink]="'./register'">Add Full Profile</button>
+                <button class="dropdown-item" (click)="openBulkAddEditor()">Bulk Add</button>
+            </div>
+        </div>
+        <button mat-stroked-button color="primary" class="rounded-pill d-none">Book Appointment</button>
+    </div>
+
+    <div class="family-member-list row mt-4">
+        <div *ngFor="let object of members" class="col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow w-100">
+                <div class="card-header bg-blue white-text cursor-pointer" (click)="select(object.id)">
+                    <!-- <input type="checkbox" [(ngModel)]="selectInfo[object.id]" /> -->
+                    <span class="fs-20">
+                        {{object.fname}} {{object.lname}} - {{object.primary_relationship}}
+                    </span>
+                </div>
+                <!-- <div class="card-body">
+                    <b>Status</b>
+                    <ng-container *ngIf="object.$expanded.booked_visits[0]">
+                        <div class="visit-status">
+                            1st Dose: {{object.$expanded.booked_visits[0].visit_status | titlecase}}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="object.$expanded.booked_visits[1]">
+                        <div class="visit-status">
+                            2nd Dose: {{object.$expanded.booked_visits[1].visit_status | titlecase}}
+                        </div>
+                    </ng-container>
+                </div> -->
+                <div class="card-footer border-0 white-bg d-flex justify-content-end">
+                    <button mat-button color="primary" class="rounded-pill" (click)="onDelete(confirmDialog, object)">
+                        Delete
+                    </button>
+                    <button mat-flat-button color="primary" class="rounded-pill d-none">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<family-add [(open)]="bulkAddEditorOpen" (save)="bulkSaveMembers($event)"></family-add>
+
+<ng-template #confirmDialog let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Please confirm</h4>
+        <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Are you sure you want to delete this family member?</strong></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">
+            Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Ok click')">
+            Ok
+        </button>
+    </div>
+</ng-template>

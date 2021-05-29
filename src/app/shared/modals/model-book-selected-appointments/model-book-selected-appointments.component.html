@@ -1,0 +1,116 @@
+<form [formGroup]="appform" (ngSubmit)="submitData()" autocomplete="off" #form>
+    <div class="vms-sign-up">
+        <div class="vaccinator-schedule-header mb-3">
+            <div class="container d-flex align-items-center">
+                <h2 class="roboto-medium-20 text-light m-0">Book Appointments</h2>
+            </div>
+        </div>
+            <div class="conatiner" style="color: red;">
+    <div *ngIf="belowage18==true && receipientIdsList" class="form-row-width container d-flex justify-content-center flex-column flex-md-row"> 
+        {{belowage18Message}}
+        <!-- For the selected material the following recepient Age should be greater than or equal to 18 {{receipientIdsList.length}} -->
+        </div>
+        <!-- <div class="container d-flex flex-column justify-content-center flex-md-row">
+        <ngcontainer *ngFor="let belowage18 of receipientIdsList;let i = index">
+        <ng-container *ngIf="belowage18.ageBelow18">
+            <span class="badge badge-primary">{{belowage18?.name}}</span> &nbsp;</ng-container>
+        </ngcontainer>
+        </div> -->
+    </div>
+
+        <div class="conatiner py-5">
+            <div *ngIf="adminType['user_type']=='receptionist'" class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                        <mat-label>Select site</mat-label>
+                        <mat-select formControlName="siteIds" (selectionChange)="getSelectedSiteName($event)">
+                            <mat-option *ngFor="let sites of sites" [value]="sites.site_id">
+                                {{ sites.site_name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Select Allocation Type</mat-label>
+                    <mat-select matInpt formControlName="allocationType">
+                        <mat-option value="Private" selected> Private </mat-option>
+                        <mat-option value="Public"> Public </mat-option>
+                        <mat-option value="All"> Private & Public </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="appform.get('allocationType').hasError('required') && appform.get('allocationType').touched">
+                        Allocation type is required.
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Select Material</mat-label>
+                    <mat-select matInpt formControlName="materialId" (selectionChange)="getSlotList($event)">
+                        <mat-option *ngFor="let vaccine of materialList" [value]="vaccine.id">
+                            {{ vaccine.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="appform.get('materialId').hasError('required')">Material is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="row d-flex justify-content-center">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select Material</mat-label>
+                    <mat-select matInpt formControlName="materialId">
+                        <mat-option *ngFor="let vaccine of materialList" [value]="vaccine.id">
+                            {{ vaccine.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="appform.get('materialId').hasError('required')">Material is required.
+                    </mat-error>
+                </mat-form-field>
+            </div> -->
+
+            <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Date Of Appointment</mat-label>
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker1"
+                        formControlName="startDateTime" />
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="appform.get('startDateTime').hasError('required')">Appointment date is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                    <mat-label>Time Of Appointment </mat-label>
+                    <input type="text" matInput [ngxTimepicker]="picker" formControlName="timeSelected">
+                    <mat-error *ngIf="appform.get('timeSelected').hasError('required')">Appointment time is required.
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+
+
+            <!-- <div class="row d-flex justify-content-center">
+                <mat-form-field appearance="outline">
+                    <mat-label>Time Of Appointment </mat-label>
+                    <input type="text" matInput [ngxTimepicker]="picker" formControlName="timeSelected">
+                    <mat-error *ngIf="appform.get('timeSelected').hasError('required')">Appointment time is required.
+                    </mat-error>
+                </mat-form-field>
+            </div> -->
+            <ngx-material-timepicker #picker></ngx-material-timepicker>
+
+
+            <div class="d-flex justify-content-center proceed-div py-3">
+                <button mat-button class="btn mr-3 roboto-medium-18" type="submit"
+                    [disabled]="(receipientIdsListCount==0 || !appform.valid || isSubmited)">
+                    Submit
+                </button>
+                &nbsp;
+                <button type="button" mat-button (click)="dialogRef.close()"
+                    class="btn preview-btn roboto-medium-16">Close</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,220 @@
+<app-component-recipient-header></app-component-recipient-header>
+<div class="vms-sign-up">
+  <app-component-dynamic-heading [heading]="'Edit Profile'"></app-component-dynamic-heading>
+  <!-- <edit-recepient-common [redirection]="redirection" 
+  [redirectionAfterSave]="redirectionAfterSave" 
+  [(recepient)]="recepientId"
+  [recepient_only]="true"
+  ></edit-recepient-common> -->
+  <div *ngIf="authRecipientEditForm" class="conatiner py-3">
+    <form class="container d-flex flex-column align-items-center" [formGroup]="authRecipientEditForm"
+      (ngSubmit)="authRecipientEditFormSub()">
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>First Name *</mat-label>
+          <input matInput placeholder="First Name" maxlength="50" formControlName="firstName" />
+          <mat-error *ngIf="!authRecipientEditForm.get('firstName').valid">First Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Last Name *</mat-label>
+          <input matInput placeholder="Last Name" maxlength="50" formControlName="lastName" />
+          <mat-error *ngIf="!authRecipientEditForm.get('lastName').valid">Last Name is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Email ID *</mat-label>
+          <input matInput placeholder="Email ID" formControlName="email" [readonly]="userDetails?.is_activated" />
+          <mat-error *ngIf="authRecipientEditForm.get('email').hasError('required')">Email ID is required
+          </mat-error>
+          <mat-error *ngIf="
+              authRecipientEditForm.get('email').hasError('existingRecipient')
+            ">Email ID already exists
+          </mat-error>
+          <mat-error *ngIf="authRecipientEditForm.get('email').hasError('pattern')">Email must be a valid
+          </mat-error>
+        </mat-form-field>
+
+        <ng-container *ngIf="authRecipientEditForm.get('countryFlag').value;else noFlag">
+          <mat-form-field appearance="outline" class="mr-md-4 ml-md-4" style="width: 6% !important;">
+              <input formControlName="countryFlag" readonly autocomplete="off" type="text"
+              (countryChange)="onCountryChange($event)" 
+              matInput ng2TelInput [ng2TelInputOptions]="{initialCountry: authRecipientEditForm.get('countryFlag').value.iso2}" />
+          </mat-form-field>
+      </ng-container>
+      <ng-template #noFlag>
+          <mat-form-field *ngIf="iso2;else emptyBox" appearance="outline" class="mr-md-4 ml-md-4" style="width: 6% !important;">
+              <input formControlName="countryFlag" id="flagRef" readonly autocomplete="off" type="text" 
+              (intlTelInputObject)="onLoadCountryChange($event)" 
+              matInput ng2TelInput [ng2TelInputOptions]="{initialCountry: iso2}" />
+          </mat-form-field>
+          <ng-template #emptyBox>
+              <mat-form-field  appearance="outline" class="mr-md-4 ml-md-4" style="width: 6% !important;">
+                  <input formControlName="countryFlag"  matInput/>
+              </mat-form-field>
+              </ng-template>
+      </ng-template>
+    <mat-form-field appearance="outline" class="mr-md-4" style="width: 82% !important;">
+        <mat-label>Mobile Phone Number</mat-label>
+        <input type="text" formControlName="phoneNumber" maxlength="10" [readonly]="userDetails?.is_activated"
+            matInput />
+        <mat-error *ngIf="authRecipientEditForm.get('phoneNumber').hasError('pattern')">Enter valid Mobile
+            Phone
+            Number.
+        </mat-error>
+    </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label class="ml-5 pl-2">Mobile Phone Number</mat-label>
+          <input type="text" formControlName="phoneNumber" matInput placeholder="Mobile Phone Number"
+            [ng2TelInputOptions]="{initialCountry: 'us'}" (countryChange)="onCountryChange($event)"
+            [readonly]="userDetails?.is_activated" />
+
+          <mat-error *ngIf="authRecipientEditForm.get('phoneNumber').hasError('pattern')">Enter valid phone
+            number.
+          </mat-error>
+          <mat-error *ngIf="authRecipientEditForm.get('phoneNumber').hasError('required')"> Phone number is
+            required
+          </mat-error>
+        </mat-form-field> -->
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Date of Birth *</mat-label>
+          <!-- <input matInput placeholder="Email ID" formControlName="dob" /> -->
+          <input matInput placeholder="Date of Birth" [min]="minDate" [max]="maxDate" formControlName="dob" [matDatepicker]="picker1" />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error *ngIf="!authRecipientEditForm.get('dob').valid">Date of Birth is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Address1 *</mat-label>
+          <input matInput placeholder="Address1" formControlName="address1" />
+          <mat-error *ngIf="!authRecipientEditForm.get('address1').valid">Address1 is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Address2 </mat-label>
+          <input matInput placeholder="Address2" formControlName="address2" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Apartment,Suit,Unit Number</mat-label>
+          <input matInput placeholder="Apartment,Suit,Unit Number" formControlName="address3" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>Home Phone Number</mat-label>
+          <input matInput placeholder="Home Mobile Phone Number" formControlName="homePhoneNumber" />
+          <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('homePhoneNumber').valid">Home Mobile Phone Number is
+              required
+          </mat-error> -->
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+          <mat-label>zip *</mat-label>
+          <input matInput placeholder="Zip" #zip formControlName="zip" (input)="fetcheditzipdetails(zip)"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+          <mat-error *ngIf="!authRecipientEditForm.get('zip').valid">zip is required</mat-error>
+          <mat-error *ngIf="authRecipientEditForm.get('zip').hasError('pattern')">Enter only number
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+      <mat-form-field appearance="outline" class="mx-md-4 w-100">
+        <mat-label>City *</mat-label>
+        <input matInput placeholder="City" formControlName="city" />
+        <mat-error *ngIf="!authRecipientEditForm.get('city').valid">City is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="mx-md-4 w-100">
+        <mat-label>State *</mat-label>
+        <input matInput placeholder="state" readonly formControlName="state" *ngIf="show" />
+        <mat-select (selectionChange)="onChangeState($event)" formControlName="state" *ngIf="stateshow">
+          <mat-option *ngFor="let statess of stateInfo" [value]="statess">
+              {{statess}}
+          </mat-option>
+      </mat-select>
+        <mat-error *ngIf="!authRecipientEditForm.get('state').valid">State is required</mat-error>
+
+      </mat-form-field>
+  </div>
+  <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+      <mat-label>Country *</mat-label>
+      <input matInput placeholder="Country" formControlName="country" readonly />
+      <mat-error *ngIf="!authRecipientEditForm.get('country').valid">Country is required</mat-error>
+      <!-- <mat-select (selectionChange)="onChangeCountry($event)" formControlName="country">
+            <mat-option *ngFor="let country of countryInfo; let i = index" [value]="country.CountryName">{{
+              country.CountryName }}
+            </mat-option>
+          </mat-select> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+      <mat-label>County *</mat-label>
+      <input matInput placeholder="county" readonly formControlName="county" *ngIf="show" />
+      <mat-select formControlName="county" *ngIf="stateshow">
+          <mat-option *ngFor="let county of countyAd; let i = index" [value]="county">{{county}}
+          </mat-option>
+      </mat-select>
+       <mat-error *ngIf="!authRecipientEditForm.get('county').valid">County is required</mat-error>
+      <!-- <mat-select formControlName="county">
+            <mat-option *ngFor="let county of this.countyAd; let i = index" [value]="county" readonly>{{ county }}
+            </mat-option>
+          </mat-select> -->
+    </mat-form-field>
+
+  </div>
+
+  <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+    <div class="mx-md-4 w-100">
+      <div class="mb-3">
+        <p class="pb-3 m-0 roboto-medium-18">Insurance Information</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+      <mat-label>Insurance</mat-label>
+      <input matInput maxlength="20" placeholder="Insurance" formControlName="insurance" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+      <mat-label>Insurance Provider name</mat-label>
+      <input matInput maxlength="20" placeholder="Insurance provider name" formControlName="insuranceprovidername" />
+    </mat-form-field>
+  </div>
+
+  <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+      <mat-label>Medical Group Number</mat-label>
+      <input matInput maxlength="20" placeholder="Medical Group Number" formControlName="medicalGroupNumber" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mx-md-4 w-100">
+      <mat-label>Medical Id</mat-label>
+      <input matInput maxlength="20" placeholder="Medical Id" formControlName="memberId" />
+    </mat-form-field>
+  </div>
+  <div class="proceed-div py-3">
+    <button mat-button class="btn roboto-medium-15 mr-2" type="submit"
+      style="
+            width: 119px; height: 38px; background: #0984e3 0% 0% no-repeat padding-box; background: #0984e3 0% 0% no-repeat padding-box;  border-radius: 52px; color: white;">
+      Save
+    </button>
+    <button mat-button class="btn roboto-medium-15 ml-2" type="button" (click)="onCancel()"
+      style="  width: 119px; height: 38px; background: #999999 0% 0% no-repeat padding-box; border-radius: 52px;">
+      Cancel
+    </button>
+  </div>
+  </form>
+</div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

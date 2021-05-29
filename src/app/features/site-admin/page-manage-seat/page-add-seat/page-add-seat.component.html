@@ -1,0 +1,129 @@
+<app-component-site-admin-header></app-component-site-admin-header>
+<app-component-dynamic-heading [heading]="'MANAGE SEATS'" [refererClick]="true"></app-component-dynamic-heading>
+
+<div class="vms-sign-up">
+  <div class="vaccinator-schedule-header mb-2">
+    <div class="container d-flex align-items-center">
+      <h1 class="roboto-bold-20 m-0 pr-1" style="border-right: 2px solid #9F9F9F;">Add Seat</h1>
+      <p class="roboto-regular-14 m-0 pl-1" style="color: #9F9F9F;">
+        <span *ngIf="vaccinatorDelails && vaccinatorDelails.$expanded['sites']">
+          {{vaccinatorDelails.$expanded['sites'][0].site_name }}
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <form [formGroup]="addSeatForm" (ngSubmit)="addSeatFormSub()">
+      <div class="w-100 d-flex justify-content-between">
+        <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+          <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 320px !important;">
+            <mat-label>Seat Label</mat-label>
+            <input matInput placeholder="Enter Seat Label" formControlName="seatLabel" />
+          </mat-form-field>
+        </div>
+        <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row p-0">
+          <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 350px !important;">
+            <mat-label>Number Of Seat</mat-label>
+
+            <input matInput type="text" placeholder="Enter" formControlName="seatNumber"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- <div class="w-50 d-flex justify-content-start pl-4 ml-3">
+        <div class="d-flex align-items-center">
+          <p class="seat pr-2">Seat Settings</p>
+          <input type="checkbox" class="mb-2" formControlName="applyAll">
+          <p class="seats pl-2">Apply to all Seats</p>
+        </div>
+      </div> -->
+      <div class="d-flex justify-content-center">
+        <div class="w-50">
+          <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-50" style="width: 320px !important;">
+              <mat-label>Vaccine</mat-label>
+              <mat-select matInput placeholder="Select" formControlName="vaccineName">
+                <!-- <mat-option value="Pfizer">Pfizer</mat-option>
+                <mat-option value="Moderna">Moderna</mat-option> -->
+                <mat-option *ngFor="let item of vaccineList" [value]="item"> {{item.name}} </mat-option>
+              </mat-select>
+
+            </mat-form-field>
+          </div>
+          <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-50" style="width: 320px !important;">
+              <mat-label>Status</mat-label>
+              <mat-select matInput placeholder="Select" formControlName="status">
+                <mat-option value="Enable">Enable</mat-option>
+                <mat-option value="Disable">Disable</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-50" style="width: 320px !important;">
+              <mat-label>Allocation</mat-label>
+              <mat-select matInput placeholder="Select" formControlName="allocation">
+                <mat-option value="Private"> Private </mat-option>
+                <mat-option value="Public"> Public </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="w-50 pb-2 ml-4 pl-2">
+          <div class="card shadow">
+            <div class="card-header">
+              <p class="roboto-medium-16">Add Vaccinator</p>
+              <p class="roboto-regular-14">Use the Add Vaccinator button to
+                add multiple Vaccinator</p>
+            </div>
+            <div class="card-body text-center p-1">
+              <mat-form-field appearance="outline" class="mx-md-4 w-50" style="width: 320px !important;">
+                <mat-label>Select Vaccinator</mat-label>
+                <mat-select multiple name="vaccinator" (selectionChange)="getSingleVacc($event)"
+                  formControlName="vaccinator" #vaccinatorobj>
+                  <mat-option value="selectAll" (click)="toggleAllSelection(ev,vaccinatorList)" #ev>
+                    Select All
+                  </mat-option>
+                  <!-- <mat-option (click)="toggleAllSelection(checkAll)" #checkAll value="Select All"> Select All </mat-option> -->
+                  <mat-option *ngFor="let v of vaccinatorList" [value]="v"> {{v.user_name}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="card-body" style="padding:0px;height: 120px;">
+                <ul class="p-0 mb-2 h-100 px-2" style="overflow-y: auto;">
+                  <li *ngFor="let item of selectedItems" (click)="removeVaccinator(item)"
+                    class="vaccinator-list d-flex justify-content-between px-2 py-1">
+                    {{item.user_name}}<i class="fa fa-trash-o blue-text text-right"></i></li>
+                </ul>
+              </div>
+            </div>
+
+
+
+            <!-- <div class="card-footer pb-4">
+              <button type="button" class="roboto-medium-14 ml-2 border-0"
+                style="width: 135px; height: 32px; background: #AADAFF 0% 0% no-repeat padding-box; border-radius: 4px;">Add
+                Vaccinator</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- <div class="d-flex justify-content-center">
+        <div class="card mt-5 add-sch-btn-card">
+          <div class="d-flex align-items-center justify-content-center py-5">
+            <button class="add-sch-btn roboto-medium-14 border-0">Add Schedule</button>
+          </div>
+        </div>
+      </div> -->
+      <div class="w-100 d-flex justify-content-end my-5">
+        <button type="submit" class="roboto-medium-18 white-text mr-2 border-0" style="width: 119px;
+            height: 46px; background: #1D8DE9 0% 0% no-repeat padding-box; border-radius: 4px;"> Add </button>
+        <button type="button" class="roboto-medium-18 white-text ml-2 border-0" style="width: 119px;
+                  height: 46px; background: #999999 0% 0% no-repeat padding-box; border-radius: 4px;"
+          [routerLink]="'/site-admin/list-seat'">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <app-component-footer-copyright-strip></app-component-footer-copyright-strip>

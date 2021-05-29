@@ -1,0 +1,135 @@
+<div>
+    <div class="bottom-border mb-3 mx-md-4">
+        <p class="pb-3 m-0 roboto-medium-18">
+            1. Which of the following best describes your ethnic group? *
+        </p>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-select matInput [(ngModel)]="ethnicity" (selectionChange)="getethnicityValue(ethnicity)">
+                <mat-option value="Hispanic or Latino">Hispanic or Latino</mat-option>
+                <mat-option value="Not Hispanic or Latino">Not Hispanic or Latino</mat-option>
+                <mat-option value="Prefer not to answer">Prefer not to answer</mat-option>
+            </mat-select>
+           
+        </mat-form-field>
+        <mat-error *ngIf="questionValidation['q1']">Ethnic Group is Required
+        </mat-error> 
+    </div>
+    <div class="bottom-border mb-3 mx-md-4">
+        <p class="pb-3 m-0 roboto-medium-18">
+            2. Which of the following best describes your race? Please select all that apply? *
+        </p>
+        <ul class="p-2">
+            <li *ngFor="let race of raceList"> 
+                <input type="checkbox"
+                       [(ngModel)]="raceSelectionInfo[race.value]" (change)="checkUncheckAll($event,race.value)"
+                       [id]="race.value">&nbsp;&nbsp;
+                <label class="roboto-regular-14" [for]="race.value">{{race.name}}</label>
+            </li>
+
+        </ul>
+        <mat-error *ngIf="questionValidation['q2']">Select Atleast One Checkbox.
+        </mat-error> 
+    </div>
+    <div class="mb-3 mx-md-4">
+        <p class="pb-3 m-0 roboto-medium-18">3. Select all that apply</p>
+        <ul class="p-2">
+            <li *ngFor="let applicable of applicableList">
+                <input type="checkbox"
+                       [(ngModel)]="employeeStatusSelectionInfo[applicable.value]"
+                       [id]="applicable.value">&nbsp;&nbsp;
+                <label class="roboto-regular-14" [for]="applicable.value">{{applicable.value}}</label>
+            </li>
+        </ul>
+    </div>
+    <div class="mb-3 mx-md-4">
+        <p class="pb-3 m-0 roboto-medium-18">4. Have you ever had any of the following medical
+            conditions? - Asthama(moderate to severe) - Cancer - Cerebrovascular disease - Chronic
+            Kidney Disease - Chronic obstructive pulmonary disease (COPD) - Cystic fibrosis - Down
+            Syndrome - Heart conditions, such as coronary artery disease or cardiomyopathies -
+            Hypertension or high blood pressure - Immunocompromised state (weakened immune system) -
+            Liver disease - Neurologic conditions, (such as dementia) - Nicotine/smoking addiction -
+            Obesity - Overweight - Pulmonary fibrosis (damaged or scarred lung tissues) - Sickle
+            cell disease - Thalassemia (type of blood disorder) - Type 1 diabetes mellitus - Type 2
+            diabetes mellitus.
+        </p>
+        <ul class="p-2">
+            <li *ngFor="let medical of medicalList">
+                <input type="radio" name="medical"
+                (change)="onSelectMedicalListChange(medical.value, $event.target.checked)"
+                    [value]="medical.value">&nbsp;&nbsp;
+                <span class="roboto-regular-14">{{medical.name}}</span>
+            </li>
+        </ul>
+    </div>
+    <!-- <div class="w-100">
+        <div class="mb-3">
+            <p class="pb-3 m-0 roboto-medium-18">
+                Prescription, over-the- counter medications, dietary supplements, or herbal remedies
+                being taken at the time of Vaccination.
+            </p>
+        </div>
+        <mat-form-field appearance="outline" class="w-100">
+            <input matInput [(ngModel)]="prescriptionQ" placeholder="Type here" />
+        </mat-form-field>
+    </div> -->
+
+    <div class="w-100 mx-md-4">
+        <div class="mb-3">
+            <p class="pb-3 m-0 roboto-medium-18">
+                Allergies to medications, food, or other products:
+            </p>
+        </div>
+        <mat-form-field appearance="outline" class="w-100">
+            <input matInput [(ngModel)]="allergiesStatus" placeholder="Type here" />
+        </mat-form-field>
+    </div>
+
+    <!-- <div class="w-100">
+        <div class="mb-3">
+            <p class="pb-3 m-0 roboto-medium-18">
+                Other illnesses at the time of vaccination and up to one month
+            </p>
+        </div>
+        <mat-form-field appearance="outline" class="w-100">
+            <input matInput [(ngModel)]="otherIllness" placeholder="Type here" />
+        </mat-form-field>
+
+    </div> -->
+
+    <div class="w-100 mx-md-4">
+        <div class="mb-3">
+            <p class="pb-3 m-0 roboto-medium-18">
+                Chronic or long-standing health conditions prior
+            </p>
+        </div>
+        <mat-form-field appearance="outline" class="w-100">
+            <input matInput [(ngModel)]="chronicOrLongStandingHealthCondition" placeholder="Type here" />
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="w-100 mx-md-4">
+    <div class="mb-3">
+        <p class="pb-3 m-0 roboto-medium-18">Insurance Information</p>
+    </div>
+    <div class="row">
+        <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Insurance</mat-label>
+            <input matInput placeholder="Insurance" maxlength="25" [(ngModel)]="insurance" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Insurance Provider name</mat-label>
+            <input matInput placeholder="Insurance provider name" maxlength="25"
+                   [(ngModel)]="insuranceProvider" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Medical Group Number</mat-label>
+            <input matInput placeholder="Medical Group Number" maxlength="25"
+                   [(ngModel)]="medicalGroupNumber" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Medical Id</mat-label>
+            <input matInput placeholder="Medical Id" maxlength="25" [(ngModel)]="medicalId" />
+        </mat-form-field>
+    </div>
+</div>

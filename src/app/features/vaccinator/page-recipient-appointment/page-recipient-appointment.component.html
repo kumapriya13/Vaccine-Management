@@ -1,0 +1,25 @@
+
+<app-component-vaccinator-header></app-component-vaccinator-header>
+
+<div class="page-header">
+    <div class="container d-flex align-items-center">
+        <i class="fa fa-arrow-left white-text" style="font-size: 22px;"
+           (click)="back()"></i>
+        <h1 class="roboto-medium-30 white-text m-0 px-2">Appointment</h1>
+    </div>
+</div>
+
+<!-- <div class="container mb-4">
+    <div class="recipient-info d-flex">
+        <h2 class="blue-text">
+            {{recipient?.fname}} {{recipient?.lname}}
+        </h2>
+    </div>
+</div> -->
+
+<component-recipient-visit [(recipient)]="recipient"
+                           [feature]="feature"
+                           (bookAppointment)="bookAppointment()"
+                           (adverseEventReport)="adverseEventReport($event)"></component-recipient-visit>
+
+                           <app-component-footer-copyright-strip></app-component-footer-copyright-strip>

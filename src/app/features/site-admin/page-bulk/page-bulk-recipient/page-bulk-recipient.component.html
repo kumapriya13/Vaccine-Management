@@ -1,0 +1,41 @@
+<app-bulk-header-strip>..</app-bulk-header-strip>
+<div class="container my-5 pt-5">
+  <div class="text-center">
+    <p class="roboto-regular-20" *ngIf="!uploadInProgress && !uploadResult">Select File To Upload</p>
+    <p class="roboto-regular-20" *ngIf="uploadInProgress && !uploadResult">Upload in progress</p>
+
+    <div class="form-group" *ngIf="!uploadInProgress && !uploadResult">
+      <input type="file" accept=".csv" id="file" (change)="onFileChange($event)">
+    </div>
+    <div *ngIf="isFileSelected && !uploadInProgress && !uploadResult">
+      <button (click)="onUpload()">Upload</button>
+    </div>
+    <div *ngIf="uploadResult">
+      <div>You uploaded {{uploadResult.count}} records</div>
+      <br />
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Number</th>
+            <th>Error</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let receipient of uploadResult.results">
+            <td>{{receipient.data.firstname}} {{receipient.data.lastname}}</td>
+            <td>{{receipient.data.emailaddress}}</td>
+            <td>{{receipient.data.mobilephonenumber}}</td>
+            <td>{{receipient.metadata.error}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <br />
+      <button (click)="refreshPage()">Upload another File?</button>
+    </div>
+  </div>
+
+
+</div>

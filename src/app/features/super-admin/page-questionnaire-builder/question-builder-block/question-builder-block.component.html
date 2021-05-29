@@ -1,0 +1,106 @@
+<div class="row mb-5">
+  <div class="col">
+    <mat-card>
+      <div class="row">
+        <div class="col-6 col-sm-4 text-center">
+          <h3>Create a Question</h3>
+        </div>
+        <div class="col col-sm-4">
+          <mat-form-field class="select-state" appearance="outline">
+            <mat-label>Question Type<span class="required">*</span></mat-label>
+            <mat-select value="{{currentQuestion.QuestionnaireAnswer.answer_min}}" [(ngModel)]="qType" (selectionChange)="saveField('answer_min', $event.value)" #answer_min_val>
+              <mat-option value=1>Mandatory</mat-option>
+              <mat-option value=0>Optional</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col col-sm-4">
+          <mat-form-field class="select-state" appearance="outline">
+            <mat-label>Answer Type<span class="required">*</span></mat-label>
+            <mat-select value="{{currentQuestion.QuestionnaireAnswer.gui_control}}" [(ngModel)]="aType"  (selectionChange)="saveField('gui_control', $event.value)">
+              <mat-option value="radio">Single Selection</mat-option>
+              <mat-option value="multiselect">Multiple Selection</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="select-state">
+            <mat-label>Question<span class="required">*</span></mat-label>
+            <ng-container *ngIf="(answer_min_val.value == 1) else optional">
+                  <textarea
+                      matInput
+                      id="question"
+                      [(ngModel)]="currentQuestion.QuestionnaireAnswer.question_text"
+                      placeholder="Enter Text here"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="3"
+                      (change)="saveField('question_text', $event.target.value+' *')">
+                </textarea>
+            </ng-container>
+
+            <ng-template #optional>
+                <textarea
+                    matInput
+                    id="question"
+                    [(ngModel)]="currentQuestion.QuestionnaireAnswer.question_text"
+                    placeholder="Enter Text here"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="3"
+                    (change)="saveField('question_text', $event.target.value)">
+                </textarea>
+          </ng-template>
+
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row" *ngFor="let option of options; index as i">
+        <div class="col-1">{{option.count}}</div>
+        <div class="col-7">
+          <mat-form-field appearance="outline" class="select-state">
+            <mat-label>Answer<span class="required">*</span></mat-label>
+            <input
+              matInput
+              (change)="saveAnswer(i,$event.target.value)" >
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <mat-form-field class="select-state" appearance="outline">
+            <mat-label>Type<span class="required">*</span></mat-label>
+            <mat-select value="" (selectionChange)="saveClassification(i, $event.value)">
+              <!-- <mat-option value="">Type</mat-option> -->
+              <mat-option value="1A">1A</mat-option>
+              <mat-option value="1B">1B</mat-option>
+              <mat-option value="1C">1C</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <button mat-button (click)="deleteAnswer(i)">
+            <i class="fa fa-trash fa-2x"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button mat-button (click)="addAnswer()">
+            <i class="fa fa-plus fa-lg"> Add Answer </i>
+          </button>
+        </div>
+        <div class="col text-right">
+          <button mat-flat-button color="primary" (click)="saveQuestion()"
+           [disabled]="!qType || !aType || (currentQuestion.QuestionnaireAnswer.question_text.trim()=='')
+           || (_qAnswers?.length <2)
+           || _types.includes('') || (_types.length==0)
+           || (_qAnswers?.length != _types.length)"           
+           
+           >Save Question</button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

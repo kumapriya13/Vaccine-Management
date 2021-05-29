@@ -1,0 +1,21 @@
+@import "~@ng-select/ng-select/scss/material.theme.scss";
+
+.ng-select .ng-select-container .ng-value-container {
+  padding: .75rem 0;
+}
+
+.ng-select .ng-has-value .ng-placeholder,
+.ng-select.ng-select-opened .ng-placeholder,
+.ng-select.ng-select-focused .ng-placeholder {
+  transform: translateY(-1.5em) scale(0.75) perspective(100px) translateZ(0.001px) !important;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  margin-top: 5px;
+  margin-left: 3px;
+}
+
+ng-select.ng-invalid.ng-touched .ng-select-container.ng-appearance-outline:after {
+  border-color: #ff5722;
+  border-width: 2px;
+}

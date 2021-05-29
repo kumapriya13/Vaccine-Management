@@ -1,0 +1,59 @@
+<app-component-dynamic-heading [heading]="'MANAGE CALENDAR'" [refererClick]="true"></app-component-dynamic-heading>
+<div class="container">
+    <section class="pb-3">
+        <h4 class="multiseat">Site</h4>
+        <div class="row">
+            <div class="col">
+                <h5>{{siteName}}</h5>
+            </div>
+        </div>
+    </section>
+
+    <section *ngIf="multiSeats" class="pt-2">
+        <div class="row">
+            <div class="col-8">
+        <h4 class="multiseat">Seats for Slot Generation</h4>
+        <mat-chip-list class="mt-2 mat-chip-list" aria-label="Seat selection">
+            <mat-chip *ngFor="let seat of multiSeats" [selectable]="selectable" [removable]="removable"
+                (removed)="removeSeat(seat)">
+                {{seat?.seat}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+        </div>
+        <div class="col-4">
+            <h4 class="multiseat">Number Of Slots Generated : {{(multiSeats.length > 0 && slotCount && checkIsNumber(slotCount,multiSeats.length)) ? (slotCount*multiSeats.length) : slotCount}}</h4>
+        </div>
+        </div>
+    </section>
+
+<br/>
+    <!-- <section class="pb-1" *ngIf="slotCount">
+        <h4 class="multiseat">Slots : {{slotCount}}</h4>
+    </section> -->
+
+    <section class="pt-3">
+        <h4 class="multiseat">Schedule Date : {{setDates?.start}} - {{setDates?.end}}</h4>
+        <div class="row">
+            <div class="col" *ngFor="let date of dateRange">
+                <ul style="list-style: none; padding-left: 0;">
+                    <li class="text-center btn-primary date py-1">
+                        {{date.day}} <br /> {{date.date}}
+                    </li>
+                    <li *ngFor="let slot of date.slots" class="py-1">
+                        <button class="time" mat-stroked-button disabled>{{slot.slot_start_time}}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="d-flex align-items-center pb-3 mt-4">
+        <button mat-flat-button color="primary" class="btn prev-btn mr-3"
+            (click)="generateSlotsForDateRangeBatch()">Generate</button>
+        <button mat-stroked-button color="primary" class="btn can-btn ml-3" (click)="cancel()">Cancel</button>
+    </div>
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

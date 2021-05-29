@@ -1,0 +1,32 @@
+<app-component-dynamic-heading [heading]="'Ad - Hoc'"></app-component-dynamic-heading>
+
+<div class="container">
+    <div class="tab-navigation">
+        <ul class="nav nav-pills nav-fill mb-5">
+            <li class="nav-item">
+                <a class="nav-link invisible" routerLinkActive="active">Recipient</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link invisible" routerLinkActive="active">Appointment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link invisible" routerLinkActive="active">Registration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link invisible" routerLinkActive="active">General</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="./ad-hoc">Ad-Hoc</a>
+            </li>
+        </ul>
+    </div>
+    <router-outlet></router-outlet>
+</div>
+<div class="py-5 my-5">
+
+
+</div>
+<div class="pt-5 my-2">
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,84 @@
+<!-- header here -->
+<div class="body">
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 forMob">
+                    <!-- <div class="topText"><a [routerLink]="'/recipient/help'" [routerLinkActive]="'active'" title="Help">Help</a></div> -->
+                </div>
+                <div class="col-md-2">
+                    <!-- company logo here -->
+                    <div class="logoArea">
+                        <!-- <img src="/assets/images/2120Check.png"
+                      style="width:200px !important; height:300px !important;" alt="logo - 21-20 All Clear" /> -->
+                        <img src="{{ logo }}" style="
+                                width: 130px !important;
+                                height: auto !important;
+                            " alt="logo - 21-20 All Clear" [routerLink]="'/super-admin/dashboard'"/>
+                        <div class="hamBtn">
+                            <a><i class="fa fa-align-justify"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="rightTop">
+                        <!-- right navigation menu here -->
+                        <div class=""><a [routerLink]="'/super-admin/help'" [routerLinkActive]="'active'"
+                                title="super-admin">&nbsp;</a></div>
+                        <!-- Help -->
+                        <div class="navigationBtm">
+                            <ul>
+                                <li><a [routerLink]="'/super-admin/dashboard'" [routerLinkActive]="'active'"
+                                        title="Home">Home</a></li>
+                                <!-- <li><a [routerLink]="'/super-admin/location'" [routerLinkActive]="'active'"
+                                        title="Location">Location</a></li> -->
+                                <li><a [routerLink]="'/super-admin/provider'" [routerLinkActive]="'active'"
+                                        title="Provider">Provider</a></li>
+                                <li><a [routerLink]="'/super-admin/users'" [routerLinkActive]="'active'"
+                                        title="Users">Users</a></li>
+                                
+                                    <li><a [routerLink]="'/super-admin/questionnaire-builder'" [routerLinkActive]="'active'"
+                                        title="Questionnaire">Questionnaire</a></li>
+                                
+                                        <li><a [routerLink]="'/super-admin/vaccine-list'" [routerLinkActive]="'active'"
+                                        title="Vaccine">Vaccine</a></li>
+                                <li><a [routerLink]="'/super-admin/sites'" [routerLinkActive]="'active'"
+                                        title="Site">Site</a></li>
+                                <li><a [routerLink]="'/super-admin/notification-setting'" [routerLinkActive]="'active'"
+                                        title="Appointment">Notification</a></li>
+                                <!-- <li><a><i class="fa fa-bell-o" style="font-size: 20px;"></i></a></li> -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"
+                                        style="color: #0984E3;">
+                                        <i class="fa fa-user-circle-o" style="font-size: 20px; color: #0984E3;"></i>
+                                    </a>
+                                    <div class="dropdown-menu p-2">
+                                        <ul>
+                                          <!--  <li class="ml-0 px-1">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="'/auth/admin-my-profile'"
+                                                    [routerLinkActive]="'active'" title="My Profile"> My Profile</a>
+                                            </li>
+                                            <br /> -->
+                                            <li class="ml-0 px-1">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="'/super-admin/dashboard'"
+                                                    [routerLinkActive]="'active'" title="Dashboard">Dashboard</a>
+                                            </li>
+                                            <li class="ml-0 px-1">
+                                                <a class="p-0 pb-1 mb-2" [routerLink]="'/auth/admin-change-password'"
+                                                    [routerLinkActive]="'active'" title="Change password">
+                                                    Change&nbsp;password</a>
+                                            </li>
+                                            <li class="ml-0 px-2">
+                                                <a class="p-0 pb-1 mb-2" (click)="logout()" title="Logout">Logout</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

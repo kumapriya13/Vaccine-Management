@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="py-5">
+        <div class="d-flex justify-content-between backgd text-light mb-5 mouse-hover" style="height: 139px;">
+            <div class="p-4 w-50">
+                <h1 class="m-0 roboto-medium-26">
+                    Welcome {{ loggedInUser!.fname }} {{ loggedInUser!.lname }}
+                </h1>
+                <hr class="bg-light" />
+                <p class="m-0 roboto-light-20">
+                    {{(provider$ | async)?.provider_name}}
+                </p>
+            </div>
+            <img class="mr-5" src="/assets/images/vaccinator/Group 52521.svg" />
+        </div>
+    </div>
+</div>
+<div class="py-5 my-5">
+
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

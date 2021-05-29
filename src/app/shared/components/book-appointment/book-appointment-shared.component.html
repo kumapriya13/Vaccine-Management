@@ -1,0 +1,96 @@
+<div *ngIf="minDate" class="container">
+    <div class="row justify-content-between">
+        <div class="col-md-2">
+            <span class="filter-text"><b>{{currentVisit ? ('Book '+ currentVisit) : ''}}</b></span>
+        </div>
+       <div class="d-flex justify-content-between">
+        <ng-container *ngIf="adminType['user_type']=='receptionist'">
+            <div class="site-selection pr-4">
+                <span class="filter-text"><b>Choose Your Site &nbsp;</b></span>
+                <mat-form-field appearance="outline">
+                    <mat-label>Select site</mat-label>
+                    <mat-select (selectionChange)="getSelectedSiteName($event)" [ngModel]="selectedSiteId">
+                        <mat-option *ngFor="let sites of sites" [value]="sites.site_id">
+                            {{ sites.site_name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <ng-conatiner *ngIf='checkAdmin'>
+            <div class="d-flex align-items-center pr-4">
+                <span class="pr-2 pb-2"><b>Choose Your Site </b></span>
+                <mat-form-field appearance="outline">
+                    <mat-label>All type</mat-label>
+                    <mat-select (selectionChange)="getSelectedSiteName($event)" [(ngModel)]="siteNameId">
+                        <mat-option *ngFor="let sites of sitelists" [value]="sites.id">
+                            {{ sites.site_name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </ng-conatiner>
+        <ng-container>
+            <div class="site-selection">
+                <span class="filter-text"><b>Filter facility by Vaccine &nbsp;</b></span>
+                <mat-form-field appearance="outline">
+                    <mat-label>All type</mat-label>
+                    <mat-select (selectionChange)="getSlotList()" [(ngModel)]="materialId"
+                        [disabled]="visits?.length > 0">
+                        <mat-option *ngFor="let vaccine of materialList" [value]="vaccine.id">
+                            {{ vaccine.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </ng-container>
+       </div>
+    </div>
+    <div class="book-slot-container">
+
+
+        <div class="border-box"></div>
+
+        <div class="d-flex justify-content-between" style="height: 400px; overflow-y: hidden;">
+            <div style="width: 300px">
+                <div id="cus_site_admin_book_app">
+                    <mat-calendar #calendar style="width: 300px;" class="border w-100" [minDate]="minDate"
+                        [selected]="selectedDate" [dateClass]="previous_gray" (selectedChange)="onSelect($event)">
+                    </mat-calendar>
+                </div>
+            </div>
+            <div class="time-slot-list h-100 px-5 pt-4 pb-3" style="width: 35%; background-color: #F9FAFF;">
+                <p>
+                    <strong>
+                        <span *ngIf="dateSlotList.length>0" class="slot-available-hdr">Available Slots for </span>
+                        <span *ngIf="dateSlotList.length==0" class="slot-available-hdr">No Slots Available for </span>
+                        <span class="slot-available-msg-date">{{ selectedDate | date: 'MMM d, y' }}</span>
+                    </strong>
+                </p>
+                <div class="d-flex flex-wrap h-100 py-4" style="overflow-y: auto;">
+                    <!-- [hidden]="checkForDisable(dateSlotItem)" [disabled]="checkForDisable(dateSlotItem)" -->
+                    <div class="ml-0 mr-4 mb-3" *ngFor="let dateSlotItem of dateSlotList">
+                        <!-- *ngIf="!checkForDisable(dateSlotItem)" -->
+                        <!-- [class.success]="dateSlotItem.frequency>5&&!(dateSlot==dateSlotItem)" -->
+                        <button mat-button class="time-btn success"
+                            [ngClass]="{'time-btn-active': (dateSlot==dateSlotItem)}"
+                            [class.warning]="dateSlotItem.frequency<=5&&!(dateSlot==dateSlotItem)"
+                            (click)="setDateSlot(dateSlotItem)">{{dateSlotItem.start_time | date:
+                            'hh:mm a'}}-{{dateSlotItem.end_time | date: 'hh:mm a'}}
+                            ({{dateSlotItem.frequency}})</button>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="h-100 d-flex justify-content-center" style="width: 35%; overflow-y: hidden;">
+                <div class="book-app-container pt-4">
+                    <button mat-button class="book-appointment-btn rounded-pill"
+                        [disabled]="dateSlot==null || isSubmited " (click)="reqBookAppointment()">Book
+                        Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

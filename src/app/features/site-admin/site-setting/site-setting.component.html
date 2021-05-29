@@ -1,0 +1,155 @@
+<div class="d-flex justify-content-between backgd text-light mb-5" style="height: 150px;">
+    <div class="container">
+        <div class="p-4 w-75">
+            <h2 class="m-0 roboto-medium-24"> <i class="fa fa-cog"></i>Site Settings - New York Presbyterian
+                    Hospital </h2>
+            <hr class="bg-light" />
+            <p class="m-0 roboto-regular-18"> 170 William St, New York, NY 10038, United States</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <form class="container d-flex flex-column align-items-center" [formGroup]="siteSettingForm"
+        (ngSubmit)="siteSettingHandler()" autocomplete="off">
+        <div class="w-100 d-flex justify-content-between">
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 320px !important;">
+                    <mat-label>Today's Appointments</mat-label>
+                    <input matInput placeholder="Today's Appointments" />
+                </mat-form-field>
+            </div>
+
+            <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row p-0">
+                <mat-form-field appearance="outline" class="w-100 pl-0" style="width: 320px !important;">
+                    <mat-label>Total Number of Appointments</mat-label>
+                    <input matInput placeholder="Total Number of Appointments" />
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="w-100 d-flex justify-content-between">
+            <div class="w-50">
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 320px !important;">
+                        <mat-label>Number of Vaccines used</mat-label>
+                        <input matInput placeholder="Total Number of Appointments" />
+                    </mat-form-field>
+                </div>
+                <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+                    <mat-form-field appearance="outline" class="mx-md-4 w-100" style="width: 320px !important;">
+                        <mat-label>Site Status</mat-label>
+                        <mat-select matInput placeholder="Select">
+                            <mat-option>Active</mat-option>
+                            <mat-option>Disable</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="w-50">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row p-0">
+                            <mat-form-field appearance="outline" class="w-100 p-0" style="width: 320px !important;">
+                                <mat-select matInput placeholder="Select Holiday">
+                                    <mat-option>
+                                        Select Holiday
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+    <!-- <form class="container d-flex flex-column align-items-center" [formGroup]="siteSettingForm" (ngSubmit)="siteSettingHandler()" autocomplete="off">
+
+
+    <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+            <mat-label>Today's Appointments</mat-label>
+            <input matInput placeholder="Today's Appointments" formControlName="todayAppointment" />
+            <mat-error *ngIf="!authRecipientEditForm.get('firstName').valid">First Name is required
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+            <mat-label>Total Number of Appointments</mat-label>
+            <input matInput placeholder="Total Number of Appointments" formControlName="totalAppointment" />
+            <mat-error *ngIf="!authRecipientEditForm.get('lastName').valid">Last Name is required</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-row-width container d-flex justify-content-start flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+            <mat-label>Number of Vaccines used</mat-label>
+            <input matInput placeholder="Number of Vaccines used" formControlName="numberVaccine" />
+            <mat-error *ngIf="!authRecipientEditForm.get('firstName').valid">First Name is required
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+            <mat-label>Site Status</mat-label>
+            <input matInput placeholder="Site Status" formControlName="siteStatus" />
+            <mat-error *ngIf="!authRecipientEditForm.get('lastName').valid">Last Name is required</mat-error>
+        </mat-form-field>
+    </div>
+    <div fxFlex="50">
+            <div fxLayout="row">
+                <div fxFlex="50" class="form-container">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Payment Accepted</mat-label>
+                        <mat-select formControlName="paymenAccepted">
+                            <mat-option value="+1 (724)-401-2938">+1 (724)-401-2938</mat-option>
+                            <mat-option value="+1 (724)-401-2938">+1 (724)-401-2938</mat-option>
+                        </mat-select>
+                     <mat-error *ngIf="!authNewPasswordForm.get('oldPassword').valid">{{getErrorMessageForOldPassword()}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex="50" class="form-container">
+                    <mat-form-field appearance="outline">
+                        <mat-label class="roboto-bold-16">Site Status</mat-label>
+                        <mat-select>
+                            <mat-option value="Active">Active</mat-option>
+                            <mat-option value="InActive">InActive</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!authNewPasswordForm.get('password').valid">{{getErrorMessageForPassword()}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+        <mat-form-field appearance="outline" class="mx-md-4 w-100">
+            <mat-label>Select Holiday</mat-label>
+            <mat-select (selectionChange)="getSeletedHoliday($event, true)">
+                <mat-option *ngFor="let list of holidayList" [value]="list.name">{{list.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="!authNewPasswordForm.get('password').valid">{{getErrorMessageForPassword()}}</mat-error>
+        </mat-form-field>
+        <div *ngIf="selectedHolidayList.length>0">
+            <div *ngFor="let list of selectedHolidayList; let i =index">
+                <div style="padding: 0 10px;" fxLayout="row" fxLayoutAlign="space-between center">
+                    <span>{{i+1}}. {{list}} </span>
+                    <button type="button" (click)="getSeletedHoliday($event, false)" style="text-align: end;"
+                        class="btn delete roboto-regular-11 ml-2"><i class="fa fa-trash-o blue-text"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</form> -->
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,48 @@
+.vaccine-schedue-details {
+  .card-header {
+    background: #0984e3 0% 0% no-repeat padding-box;
+    border-radius: 5px 5px 0px 0px;
+    opacity: 1;
+    color: #ffffff;
+    height: 55px;
+  }
+
+  .btn {
+    border: 1px solid #0984e3;
+    border-radius: 4px;
+    opacity: 1;
+  }
+
+  .card-header.card-header-error {
+    background: #fde4e4 0% 0% no-repeat padding-box;
+    border-radius: 5px 5px 0px 0px;
+    opacity: 1;
+    color: #0984e3;
+  }
+
+  .card-header.card-header-muted {
+    background: #e1e1e1 0% 0% no-repeat padding-box;
+    border-radius: 5px 5px 0px 0px;
+    opacity: 1;
+    color: #0984e3;
+  }
+  .active-button {
+    background: #0984e3 0% 0% no-repeat padding-box;
+    color: white;
+    border-radius: 40px;
+  }
+  .normal-button {
+    color: #fff;
+    border: 1px solid #0984e3;
+    color: #0984e3;
+    border-radius: 40px;
+  }
+}
+
+.card {
+  width: 525px !important;
+
+  @media (max-width: 960px) {
+    width: auto;
+  }
+}

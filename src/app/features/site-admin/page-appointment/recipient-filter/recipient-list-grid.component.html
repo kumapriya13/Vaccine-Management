@@ -1,0 +1,38 @@
+<app-recipient-filter [totalCount]="totalCount" [selectedVaccine]="_selectedVaccine"  (selectAll)="selectAll()" (filterChange)="applyFilter($event)" 
+    (addFilteredRecipients)="onAddFilteredRecipients()" >
+</app-recipient-filter>
+
+<table class="table table-striped">
+    <thead>
+        <tr class="blue-bg">
+            <th>
+                <input type="checkbox" [checked]="selectAllCheckboxValue"
+                    (change)="selectAllChange($event.target.checked)">
+            </th>
+            <th class="white-text">Recipient</th>
+            <th class="white-text">Mobile number</th>
+            <th class="white-text">Email</th>
+            <th class="white-text">Address</th>
+            <th class="white-text">City</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let recipient of recipientsOnPage">
+            <td>
+                <input type="checkbox" [disabled]="checkDisable(recipient)"
+                    [(ngModel)]="recipientSelectInfo[recipient.id]"
+                    (change)="selectChanged(recipient.id, $event.target.checked)">
+            </td>
+            <td>{{recipient.fname}} {{recipient.lname}}</td>
+            <td>{{recipient.mobile_number}}</td>
+            <td>{{recipient.email}}</td>
+            <td>{{recipient.address1}}</td>
+            <td>{{recipient.city}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="d-flex">
+    <ngb-pagination class="ml-auto" (pageChange)="onPageChange($event)" [maxSize]="5" [page]="pageIndex"
+        [pageSize]="pageSize" [collectionSize]="totalCount"></ngb-pagination>
+</div>

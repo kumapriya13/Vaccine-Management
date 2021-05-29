@@ -1,0 +1,112 @@
+.site-admin-list-add-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+    font-size: 22px;
+    font-weight: lighter;
+  }
+}
+
+table {
+  width: 100%;
+  .mat-header-cell {
+    background-color: #1e8ee9;
+    max-height: 45px !important;
+    color: white !important;
+    // padding-left: 48px !important;
+  }
+  th {
+    text-align: center !important;
+  }
+  .mat-row:nth-child(even) {
+    background-color: #00000029;
+  }
+  .mat-row:nth-child(odd) {
+    background-color: #fffdfd;
+  }
+}
+
+.edit {
+  width: 60px;
+  height: 25px;
+  background: #e9efff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.delete {
+  width: 70px;
+  height: 25px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.delete-popup {
+  width: 350px;
+  height: 155px;
+  top: 300px;
+  // left: 525px;
+  // width: 374px;
+  // height: 155px;
+  opacity: 1;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.modal-content {
+  border-radius: 14px 14px 14px 14px !important;
+}
+
+.add-sch-btn {
+  width: 100px;
+  height: 25px;
+  background: #fff0d6 0% 0% no-repeat padding-box;
+  border: 0.5px solid #f6bb19;
+  color: #ffa300;
+}
+
+:host ::ng-deep .mat-sort-header-arrow {
+  color: white !important;
+}
+
+.blue-text {
+  color: #0984e3 !important;
+}
+
+:host ::ng-deep .table-action-strip {
+  .mat-form-field-flex > .mat-form-field-infix {
+    // border: 0 !important;
+    padding: 0.4em 0px !important;
+    padding-bottom: 0.6em !important;
+  }
+  .mat-form-field-label-wrapper {
+    top: -1.5em;
+  }
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+}
+
+.search-form-field {
+  width: 230px;
+}
+
+// .generate-block {
+//     .header {
+//         background-color: greenyellow;
+//     }
+// }
+
+.header-align-left {
+  display: flex;
+  padding: 21px 0;
+  justify-content: flex-start;
+  padding-bottom: 34px !important;
+}

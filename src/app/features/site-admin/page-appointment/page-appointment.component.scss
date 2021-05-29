@@ -1,0 +1,165 @@
+@charset "UTF-8";
+.site-admin-vaccine-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+    font-size: 22px;
+    font-weight: lighter;
+  }
+}
+
+table {
+  width: 100%;
+  .mat-header-cell {
+    background-color: #1e8ee9;
+    color: white !important;
+    // padding-left: 48px !important;
+  }
+  th {
+    text-align: center !important;
+  }
+  .mat-row:nth-child(even) {
+    background-color: #00000029;
+  }
+  .mat-row:nth-child(odd) {
+    background-color: #fffdfd;
+  }
+}
+
+.delete {
+  width: 70px;
+  height: 25px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.edit {
+  width: 60px;
+  height: 30px;
+  background: #e9efff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.appointment {
+  width: 120px;
+  height: 25px;
+  padding-bottom: 25px !important;
+  background: #e9efff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+.book-btn-active {
+  color: #0984e3;
+  border: 1px solid #0984e3;
+}
+.book-btn-disabled {
+  color: #333232;
+  border: 1px solid #333232;
+}
+.search {
+  width: 400px !important;
+  height: 45px !important;
+}
+
+:host ::ng-deep .table-action-strip {
+  .mat-form-field-flex > .mat-form-field-infix {
+    // border: 0 !important;
+    padding: 0.4em 0px !important;
+    padding-bottom: 0.6em !important;
+  }
+  .mat-form-field-label-wrapper {
+    top: -1.5em;
+  }
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+}
+
+.search-form-field {
+  width: 230px;
+}
+:host ::ng-deep .mat-sort-header-arrow {
+  color: white !important;
+}
+
+.dropzone {
+  height: 200px;
+  display: table;
+  width: 100%;
+  background-color: #eee;
+  border: dotted 1px #aaa;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.textLink {
+  background-color: #198be7;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#hand {
+  cursor: pointer;
+}
+
+.text-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.centered {
+  font-family: sans-serif;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.fileItem {
+  width: calc(25% - 6px);
+  overflow: hidden;
+  height: fit-content;
+  margin: 3px;
+  padding: 10px;
+  display: block;
+  position: relative;
+  float: left;
+  border: 2px dashed #778899;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+.fileItem:hover {
+  border: 2px solid #198be7;
+  background-color: #198be7;
+}
+.fileItem:hover .fileItemIcon::before {
+  content: "\f00d";
+  color: whitesmoke;
+}
+.fileItem:hover .fileItemText {
+  color: whitesmoke;
+}
+.fileItemIconDiv {
+  text-align: center;
+}
+.fileItemIcon::before {
+  font-style: normal;
+  content: "\f15b";
+  color: #778899;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+.fileItemText {
+  text-align: center;
+  margin-top: 10px;
+  height: 40px;
+}

@@ -1,0 +1,127 @@
+<app-component-receptionist-header *ngIf="currentAuthLoggedKey == 'receptionist_admin-token'">
+</app-component-receptionist-header>
+<app-component-site-admin-header *ngIf="currentAuthLoggedKey == 'site_admin-token'"></app-component-site-admin-header>
+<app-component-super-admin-header *ngIf="currentAuthLoggedKey == 'super_admin-token'">
+</app-component-super-admin-header>
+<app-component-vaccinator-header *ngIf="currentAuthLoggedKey == 'vaccinator-token'"></app-component-vaccinator-header>
+<app-component-facility-admin-header *ngIf="currentAuthLoggedKey == 'facility_admin-token'">
+</app-component-facility-admin-header>
+<app-component-dynamic-header *ngIf="currentAuthLoggedKey == 'provider_admin'">
+</app-component-dynamic-header>
+<app-component-dynamic-heading [heading]="'My Profile'"></app-component-dynamic-heading>
+<div class="container py-3">
+    <div class="d-flex align-items-center justify-content-end mb-3">
+        <button class="mr-5 roboto-regular-16 white-bg change-password-btn"
+            [routerLink]="['/auth/admin-change-password']">Change Password
+        </button>
+        <i vmsTooltip="vaccinator_edit_profile"  placement="top" delay="10" class="fa fa-pencil-square-o" (ngSubmit)="linkRecipient()" [routerLink]="'/auth/admin-edit-profile'"></i>
+    </div>
+    <div>
+        <div class="card profile-card mb-4 border-0 shadow">
+            <div class="card-body p-3">
+                <div class="d-flex pt-4">
+                    <div class="pl-5 pr-3">
+                        <div class="profile-photo">
+                            <img src="/assets/images/vaccinator/Image 5@2x.jpg" width="100" height="100"> 
+                        </div>
+                        <div class="profile-name">
+                            <p class="roboto-medium-18">{{ userDetails.fname+"&nbsp;"+userDetails.lname}}</p>
+                        </div>
+                    </div>
+                    <div class="px-5 ml-3 user-detail-box">
+                        <p class="m-0 pb-2"><span class="roboto-regular-16 grey-text">Email&nbsp;ID</span><span
+                                class="roboto-medium-18">&nbsp;-&nbsp;{{ userDetails.email }}</span></p>
+                        <p class="m-0 pb-2"><span
+                                class="roboto-regular-16 grey-text">Mobile&nbsp;Phone&nbsp;Number</span><span
+                                class="roboto-medium-18">&nbsp;-&nbsp;{{ userDetails.mobile_number }}</span></p>
+
+                        <div class="d-flex">
+                            <div class="pr-3">
+                                <p class="m-0 pb-2"><span class="roboto-regular-16 grey-text">Address</span><span
+                                        class="roboto-medium-18">&nbsp;-&nbsp;</span>
+                                </p>
+                            </div>
+                            <div>
+                                <div class="d-flex">
+                                    <ng-container *ngIf="userDetails.address1">
+                                        <span class="roboto-medium-18">{{ userDetails.address1 }}, </span>
+                                    </ng-container>&nbsp;
+
+                                    <ng-container *ngIf="userDetails.address2">
+                                        <span class="roboto-medium-18"> {{ userDetails.address2 }},</span>
+                                    </ng-container>&nbsp;
+
+                                    <ng-container *ngIf="userDetails.address3">
+                                        <span class="roboto-medium-18"> {{ userDetails.address3 }},</span>
+                                    </ng-container>&nbsp;
+                                </div>
+
+                                <ng-container *ngIf="userDetails.city">
+                                    <span class="roboto-medium-18"> {{ userDetails.city }},</span>
+                                </ng-container>
+
+                                <ng-container *ngIf="userDetails.state">
+                                    <span class="roboto-medium-18"> {{ userDetails.state }},</span>
+                                </ng-container>
+                                <ng-container *ngIf="userDetails.state">
+                                    <span class="roboto-medium-18"> {{ userDetails.zip }}</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" pr-2 mr-1 mfa-box" *ngIf="(currentAuthLoggedKey !=='super_admin-token')">
+                        <div class="d-flex">
+                            <p class="roboto-regular-14 pr-2">Enable&nbsp;Multi&nbsp;Factor&nbsp;Authentication</p>
+                            <form>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switch1"
+                                        [(checked)]="mfaValue" (click)="setMfaValue(checked)" 
+                                        [disabled]="!enableDisableMfaSwitch()" #checked>
+                                    <label class="custom-control-label" for="switch1"></label>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- <a class="roboto-regular-14 cursor-pointer" [routerLink]="'/recipient/link-bracelet'">Link 21-20
+                            <img src="../../../../assets/images/global_logo.png" alt="global_logo"
+                                style="width: 15px; padding-bottom: 3px;"> Bracelet to
+                            your account</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between pr-2 pt-2 mb-3">
+            <!-- <div class="align-items-center justify-content-between p-3 px-5 shadow border-0"
+                style="width: 540px; height: 220px;">
+                <div>
+                    <p class="roboto-regular-16" style="color: #7B7B7B; font-weight: bold !important;">Insurance
+                        information </p>
+                </div>
+                <div *ngFor="let item of insuranceInformation">
+                    <p class="roboto-regular-18" style="color: #7B7B7B;">
+                        <span>{{!!item? item.question_text : ''}}</span>
+                        <span>{{!!item? columnText: ''}}</span>
+                        <span style="font-weight: 700; color: #2D2D41;">{{!!item?item.answers[0]: ''}}</span>
+                    </p>
+                </div>
+            </div> -->
+
+            <!-- <div class="card">
+                <div class="d-flex p-2">
+                    <div class="pb-1 mr-2">
+                        <img [src]="qrImageBase64">
+                    </div>
+                    <div class="ml-3 text-left pt-4 pr-2">
+                        <p class="roboto-regular-18">Select the items to display<br /> when your QR Code is Viewed</p>
+                        <button class="btn select-btn" [routerLink]="'/recipient/edit-scan'">Select</button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="d-flex justify-content-end">
+         <button class="btn btn-primary rounded-pill shadow-sm" (click)="logOut()" [routerLink]="'/home'">Log
+            Out</button> 
+         <button class="btn btn-light rounded-pill shadow-sm">Help</button>
+    </div> -->
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

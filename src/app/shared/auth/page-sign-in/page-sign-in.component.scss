@@ -1,0 +1,128 @@
+.main-div-bg-conatiner {
+  padding-top: 15px;
+  background-size: 1400px 650px;
+  display: block;
+  position: relative;
+
+  // margin-top: 1%;
+  // margin-bottom: 1%;
+  img {
+    max-height: 50px;
+    margin: 1rem;
+  }
+  .main-div-logo-area {
+    border: 1px solid #707070;
+    border-radius: 50px;
+    opacity: 1;
+    width: 300px;
+    height: 80px;
+    text-align: center;
+    margin: 10px auto;
+  }
+  .login-container {
+    text-align: center;
+    .sign-in {
+      width: 522px;
+      height: 370px;
+      background: #ffffff 0% 0% no-repeat padding-box;
+      box-shadow: 0px 3px 5px #00000029;
+      border: 1px solid white;
+      border-radius: 5px;
+      opacity: 1;
+      padding-top: 1.3rem;
+      // .sign-in-div {
+      // }
+      .sign-in-input-field {
+        width: 423px;
+        // width: 100% !important;
+        height: 48px;
+        box-shadow: 0px 3px 6px #00000005;
+        border-radius: 6px;
+        border: none;
+      }
+    }
+  }
+  .fa-times {
+    font-size: 23px;
+    font-weight: normal;
+    color: #6e6e6e;
+  }
+  .social-media-login {
+    margin-top: 1rem;
+    ul {
+      font-size: 0;
+      li {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 5px 0 0;
+        &:last-child {
+          margin: 0;
+        }
+        a {
+          font-size: 24px;
+          display: block;
+          width: 45px;
+          height: 45px;
+          line-height: 45px;
+          text-align: center;
+          transition: 0.4s;
+        }
+      }
+    }
+  }
+  .sign-in-btn-container {
+    margin-top: 1.5rem;
+  }
+  #password-lable {
+    margin-top: 1rem;
+  }
+  ::placeholder {
+    padding: 10px;
+  }
+}
+:host ::ng-deep .iti__selected-flag {
+  padding-top: 6px;
+}
+
+.main-div-bg-conatiner {
+  width: 1400px !important;
+  height: 580px !important;
+  display: block !important;
+  position: relative !important;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.main-div-bg-conatiner::after {
+  content: "";
+  background: url("../../../../assets/images/Banner\ 2.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.8;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+@media(max-width: 576px){
+  .container-sm, .container{
+    max-width: 370px;
+  }
+  .sign-in-div{
+    width: 350px;
+  }
+  .sign-in-input-field{
+    width: 280px !important;
+  }
+  .sign-in-btn{
+    width: 280px !important;
+  }
+  mat-icon{
+    position: relative !important; 
+    top: -35px !important; 
+    right: -130px !important; 
+    cursor: pointer !important;
+  }
+
+}

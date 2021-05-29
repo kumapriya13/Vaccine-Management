@@ -1,0 +1,245 @@
+<app-component-facility-admin-header></app-component-facility-admin-header>
+<div class="facility-admin-tab-vaccinator-header mb-4">
+    <div class="container d-flex align-items-center">
+        <i class="fa fa-arrow-left white-text"></i>
+        <h1 class="roboto-medium-40 white-text m-0 px-2">VACCINATOR</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="container my-5 pb-5 ">
+        <div class="text-center">
+            <p class="roboto-regular-20">You have not added Vaccinator please add Vaccinator below</p>
+            <button class="btn poppins-regular-16 blue-2-bg white-text py-1 px-3 mt-3">+ Add Vaccinator</button>
+        </div>
+    </div>
+    <hr />
+    <p class="roboto-regular-18 text-left">Edit Site</p>
+    <form class="container d-flex flex-column align-items-center" [formGroup]="pagesManageSiteForm" (ngSubmit)=pagesManageSiteFormSub()>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Site Name</mat-label>
+                <input matInput placeholder="Site Name" formControlName="siteName" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('siteName').valid">Site Name is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Site Address</mat-label>
+                <input matInput placeholder="Site Address" formControlName="siteAddress" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('siteAddress').valid">Site Address is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Assign Site Admin</mat-label>
+                <input matInput placeholder="Assign Site Admin" formControlName="siteAdmin" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('siteAdmin').valid">Site Admin is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Vaccine</mat-label>
+                <input matInput placeholder="Vaccine" formControlName="vaccine" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('vaccine').valid">Site Vaccine is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Longitute</mat-label>
+                <input matInput placeholder="Longitute" formControlName="gpsLongitute" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('gpsLongitute').valid">Longitute is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100 form">
+                <mat-label>Latitudce</mat-label>
+                <input matInput placeholder="Latitudce" formControlName="gpsLatitudce" />
+                <mat-error *ngIf="!pagesManageSiteForm.get('gpsLatitudce').valid">Latitudce is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="proceed-div py-3 d-flex justify-content-start form-row-width container">
+            <button mat-button class="btn blue-bg white-text rounded-pill px-5 mx-md-4" type="submit">SAVE</button>
+            <button mat-button class="btn light-grey-bg white-text rounded-pill px-5 mx-md-4" type="submit">CANCEL</button>
+        </div>
+    </form>
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-3">
+        <p class="roboto-bold-20 m-0">List of Vaccinator</p>
+        <button class="btn roboto-medium-16 white-text py-1">+ Add Vaccinator</button>
+    </div>
+    <input type="text" class="form p-3 mb-4" placeholder="Search" width="342px">
+    <table class="table table-striped mb-3">
+        <tbody>
+            <tr class="blue-1-bg white-text">
+                <th class="txt roboto-regular-18">Vaccinator</th>
+                <th class="txt roboto-regular-18">Phone</th>
+                <th class="txt roboto-regular-18">Email</th>
+                <th class="txt roboto-regular-18">Seat</th>
+                <th class="txt roboto-regular-18">Address</th>
+                <th class="txt roboto-regular-18">Gender</th>
+                <th class="txt roboto-regular-18"></th>
+            </tr>
+            <tr>
+                <td class="txt blue-text roboto-medium-16">John Doe</td>
+                <td class="txt blue-text roboto-medium-16">+1 123456789</td>
+                <td class="txt blue-text roboto-medium-16">Johndoe@gmail.com</td>
+                <td class="txt blue-text roboto-medium-16">3</td>
+                <td class="txt blue-text roboto-regular-16">450 1st Avenue</td>
+                <td class="txt blue-text roboto-regular-16">Male</td>
+                <td class="txt blue-text"><i class="fa fa-pencil-square-o border p-1 mr-1"></i>
+                    <i class="fa fa-trash-o border p-1 ml-1"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="txt blue-text roboto-medium-16">John Doe</td>
+                <td class="txt blue-text roboto-medium-16">+1 123456789</td>
+                <td class="txt blue-text roboto-medium-16">Johndoe@gmail.com</td>
+                <td class="txt blue-text roboto-medium-16">3</td>
+                <td class="txt blue-text roboto-regular-16">450 1st Avenue</td>
+                <td class="txt blue-text roboto-regular-16">Male</td>
+                <td class="txt blue-text"><i class="fa fa-pencil-square-o border p-1 mr-1"></i>
+                    <i class="fa fa-trash-o border p-1 ml-1"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="txt blue-text roboto-medium-16">John Doe</td>
+                <td class="txt blue-text roboto-medium-16">+1 123456789</td>
+                <td class="txt blue-text roboto-medium-16">Johndoe@gmail.com</td>
+                <td class="txt blue-text roboto-medium-16">3</td>
+                <td class="txt blue-text roboto-regular-16">450 1st Avenue</td>
+                <td class="txt blue-text roboto-regular-16">Male</td>
+                <td class="txt blue-text"><i class="fa fa-pencil-square-o border p-1 mr-1"></i>
+                    <i class="fa fa-trash-o border p-1 ml-1"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="txt blue-text roboto-medium-16">John Doe</td>
+                <td class="txt blue-text roboto-medium-16">+1 123456789</td>
+                <td class="txt blue-text roboto-medium-16">Johndoe@gmail.com</td>
+                <td class="txt blue-text roboto-medium-16">3</td>
+                <td class="txt blue-text roboto-regular-16">450 1st Avenue</td>
+                <td class="txt blue-text roboto-regular-16">Male</td>
+                <td class="txt blue-text"><i class="fa fa-pencil-square-o border p-1 mr-1"></i>
+                    <i class="fa fa-trash-o border p-1 ml-1"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="txt blue-text roboto-medium-16">John Doe</td>
+                <td class="txt blue-text roboto-medium-16">+1 123456789</td>
+                <td class="txt blue-text roboto-medium-16">Johndoe@gmail.com</td>
+                <td class="txt blue-text roboto-medium-16">3</td>
+                <td class="txt blue-text roboto-regular-16">450 1st Avenue</td>
+                <td class="txt blue-text roboto-regular-16">Male</td>
+                <td class="txt blue-text"><i class="fa fa-pencil-square-o border p-1 mr-1"></i>
+                    <i class="fa fa-trash-o border p-1 ml-1"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="txt blue-text roboto-medium-16">John Doe</td>
+                <td class="txt blue-text roboto-medium-16">+1 123456789</td>
+                <td class="txt blue-text roboto-medium-16">Johndoe@gmail.com</td>
+                <td class="txt blue-text roboto-medium-16">3</td>
+                <td class="txt blue-text roboto-regular-16">450 1st Avenue</td>
+                <td class="txt blue-text roboto-regular-16">Male</td>
+                <td class="txt blue-text"><i class="fa fa-pencil-square-o border p-1 mr-1"></i>
+                    <i class="fa fa-trash-o border p-1 ml-1"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<hr />
+<div class="container my-5 pb-5">
+    <p class="roboto-medium-20">Add user using below tabs</p>
+    <input type="text" class="form cus-width p-3 mb-4" placeholder="Search" width="342px">
+
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-3">
+        <p class="roboto-bold-20 m-0">List of Appointments</p>
+        <button class="btn roboto-medium-16 white-text blue-2-bg py-1">+ Add Site Admin</button>
+    </div>
+    <div class="d-flex align-items-center">
+        <div class="form-group mr-2">
+            <select class="form-control">
+            <option>All Sites</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+        </div>
+        <div class="form-group ml-2">
+            <select class="form-control">
+            <option>All Date</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+        </div>
+    </div>
+    <table class="table table-striped my-5">
+        <tbody>
+            <tr>
+                <td class="txt blue-text">
+                    <span class="roboto-medium-16">12:30</span>&nbsp;<span>pm</span>
+                </td>
+                <td class="txt roboto-medium-16 blue-text">
+                    <img src="../../../../assets/images/vaccinator/Image 5.png"> &nbsp;Wallace Neal
+                </td>
+                <td class="txt roboto-regular-16 blue-text">1st does</td>
+                <td class="txt text-center"><i class="fa fa-list-alt blue-text"></i><br />checklist</td>
+            </tr>
+            <tr>
+                <td class="txt blue-text">
+                    <span class="roboto-medium-16">12:30</span>&nbsp;<span>pm</span>
+                </td>
+                <td class="txt roboto-medium-16 blue-text">
+                    <img src="../../../../assets/images/vaccinator/Image 5.png"> &nbsp;Wallace Neal
+                </td>
+                <td class="txt roboto-regular-16 blue-text">1st does</td>
+                <td class="txt text-center"><i class="fa fa-list-alt blue-text"></i><br />checklist</td>
+            </tr>
+            <tr>
+                <td class="txt blue-text">
+                    <span class="roboto-medium-16">12:30</span>&nbsp;<span>pm</span>
+                </td>
+                <td class="txt roboto-medium-16 blue-text">
+                    <img src="../../../../assets/images/vaccinator/Image 5.png"> &nbsp;Wallace Neal
+                </td>
+                <td class="txt roboto-regular-16 blue-text">1st does</td>
+                <td class="txt text-center"><i class="fa fa-list-alt blue-text"></i><br />checklist</td>
+            </tr>
+            <tr>
+                <td class="txt blue-text">
+                    <span class="roboto-medium-16">12:30</span>&nbsp;<span>pm</span>
+                </td>
+                <td class="txt roboto-medium-16 blue-text">
+                    <img src="../../../../assets/images/vaccinator/Image 5.png"> &nbsp;Wallace Neal
+                </td>
+                <td class="txt roboto-regular-16 blue-text">1st does</td>
+                <td class="txt text-center"><i class="fa fa-list-alt blue-text"></i><br />checklist</td>
+            </tr>
+            <tr>
+                <td class="txt blue-text">
+                    <span class="roboto-medium-16">12:30</span>&nbsp;<span>pm</span>
+                </td>
+                <td class="txt roboto-medium-16 blue-text">
+                    <img src="../../../../assets/images/vaccinator/Image 5.png"> &nbsp;Wallace Neal
+                </td>
+                <td class="txt roboto-regular-16 blue-text">1st does</td>
+                <td class="txt text-center"><i class="fa fa-list-alt blue-text"></i><br />checklist</td>
+            </tr>
+            <tr>
+                <td class="txt blue-text">
+                    <span class="roboto-medium-16">12:30</span>&nbsp;<span>pm</span>
+                </td>
+                <td class="txt roboto-medium-16 blue-text">
+                    <img src="../../../../assets/images/vaccinator/Image 5.png"> &nbsp;Wallace Neal
+                </td>
+                <td class="txt roboto-regular-16 blue-text">1st does</td>
+                <td class="txt text-center"><i class="fa fa-list-alt blue-text"></i><br />checklist</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,72 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Schedule Notification</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="d-flex mb-4">
+            <div class="mr-4">
+                <input type="radio" id="today" value="today" [(ngModel)]="todayOrFuture">
+                <label for="today">&nbsp;Send notification today</label>
+            </div>
+            <div>
+                <input type="radio" id="future" value="future" [(ngModel)]="todayOrFuture">
+                <label for="future">&nbsp;Send notification for future</label>
+            </div>
+        </div>
+        <div>
+            <ng-container *ngIf="todayOrFuture === 'today'; else futureTemplate">
+                <div class="d-flex align-items-center">
+                    <div class="mr-3">
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Hours</mat-label>
+                            <mat-select [(ngModel)]="todayHour">
+                                <mat-option *ngFor="let hour of hours" [value]="hour">
+                                    {{hour}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-3">
+                        <mat-form-field appearance="outline" style="width: 100px">
+                            <mat-label>Minutes</mat-label>
+                            <mat-select [(ngModel)]="todayMinute">
+                                <mat-option *ngFor="let minute of minutes" [value]="minute">
+                                    {{minute}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <strong class="mr-4" style="margin-bottom: 20px;">Later</strong>
+                </div>
+            </ng-container>
+            <ng-template #futureTemplate>
+                <div class="d-flex">
+                    <mat-form-field appearance="outline" class="mr-3">
+                        <mat-label>Select Date</mat-label>
+                        <input matInput
+                               [min]="minDate" [max]="maxDate" #dob
+                               [matDatepicker]="picker1"
+                               [(ngModel)]="futureDate"/>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100px">
+                        <mat-label>Time</mat-label>
+                        <mat-select [(ngModel)]="futureTime">
+                            <mat-option *ngFor="let option of timepickerOptions" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="confirm(modal)">Send</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    </div>
+</ng-template>

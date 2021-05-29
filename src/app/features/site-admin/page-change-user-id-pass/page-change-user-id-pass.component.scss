@@ -1,0 +1,50 @@
+.auth-reset-password-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  opacity: 1;
+  padding: 2.2rem 0;
+  .vcn-sch-text {
+    text-align: left;
+    font: normal normal medium 30px/39px Roboto !important;
+    letter-spacing: 0px;
+    color: #ffffff;
+    font-weight: 600;
+  }
+}
+
+.btn {
+  margin-top: 1rem;
+}
+
+.mat-input-element {
+  font-weight: 500;
+  font-size: 18px;
+}
+:host ::ng-deep mat-label {
+  background-color: white !important;
+  color: #0984e3 !important;
+}
+:host ::ng-deep mat-label:before {
+  content: "\2022\2022";
+  color: transparent;
+}
+:host ::ng-deep mat-label:after {
+  content: "\2022\2022";
+  color: transparent;
+}
+// :host ::ng-deep .mat-form-field-outline-start, :host ::ng-deep .mat-form-field-outline-gap, :host ::ng-deep .mat-form-field-outline-end{
+//     border-color: #0984E3 !important;
+// }
+
+:host ::ng-deep mat-form-field:hover {
+  // background: red;
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-gap,
+  .mat-form-field-outline-end {
+    border-color: #0984e3 !important;
+  }
+}
+
+:host ::ng-deep mat-form-field:focus {
+  background-color: black !important;
+}

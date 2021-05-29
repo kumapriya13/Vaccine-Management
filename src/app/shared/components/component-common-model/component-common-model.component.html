@@ -1,0 +1,31 @@
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h2>{{heading}}</h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+
+    <ng-container *ngIf="templateLayout=='appointment'">
+      <component-recipient-visit *ngIf="recipient" [hideActions]="hideActions" [(recipient)]="recipient"
+        (bookAppointmentModel)="bookAppointment()" [feature]="feature">
+      </component-recipient-visit>
+    </ng-container>
+    <ng-container *ngIf="templateLayout=='manageschedule'">
+      <app-component-manage-schedule></app-component-manage-schedule>
+    </ng-container>
+    <ng-container *ngIf="templateLayout=='bookappointment'">
+      <app-book-appointment-shared 
+      [(recipient)]="recipient.id" 
+      [modelContent]="true"
+      (showBookedAppointment)="showBookedAppointment()">
+      </app-book-appointment-shared>
+    </ng-container>
+  </div>
+  <!-- <ng-container [ngTemplateOutlet]="showTemplate" [ngTemplateOutletContext]="{ comp: templateLayout }"></ng-container> -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

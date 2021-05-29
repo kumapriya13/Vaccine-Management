@@ -1,0 +1,106 @@
+<app-component-recipient-header></app-component-recipient-header>
+<app-component-dynamic-heading [heading]="'Edit QR Code Details'"></app-component-dynamic-heading>
+<div class="container">
+    <form [formGroup]="qrLinkDataForm">
+        <div class="mb-4">
+            <p class="mb-4 roboto-medium-20">Select the items to display when your QR Code is Viewed</p>
+            <ul class="d-flex">
+                <div class="mr-5">
+                    <li>
+                        <input type="checkbox" readonly checked disabled formControlName="fname">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">First
+                            Name :</span><span class="roboto-regular-14">{{recipent.fname}}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="dob">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Date of
+                            birth :</span><span class="roboto-regular-14">{{ recipent.dob | date: 'MMM-dd-y' }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="email">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Email :</span><span class="roboto-regular-14">{{
+                            recipent.email }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="address3">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Apartment,
+                            Suite,
+                            Unit Number :</span><span class="roboto-regular-14">{{ recipent.address3 }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="city">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">City :</span><span class="roboto-regular-14">{{
+                            recipent.city }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="zip">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Zip :</span><span class="roboto-regular-14">{{
+                            recipent.zip }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="country">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Country :</span>
+                        <span class="roboto-regular-14">{{ recipent.country }}</span>
+                    </li>
+
+                </div>
+                <div class="ml-5">
+                    <li>
+                        <input type="checkbox" readonly checked disabled formControlName="lname">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Last
+                            Name :</span>
+                        <span class="roboto-regular-14">{{ recipent.lname }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="mobile_number">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Mobile Phone
+                            number :</span>
+                        <span class="roboto-regular-14">{{ recipent.mobile_number }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="address1">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Address Line
+                            1 :</span>
+                        <span class="roboto-regular-14">{{ recipent.address1 }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="address2">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">Address Line
+                            2 :</span>
+                        <span class="roboto-regular-14">{{ recipent.address2 }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="state">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">State :</span>
+                        <span class="roboto-regular-14">{{ recipent.state }}</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" formControlName="county">&nbsp;&nbsp;<span
+                            class="roboto-regular-14 grey-text pr-2">County :</span>
+                        <span class="roboto-regular-14">{{ recipent.county }}</span>
+                    </li>
+                </div>
+            </ul>
+        </div>
+        <div class="mb-5">
+            <p class="roboto-regular-18" style="color: #707070;">What Certificate you want to show</p>
+            <ul>
+                <li class="pb-3">
+                    <input type="checkbox" formControlName="certificates__electronic">&nbsp;&nbsp;<span
+                        class="roboto-regular-14 grey-text">Electronic
+                        Certificate</span>
+                </li>
+                <li>
+                    <input type="checkbox" formControlName="certificates__image">&nbsp;&nbsp;<span
+                        class="roboto-regular-14 grey-text">Image of
+                        Certificate</span>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex justify-content-end py-3">
+            <button type="submit" class="btn prev-btn mr-3" (click)="qrLinkDataFormSub()">Save</button>
+            <button type="submit" class="btn cancel-btn ml-3" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

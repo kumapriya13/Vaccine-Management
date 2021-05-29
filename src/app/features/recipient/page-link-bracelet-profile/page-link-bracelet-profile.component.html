@@ -1,0 +1,98 @@
+<app-component-recipient-header></app-component-recipient-header>
+<!-- <div class="link-brecelet-header mb-5">
+    <div class="container">
+        <h1 class="roboto-medium-40 text-light m-0">Link Bracelet to your account</h1>
+    </div>
+</div> -->
+<app-component-dynamic-heading [heading]="'Link Bracelet to your account'"></app-component-dynamic-heading>
+<div class="container">
+    <div class="card mb-4 border-0 shadow">
+        <div class="card-body p-4">
+            <div class="d-lg-flex">
+                <div class="col-md-6 px-3">
+                    <div class="profile-photo pl-5 ml-1" *ngIf="(responseFlag==true)">
+                        <img class="rounded-circle"
+                            [src]="profileImage ? profileImage : '/assets/images/vaccinator/Image 5@2x.jpg'" width="135"
+                            height="130">
+                    </div>
+                    <div class="profile-name pl-4 ml-3">
+                        <p class="roboto-medium-20 p-name">{{ userDetails.fname+"&nbsp;"+userDetails.lname}}</p>
+                    </div>
+                    <div class="d-flex mt-2">
+                        <button class="btn delete-pht-btn mr-2" [disabled]="!profileImage" (click)="removeProfile_img()">Delete Photo</button>
+                        <label class="btn change-pht-btn ml-2">
+                            <input id="file" type="file" accept="image/*" (change)="onSelectFile($event)">
+                            Change Photo
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6 px-3">
+                    <p class="m-0 pb-2"><span class="roboto-regular-18 grey-text">Email&nbsp;ID</span><span
+                            class="roboto-medium-18">&nbsp;-&nbsp;{{ userDetails.email }}</span></p>
+                    <p class="m-0 pb-2"><span
+                            class="roboto-regular-18 grey-text">Mobile&nbsp;Phone&nbsp;Number</span><span
+                            class="roboto-medium-18">&nbsp;-&nbsp;{{ userDetails.mobile_number }}</span></p>
+                    <div class="d-flex">
+                        <p class="m-0 pb-2"><span class="roboto-regular-18 grey-text">Address</span><span
+                            class="roboto-medium-18">&nbsp;-&nbsp;</span>
+                    </p>
+                    <div>
+                        <ng-container *ngIf="userDetails.address1">
+                            <span class="roboto-medium-18">{{ userDetails.address1 }}, </span>
+                        </ng-container>
+
+                        <ng-container *ngIf="userDetails.address2">
+                            <span class="roboto-medium-18"> {{ userDetails.address2 }},</span>
+                        </ng-container>
+                        <br />
+                        <ng-container *ngIf="userDetails.address3">
+                            <span class="roboto-medium-18"> {{ userDetails.address3}},</span>
+                        </ng-container>
+                        <ng-container *ngIf="userDetails.state">
+                            <span class="roboto-medium-18"> {{ userDetails.county }},</span>
+                        </ng-container>
+                        <br />
+                        <ng-container *ngIf="userDetails.city">
+                            <span class="roboto-medium-18"> {{ userDetails.city }},</span>
+                        </ng-container>
+
+                        <ng-container *ngIf="userDetails.state">
+                            <span class="roboto-medium-18"> {{ userDetails.state }},</span>
+                        </ng-container>
+
+                        <ng-container *ngIf="userDetails.state">
+                            <span class="roboto-medium-18"> {{ userDetails.zip }}</span>
+                        </ng-container>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="d-lg-flex justify-content-between pt-5 mt-md-3">
+        <div class="col-md-6">
+            <div class="mb-5 pl-4">
+                <p class="roboto-medium-20">Use the QR reader or camera to link Bracelet to your account</p>
+            </div>
+            <div class="pl-4 mt-3">
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>QR Code Number </mat-label>
+                    <input matInput placeholder="Qrcodenumber" [(ngModel)]="qrCodeNumberInput" />
+                </mat-form-field>
+                <!-- <a class="roboto-medium-18 mr-4">visibleLink</a> -->
+                <button class="btn link-bracelet mb-2" [disabled]="qrCodeNumberInput.trim()==''"
+                    (click)="linkBracelet()">Link Bracelet</button>
+            </div>
+        </div>
+        <div class="col-6 d-flex justify-content-center mr-4">
+            <img [src]="qrImageBase64">
+        </div>
+    </div>
+    <div class="py-5 pl-4">
+        <button class="btn cancel-btn mr-3" [routerLink]="'/recipient/profile'">Cancel</button>
+        <button class="btn save-btn ml-3" [disabled]="qrCodeNumberInput.trim()==''"
+            (click)="linkBracelet()">Save</button>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

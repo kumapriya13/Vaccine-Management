@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Help Menus</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="panel-group wrap" id="accordion" role="tablist" aria-multiselectable="true"  *ngIf="toolTipData.length > 0;else noMenuAvailable;">
+        <!-- <ng-container> -->
+        <div #panelList class="panel" *ngFor="let tooptip of toolTipData;let i=index" (click)="helpMenuEvents();">
+            <ng-container *ngIf="(tooptip.Title) && (tooptip.Value);">
+          <div class="panel-heading" role="tab" id="heading{{i+1}}" (click)="showHideItems(i);">
+            <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i+1}}" aria-expanded="true" aria-controls="collapseOne">
+            {{tooptip.Title}}
+          </a>
+        </h4>
+          </div>
+          <div id="collapse{{i+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{i+1}}">
+            <div class="panel-body">
+                {{tooptip.Value}}
+                <!-- Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. -->
+            </div>
+          </div>
+          </ng-container>
+        </div>
+        <!-- </ng-container> -->
+        
+        <!-- end of panel -->
+  
+      </div>
+      <ng-template #noMenuAvailable>
+        <mat-grid-list cols="12" rowHeight="100px">
+            <h4>NO MENU AVAILABLE</h4>
+          </mat-grid-list>
+        </ng-template>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,83 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Add Family Members</h4>
+        <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+       <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="blue-2-bg white-text">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date of Birth</th>
+                    <!-- <th>Race</th>
+                    <th>Ethnicity</th> -->
+                    <th>Relation</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let recipientFormGroup of formArray.controls; let i = index;"
+                    [formGroup]="recipientFormGroup">
+                    <td>
+                        <mat-form-field appearance="outline">
+                            <input matInput maxlength="15" formControlName="fname" />
+                            <mat-error *ngIf="!recipientFormGroup.get('fname').valid">First Name is required
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="outline">
+                            <input matInput maxlength="15" formControlName="lname" />
+                            <mat-error *ngIf="!recipientFormGroup.get('lname').valid">Last Name is required
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="outline">
+                            <input matInput [max]="maxDate" #dob
+                                   (focusout)="getage(dob)"
+                                   formControlName="dob" [matDatepicker]="picker1" />
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <mat-error *ngIf="!recipientFormGroup.get('dob').valid">Date of Birth is required
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <!-- <td></td>
+                    <td></td> -->
+                    <td>
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="primary_relationship">
+                                <mat-option *ngFor="let relation of FAMILY_RELATIONS; let i = index" [value]="relation">
+                                    {{relation}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!recipientFormGroup.get('primary_relationship').valid">Relation is required</mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <button mat-icon-button style="margin-top: 6px" (click)="removeAt(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+       </div>
+    </div>
+    <div class="modal-footer d-flex">
+        <button mat-flat-button color="primary" class="rounded-pill" (click)="addNew()">
+            Add New
+        </button>
+        <button mat-flat-button color="primary"
+                class="rounded-pill ml-auto"
+                (click)="onSave()"
+                [disabled]="!memberProfiles.length">
+            Save
+        </button>
+    </div>
+</ng-template>

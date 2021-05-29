@@ -1,0 +1,86 @@
+<h1 mat-dialog-title>Edit Questionnaire</h1>
+<mat-dialog-content class="mat-typography">
+  <div class="row mb-5">
+    <div class="col">
+      <mat-card>
+        <div class="row">
+          <div class="col-6 col-sm-4 text-center">
+          </div>
+          
+          <div class="col col-sm-4">
+            <mat-form-field class="select-state" appearance="outline">
+              <mat-label>Question Type<span class="required">*</span></mat-label>
+              <mat-select value="{{currentQuestion.answer_min}}"
+                (selectionChange)="saveField('answer_min', $event.value)">
+                <mat-option value=1>Mandatory</mat-option>
+                <mat-option value=0>Optional</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+          <div class="col col-sm-4">
+            <mat-form-field class="select-state" appearance="outline">
+              <mat-label>Answer Type<span class="required">*</span></mat-label>
+              <mat-select value="{{currentQuestion.gui_control}}"
+                (selectionChange)="saveField('gui_control', $event.value)">
+                <mat-option value="radio">Single Selection</mat-option>
+                <mat-option value="multiselect">Multiple Selection</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="select-state">
+              <mat-label>Question<span class="required">*</span></mat-label>
+              <textarea matInput placeholder="Enter Text here" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"
+                (change)="saveField('question_text', $event.target.value)">{{currentQuestion.question_text}}</textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row" *ngFor="let option of currentQuestion.options; index as i">
+          <div class="col-1">{{i + 1}}</div>
+          <div class="col-7">
+            <mat-form-field appearance="outline" class="select-state">
+              <mat-label>Answer<span class="required">*</span></mat-label>
+              <input matInput [value]="option" (change)="saveAnswer(i, $event.target.value)" />
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <mat-form-field class="select-state" appearance="outline">
+              <mat-label>Type<span class="required">*</span></mat-label>
+              <mat-select [value]="getClassification(option)"
+                (selectionChange)="saveClassification(i,option, $event.value)" #classification>
+                <!-- <mat-option value="">Type<span class="required">*</span></mat-option> -->
+                <mat-option value="1A">1A</mat-option>
+                <mat-option value="1B">1B</mat-option>
+                <mat-option value="1C">1C</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-2">
+            <button mat-button (click)="deleteAnswer(i, option)">
+              <i class="fa fa-trash fa-2x"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <button mat-button (click)="addAnswer()">
+              <i class="fa fa-plus fa-lg"> Add Answer </i>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="saveQuestion()" 
+   [disabled]="(currentQuestion.question_text.trim()=='')
+  || (_qAnswers?.length <2)">Save</button>
+</mat-dialog-actions>

@@ -1,0 +1,73 @@
+<app-component-recipient-header></app-component-recipient-header>
+<!-- <div class="container blue-text py-2 appointment-header">
+    Appointment
+</div> -->
+<!-- [background]="''" [textClass]="'blue-text'" -->
+<!-- <app-component-dynamic-heading [heading]="'Appointment'"></app-component-dynamic-heading> -->
+
+<!-- <section style="background-color: rgba(175, 175, 175, 0.11);" *ngIf="exactStepNumber == 0">
+    <div class="container px-0">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="d-flex">
+                    <p class="px-2 align-items-center pt-4">
+                        Quickly create an account for all Covid 19 vaccine related information, check vaccine
+                        availability
+                        and
+                        eligibility, as well as receive communications from &nbsp; 21-20
+                        <img src="../../../../assets/images/global_logo.png" alt=""
+                            style="width: 20px; padding-bottom: 5px;">
+                        All Clear.
+
+                    </p>
+                    <img src="../../../../assets/images/recipent/Group39170.svg" height="160px;">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="pt-3 d-lg-flex justify-content-center">
+                    <p class="px-2 align-items-center">
+                        <ng-container *ngIf="userInfo">
+                            <span class="roboto-medium-18">{{userInfo.fname}} {{userInfo.lname}} {{ userInfo.classification }}</span> <br>
+                            Email ID : &nbsp;<span class="roboto-medium-16">{{userInfo.email}}</span><br>
+                            Mobile Phone Number : &nbsp;<span
+                                class="roboto-medium-16">{{userInfo.mobile_number}}</span><br>
+                         </ng-container>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<div class="appointmnet-container" *ngIf="isdisplay; else bookAppointment">
+    <app-page-appointment-stepper></app-page-appointment-stepper>
+</div>
+
+<ng-template #bookAppointment>
+    <div class="no-appointmnet-container py-3">
+        <div class="container py-5">
+            <div class="px-0 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+                <div class="vaccine-schedue-details p-0 m-0 w-100">
+                    <div class="card h-100 border-0 shadow" style="max-width: 420px;">
+                        <div class="card-header blue-bg py-4 d-flex justify-content-between">
+                            <!-- <div><b>1st Dose</b></div>
+                        <div><b>Pending</b></div> -->
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <p *ngIf="isEligible" class="roboto-medium-16">You have No Appointment<br /> Please Book an Appointment Below</p>
+                            <p *ngIf="!isEligible" class="roboto-medium-16">You are not eligible to book <br />an appointment at this time.</p>
+                            <div class="py-2">
+                                <button mat-button [disabled]="!isEligible" (click)="isdisplay=true" class="edit btn mr-2 blue-bg rounded-pill"
+                                    style="background: 0% 0% no-repeat padding-box;color:white">Book
+                                    Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

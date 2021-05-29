@@ -1,0 +1,100 @@
+<app-component-facility-admin-header></app-component-facility-admin-header>
+<div class="facility-admin-manage-site-header mb-4">
+    <div class="container d-flex align-items-center">
+        <i class="fa fa-arrow-left white-text"></i>
+        <h1 class="roboto-medium-40 white-text m-0 px-2">MANAGE SITE</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <p class="roboto-bold-20 m-0">List of Site</p>
+        <button [routerLink]="'add-site'" class="btn add-site-btn roboto-medium-16 white-text px-3 py-1">+ Add Site</button>
+    </div>
+    <input type="text" class="form sarch-input p-3 mb-4" placeholder="Search" width="342px">
+    <ng-container *ngIf="tableDataList.length!=0">
+        <table class="table table-striped my-5">
+            <thead>
+                <tr class="blue-1-bg white-text">
+                    <th class="txt roboto-regular-18">Hospital</th>
+                    <th class="txt roboto-regular-18">Address</th>
+                    <th class="txt roboto-regular-18">Site Admin</th>
+                    <th class="txt roboto-regular-18">Vaccine Type</th>
+                    <th class="txt roboto-regular-18">Latitude</th>
+                    <th class="txt roboto-regular-18">Longitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let row of tableDataList">
+                    <tr (click)="trBtnToggler(row)">
+                        <td class="txt blue-text roboto-medium-16"> New York Presbyrerian Hospital </td>
+                        <td class="txt blue-text roboto-medium-16">450 1st Avenue</td>
+                        <td class="txt blue-text roboto-medium-16">Chandler</td>
+                        <td class="txt blue-text roboto-medium-16">Pfizer</td>
+                        <td class="txt blue-text roboto-regular-16">0.000000</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div>
+                                    <span class="txt blue-text roboto-regular-16">0.000000</span>
+                                </div>
+                                <div class="txt blue-text ">
+                                    <i class="fa fa-pencil-square-o border p-1 mr-1"></i>
+                                    <i class="fa fa-trash-o border p-1 ml-1" data-toggle="modal"
+                                        data-target="#exampleModal2"></i>
+                                </div>
+                            </div>
+                            <div *ngIf="trTogglerBtnNo == row" class="d-flex align-items-center justify-content-end">
+                                <button class="btn poppins-regular-10 blue-2-bg py-1 white-text">Add Vaccine</button>
+                                <button class="btn poppins-regular-10 blue-2-bg py-1 white-text ml-2"
+                                    data-toggle="modal" data-target="#exampleModal">Add Site Admin</button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </ng-container>
+</div>
+
+<!-- Modal 1 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="exampleModalLabel">Select Vaccine Type</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mr-2">
+                    <select class="form-control">
+                        <option>Pfizer</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn rounded-pill btn-primary px-5">ADD</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 2 -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe2"
+    aria-hidden="true">
+    <div class="modal-dialog border-0 h-auto delete-popup" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title m-0 text-center roboto-regular-16" id="exampleModalLabe2">Delete Site</h3>
+            </div>
+            <div class="modal-body">
+                <p class="roboto-regular-14 text-center m-0">Are you sure you want to Delete Site from the list</p>
+            </div>
+            <div class="modal-footer p-0 d-flex justify-content-around align-items-center">
+                <button type="button" class="btn w-50 px-0 rounded-0 shadow-none m-0 border blue-text">No</button>
+                <button type="button" class="btn w-50 px-0 rounded-0 shadow-none m-0 border blue-text">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,56 @@
+@charset "UTF-8";
+.site-admin-vaccine-header {
+  background: transparent linear-gradient(270deg, #71B7FE 0%, #0984E3 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 10px 15px #05273130;
+  border-radius: 27px;
+  opacity: 1;
+  width: 1500px;
+height: 139px;
+margin-left: 200px;
+margin-top: 150px;
+}
+
+
+.vaccinator-list-container {
+  margin: 2rem 12.5rem;
+  table {
+      width: 100%;
+      margin-top: 2rem;
+      th {
+          background-color: #66B2FB;
+      }
+      .mat-row:nth-child(even) {
+          background-color: #00000029;
+      }
+      .mat-row:nth-child(odd) {
+          background-color: #FFFDFD;
+      }
+  }
+}
+
+
+.delete {
+  width: 70px;
+  height: 25px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984E3;
+  border-radius: 3px;
+}
+
+.edit {
+  width: 60px;
+  height: 25px;
+  background: #E9EFFF 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984E3;
+  border-radius: 3px;
+}
+
+.search{
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 1px 3px #78787859;
+opacity: 1;
+top: 332px;
+left: 139px;
+width: 342px;
+height: 40px;
+}

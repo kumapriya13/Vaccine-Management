@@ -1,0 +1,47 @@
+.vaccine-container {
+
+  margin: 3rem 6rem;
+
+  .filter-row {
+    display: flex;
+    justify-content: flex-end;
+
+    .text {
+      letter-spacing: 0px;
+      color: #333333;
+      opacity: 1;
+      padding-right: 2rem;
+    }
+  }
+
+
+  .vaccine-list {
+    mat-list-item {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .btn {
+      background: #375D9D 0% 0% no-repeat padding-box;
+      border-radius: 5px;
+      letter-spacing: 0px;
+      color: #FFFFFF;
+      padding: 2px 2.5rem;
+    }
+  }
+}
+
+.mat-list-item-content {
+  /* This rule does NOT work !!! */
+  padding: 0;
+}
+
+.item-link {
+  border: 1px solid red;
+  padding: 0;
+}
+
+.item-text {
+  border: 1px solid black;
+  margin: 0;
+}
+

@@ -1,0 +1,113 @@
+<app-component-dynamic-heading [heading]="'MANAGE RECEPTIONIST'" [refererClick]="true"></app-component-dynamic-heading>
+
+<div class="container my-3 pb-2" id="site-recp-list">
+  <div class="d-flex align-items-center justify-content-between pt-3 table-action-strip">
+    <div class="d-flex align-items-center">
+   <!--   <mat-form-field class="search-form-field ml-1" appearance="outline">
+        <mat-label>Search By First Name</mat-label>
+        <input matInput #fname />
+        <button mat-button *ngIf="fname.value.trim() !=''"  matSuffix mat-icon-button aria-label="Clear" (click)="(fname.value='');getAllResults(fname,lname,email)">
+          <mat-icon>close</mat-icon>
+ </button>
+      </mat-form-field>
+      <mat-form-field class="search-form-field ml-1" appearance="outline">
+        <mat-label>Search By Last Name</mat-label>
+        <input matInput #lname />
+        <button mat-button *ngIf="lname.value.trim() !=''"  matSuffix mat-icon-button aria-label="Clear" (click)="(lname.value='');getAllResults(fname,lname,email)">
+          <mat-icon>close</mat-icon>
+ </button>
+      </mat-form-field> -->
+      <mat-form-field class="search-form-field ml-1" appearance="outline">
+        <mat-label>Search by name / email</mat-label>
+        <input matInput #searchInput 
+        (keyup.enter)="searchByFilterText(searchInput.value)"/>
+        <button mat-button *ngIf="searchInput.value.trim() !=''"  matSuffix mat-icon-button aria-label="Clear" (click)="(searchInput.value='');searchByFilterText(searchInput.value)">
+          <mat-icon>close</mat-icon>
+ </button>
+      </mat-form-field>
+      <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3"
+        (click)="searchByFilterText(searchInput.value)">Filter</button>
+    </div>
+    <div class="d-flex align-items-center">
+      <button type="button" class="btn roboto-medium-16 white-text blue-2-bg py-1 ml-3"
+        [routerLink]="'/site-admin/receptionist-create'">+ Add&nbsp;Receptionist</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col w-100" >
+      <table mat-table MatSort [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="user_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> User Name
+          </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.user_name}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Name
+          </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.name}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Email </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.email}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mobile_number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="roboto-regular-18"> Mobile </th>
+          <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text"> {{element.mobile_number}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="roboto-regular-18">Action </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="d-flex align-items-center justify-content-center">
+              <button type="submit" class="btn edit roboto-regular-11 blue-text mr-2"
+                (click)="navToEditReceptionistPage(element)">Edit <i class="fa fa-pencil-square-o"></i></button>
+              <!-- <button type="submit" class="btn delete roboto-regular-11 ml-2" (click)="recipientInfo = element"
+                data-toggle="modal" data-target="#exampleModal2">Delete <i class="fa fa-trash-o blue-text"></i></button> -->
+                <button type="button"  (click)="OnStatus(element)"
+                class="btn delete roboto-regular-11 ml-3" style="width: 75px;">
+                {{element.is_disabled ? 'Enable' : 'Disable'}} 
+                 <i *ngIf="element.is_disabled" class="fa fa-eye"></i>
+                 <i *ngIf="!element.is_disabled" class="fa fa-eye-slash"></i>
+              </button> 
+              </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator class="w-100" [length]="totalCount" [pageIndex]="pageIndex" (page)="getPageReceptionist($event)"
+      [pageSize]="pageSize" [pageSizeOptions]="[10,25,50,100]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe2"
+    aria-hidden="true">
+    <div class="modal-dialog border-0 h-auto delete-popup" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h3 class="modal-title m-0 text-center roboto-regular-16" id="exampleModalLabe2">Delete Recipient</h3>
+        </div>
+        <div class="modal-body">
+          <p class="roboto-regular-14 text-center m-0 pt-2 pb-4">Are you sure you want to delete recipient </p>
+        </div>
+        <div class="modal-footer p-0 d-flex justify-content-around align-items-center">
+          <button data-dismiss="modal" aria-label="Close" type="button"
+            class="btn w-50 px-0 rounded-0 shadow-none m-0 border-right blue-text">No</button>
+          <button data-dismiss="modal" aria-label="Close" type="button"
+            class="btn w-50 px-0 rounded-0 shadow-none m-0 blue-text"
+            (click)="onDeleteReceptionist(receptionistInfo)">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

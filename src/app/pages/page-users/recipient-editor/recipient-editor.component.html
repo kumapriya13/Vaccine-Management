@@ -1,0 +1,12 @@
+<div class="vms-sign-up">
+    <app-component-dynamic-heading [heading]="isNew ? 'Register' : 'Edit Recipient'"></app-component-dynamic-heading>
+
+<edit-recepient-common [redirection]="redirection" 
+  [redirectionAfterSave]="redirectionAfterSave" 
+  [(recepient)]="recepientId"
+  [is_allow_private]="is_allow_private"
+  [isNew]="isNew"
+  ></edit-recepient-common>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

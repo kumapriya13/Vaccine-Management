@@ -1,0 +1,150 @@
+{
+    "data": [
+        {
+            "Keyword": "my_profile_update",
+            "Value": "Link bracelet to your account",
+            "Unique_location": "myprofile_bracelet",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "my_profile_verify_email",
+            "Value": "Verify your email",
+            "Unique_location": "myprofile_email",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "my_profile_verify_mobile",
+            "Value": "Verify your mobile",
+            "Unique_location": "myprofile_mobile",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "my_profile_image",
+            "Value": "Update your profile picture",
+            "Unique_location": "myprofile_img",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "my_profile_change_password",
+            "Value": "Update your password",
+            "Unique_location": "recipient_password",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "my_profile_mfa",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "my_profile_upload_certificate",
+            "Value": "Upload your certificate",
+            "Unique_location": "recipient_certificate",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "my_profile_select_QR_information",
+            "Value": "Select details to show in QR code",
+            "Unique_location": "recipient_QRcode",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_appointment_QR_scan",
+            "Value": "Scan QR code to see your details",
+            "Unique_location": "recipient_QRcode_scan",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_cancel_appointment",
+            "Value": "Cancel your appointment",
+            "Unique_location": "recipient_cancel_apmt",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_checkin_appointment",
+            "Value": "Check in for appointment",
+            "Unique_location": "recipient_checkin_apmt",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_home_appointment",
+            "Value": "See your appointments",
+            "Unique_location": "recipient_home_apmt",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "receptionist_home_schedule",
+            "Value": "See your schedule",
+            "Unique_location": "receptionist_home_schedule",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "vaccinator_home_schedule",
+            "Value": "See your schedule",
+            "Unique_location": "vaccinator_home_schedule",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "vaccinator_edit_profile",
+            "Value": "Edit your profile",
+            "Unique_location": "vaccinator_edit_profile",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_edit_profile",
+            "Value": "Edit your profile",
+            "Unique_location": "vaccinator_edit_profile",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "receptionist_schedule_search",
+            "Value": "Survey id to filter recipient",
+            "Unique_location": "receptionist_schedule_search",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "receptionist_appointment_namesearch",
+            "Value": "Recipient name search ",
+            "Unique_location": "receptionist_appointment_namesearch",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "receptionist_registration",
+            "Value": "Register a new recipient",
+            "Unique_location": "receptionist_registration",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "receptionist_bookappointment",
+            "Value": "Book an appointment for receptionist"
+        },
+        {
+            "Keyword": "my_profile_preview_certificate",
+            "Value": "See certificate preview.",
+            "Unique_location": "recipient_preview",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_view_certificate",
+            "Value": "View your certificate",
+            "Unique_location (Field)": "recipient_my_appointment",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_adverse_event",
+            "Value": "To Report adverse event",
+            "Unique_location (Field)": "recipient_my_appointment",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "recipient_change_password",
+            "Value": "Change your password",
+            "Unique_location (Field)": "recipient_my_profile",
+            "enabled": "yes"
+        },
+        {
+            "Keyword": "site_admin_bulk_import",
+            "Value": "Import recipients from excel",
+            "Unique_location (Field)": "site_admin_bulk_import",
+            "enabled": "yes"
+        }
+    ]
+}

@@ -1,0 +1,672 @@
+<div class="container">
+    <div class="container heading py-4">Your Vaccination Schedule</div>
+    <div class="container pb-5 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+        <ng-container *ngFor="let recipientVisitItem of _recipientVisit['results'];let i = index;let length = count;">
+            <!-- <div>{{ (length) }}</div> -->
+
+           <!-- For missed new changes -->               
+
+            <ng-container
+                *ngIf="(length<recipientVisitItem.$expanded.no_of_doses_in_series)&&recipientVisitItem.visit_status && (recipientVisitItem.visit_status=='completed' || recipientVisitItem.visit_status=='observation')">
+                <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex align-items-center justify-content-between pt-3">
+                            <div class="roboto-medium-20">2nd Dose</div>
+                            <div class="roboto-medium-20">Pending</div>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <p><b>Second Dose of Vaccination<br />Any time Soon</b></p>
+                            <div class="py-2">
+                                <button mat-button class="edit btn rounded-pill mr-2" (click)="bookNextAppointment()"
+                                    style="background:#0984e3 0% 0% no-repeat padding-box;color:white">Book
+                                    Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            
+            <!-- Missed -->
+            <ng-container *ngIf="!recipientVisitItem.visit_status && recipientVisitItem.$expanded.status == 'missed'">                         
+                <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <div class="roboto-medium-20"><b>{{ length - i }}<span *ngIf="(length-i)==1">st</span><span
+                                        *ngIf="(length-i)==2">nd</span> Dose</b></div>
+                            <div *ngIf="recipientVisitItem.$expanded.status == 'missed'"><b>Missed</b></div>                            
+                        </div>
+
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="p-2 px-4">
+                                    <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                        <b>{{recipientVisitItem.start_time|date:'dd'}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        {{recipientVisitItem.start_time|date:'MMM'}}&nbsp;|&nbsp;{{recipientVisitItem.start_time|date:'EE'}}
+                                    </p>
+                                </div>
+                                <div class="p-2">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.site_name}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.address1}}</b>
+                                    </p>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.city}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.state}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.zip}}
+                                        </p>
+                                    </div>
+                                    <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine :
+                                        {{recipientVisitItem.$expanded.vaccine}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;">Time :
+                                        {{recipientVisitItem.start_time|date:'hh:mm a'}} -
+                                        {{recipientVisitItem.end_time|date:'hh:mm a'}}
+                                    </p>
+                                    <p *ngIf="(recipientVisitItem.$expanded.recipient_dob && recipientVisitItem.$expanded.recipient_dob != '1900-01-01')" class="mb-1" style="font-size: 12px !important;">DOB :
+                                        &nbsp;{{recipientVisitItem.$expanded.recipient_dob |date:'MM-dd-yyyy'}}                                                                    
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-end pl-4 pb-5 pt-2 h-100">
+                                    <p class="mb-1" style="font-size: 16px !important;"><b>Survey id :</b>
+                                        {{recipientVisitItem.ticket_number}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pb-2">
+                                <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_cancel_appointment" placement="bottom" delay="10"
+                                    *ngIf="!recipientVisitItem.visit_status || !recipientVisitItem.visit_status!='checked-in'"
+                                    (click)="cancleAppointment(recipientVisitItem)"
+                                    style="color: #fff;border: 1px solid #0984E3;color: #0984E3; border-radius: 40px;">
+                                     Cancel Appointment
+                                </button>
+                               <!--  <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_checkin_appointment" placement="right" delay="10"
+                                    [disabled]="recipientVisitItem.visit_status=='checked-in'"
+                                    [routerLink]="'/recipient/pre-vaccinate-check-list'"
+                                    [ngClass]="{'active-button':recipientVisitItem.visit_status=='checked-in','normal-button':recipientVisitItem.visit_status=='scheduled' || !recipientVisitItem.visit_status}">
+                                    Check In
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           </ng-container>
+            
+           <!-- Missed end-->
+
+            <ng-container
+                *ngIf="(!recipientVisitItem.visit_status || recipientVisitItem.visit_status=='checked-in' || recipientVisitItem.visit_status=='scheduled') && recipientVisitItem.$expanded.status !== 'missed'">
+                <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <div class="roboto-medium-20"><b>{{ length - i }}<span *ngIf="(length-i)==1">st</span><span
+                                        *ngIf="(length-i)==2">nd</span> Dose</b></div>
+                            <div *ngIf="recipientVisitItem.visit_status=='checked-in'"><b>Checked In</b></div>
+                            <div
+                                *ngIf="recipientVisitItem.visit_status=='scheduled' || !recipientVisitItem.visit_status">
+                                <b>Scheduled</b>
+                            </div>
+                        </div>
+
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="p-2 px-4">
+                                    <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                        <b>{{recipientVisitItem.start_time|date:'dd'}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        {{recipientVisitItem.start_time|date:'MMM'}}&nbsp;|&nbsp;{{recipientVisitItem.start_time|date:'EE'}}
+                                    </p>
+                                </div>
+                                <div class="p-2">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.site_name}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.address1}}</b>
+                                    </p>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.city}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.state}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.zip}}
+                                        </p>
+                                    </div>
+                                    <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine :
+                                        {{recipientVisitItem.$expanded.vaccine}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;">Time :
+                                        {{recipientVisitItem.start_time|date:'hh:mm a'}} -
+                                        {{recipientVisitItem.end_time|date:'hh:mm a'}}
+                                    </p>
+                                    <p *ngIf="(recipientVisitItem.$expanded.recipient_dob && recipientVisitItem.$expanded.recipient_dob != '1900-01-01')" class="mb-1" style="font-size: 12px !important;">DOB :
+                                        &nbsp;{{recipientVisitItem.$expanded.recipient_dob |date:'MM-dd-yyyy'}}                                                                    
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-end pl-4 pb-5 pt-2 h-100">
+                                    <p class="mb-1" style="font-size: 16px !important;"><b>Survey id :</b>
+                                        {{recipientVisitItem.ticket_number}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pb-2">
+                                <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_cancel_appointment" placement="bottom" delay="10"
+                                    *ngIf="!recipientVisitItem.visit_status || !recipientVisitItem.visit_status!='checked-in'"
+                                    (click)="cancleAppointment(recipientVisitItem)"
+                                    style="color: #fff;border: 1px solid #0984E3;color: #0984E3; border-radius: 40px;">
+                                     Cancel Appointment
+                                </button>
+                                <!-- <button mat-button class="cancel btn mr-2" vmsTooltip="recipient_checkin_appointment" placement="right" delay="10"
+                                    [disabled]="recipientVisitItem.visit_status=='checked-in'"
+                                    [routerLink]="'/recipient/pre-vaccinate-check-list'"
+                                    [ngClass]="{'active-button':recipientVisitItem.visit_status=='checked-in','normal-button':recipientVisitItem.visit_status=='scheduled' || !recipientVisitItem.visit_status}">
+                                    Check In
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container
+                *ngIf="recipientVisitItem.visit_status && (recipientVisitItem.visit_status=='completed' || recipientVisitItem.visit_status=='observation')">
+                <div class="vaccine-schedue-details p-2">
+                    <div class=" card h-100 border-0 shadow w-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="roboto-medium-20">{{ length-i }}<span *ngIf="(length-i)==1">st</span><span
+                                    *ngIf="(length-i)==2">nd</span> Dose</div>
+                            <div *ngIf="recipientVisitItem.visit_status=='completed'"
+                                class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"
+                                style="background-color:#099B4E !important;color: #fff !important;">
+                                Completed</div>
+                            <div *ngIf="recipientVisitItem.visit_status=='observation'"
+                                class="roboto-medium-14 white-bg rounded-pill py-2 px-4 badge" style="color: #0984e3;">
+                                Observation</div>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex align-items-center text-muted">
+                                <div class="p-2 px-4">
+                                    <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                        <b>{{recipientVisitItem.start_time|date:'dd'}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        {{recipientVisitItem.start_time|date:'MMM'}}&nbsp;|&nbsp;{{recipientVisitItem.start_time|date:'EE'}}
+                                    </p>
+                                </div>
+                                <div class="p-2">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.site_name}}</b>
+                                    </p>
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>{{recipientVisitItem.$expanded.address1}}</b>
+                                    </p>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.city}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.state}},&nbsp;
+                                        </p>
+                                        <p class="m-0" style="font-size: 14px !important;">
+                                            {{recipientVisitItem.$expanded.zip}}
+                                        </p>
+                                    </div>                    
+                                    <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine :
+                                        {{recipientVisitItem.$expanded.vaccine}}
+                                    </p>
+                                    <p class="mb-1" style="font-size: 12px !important;">Time :
+                                        {{recipientVisitItem.start_time|date:'hh:mm a'}} -
+                                        {{recipientVisitItem.end_time|date:'hh:mm a'}}
+                                    </p>
+                                    <p *ngIf="(recipientVisitItem.$expanded.recipient_dob && recipientVisitItem.$expanded.recipient_dob != '1900-01-01')" class="mb-1" style="font-size: 12px !important;">DOB :
+                                        &nbsp;{{recipientVisitItem.$expanded.recipient_dob |date:'MM-dd-yyyy'}}                                                                    
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-end pl-4 pb-5 pt-2 h-100">
+                                    <p class="mb-1" style="font-size: 16px !important;"><b>Survey id :</b>
+                                        {{recipientVisitItem.ticket_number}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pb-2">
+                                <button [routerLink]="['/recipient/advert-event', recipientVisitItem.id, 'recipient']"
+                                    mat-button class="roboto-medium-14 btn rounded-pill mr-2"
+                                    style="border: 1px solid #F87D46 !important; color: #F87D46;"
+                                    vmsTooltip="recipient_adverse_event" placement="right" delay="10">
+                                    Report Adverse Events</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="i==(length-1)">
+                <div class="qr-code-details p-2">
+                    <div class="card h-100 border-0 shadow w-100">
+                        <div class="card-body px-5 d-flex flex-column justify-content-center align-items-start">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex flex-column justify-content-center align-items-start pr-5">
+                                    <p class="mb-1" style="font-size: 16px !important;">
+                                        <b>Vaccination QR Code</b>
+                                    </p>
+                                    <ng-container
+                                        *ngIf="!(_recipientVisit['results'].length>1&&_recipientVisit['results'][0]['visit_status']=='completed'&&_recipientVisit['results'][1]['visit_status']=='completed')">
+                                        <p class="mb-1 pt-3" style="font-size: 12px !important; color: #999999;"> Use
+                                            this code to quickly Check in to your appointment when you arrive at
+                                            facility
+                                        </p>
+                                    </ng-container>
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img [src]="qrImageBase64">
+                                </div>
+                            </div>
+                            <ng-container *ngIf="checkCertificateVisible()">
+                               
+                                <button (click)="viewCertificate()" mat-button                                    
+                                    class="roboto-medium-14 btn rounded-pill mr-2"
+                                    style="border: 1px solid #118484 !important; color: #118484;"
+                                    vmsTooltip="recipient_view_certificate" placement="top" delay="10"
+                                    >
+                                    View Certificate</button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+
+
+<!-- <div *ngIf="_recipientVisit['results']&&_recipientVisit.results['length']>0">
+    <div *ngIf="_recipientVisit.results[0].visit_status && (_recipientVisit.results[0].visit_status=='completed' || _recipientVisit.results[0].visit_status=='observation')"
+        class="container pb-5 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+        <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+            <div class=" card h-100 border-0 shadow w-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="roboto-medium-20">1st Dose</div>
+                    <div *ngIf="_recipientVisit.results[0].visit_status=='completed'"
+                        class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"
+                        style="background-color:#099B4E !important;color: #fff !important;">
+                        Completed</div>
+                    <div *ngIf="_recipientVisit.results[0].visit_status=='observation'"
+                        class="roboto-medium-14 white-bg rounded-pill py-2 px-4 badge" style="color: #0984e3;">
+                        Observation</div>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="d-flex align-items-center text-muted">
+                        <div class="p-2 px-4">
+                            <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                <b>{{_recipientVisit.results[0].start_time|date:'dd'}}</b>
+                            </p>
+                            <p class="mb-1" style="font-size: 16px !important;">
+                                {{_recipientVisit.results[0].start_time|date:'MMM'}}&nbsp;|&nbsp;{{_recipientVisit.results[0].start_time|date:'EE'}}
+                            </p>
+                        </div>
+                        <div class="p-2">
+                            <p class="mb-1" style="font-size: 16px !important;">
+                                <b>{{_recipientVisit.results[0].$expanded.site_name}}</b>
+                            </p>
+                            <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine :
+                                {{_recipientVisit.results[0].$expanded.vaccine}}</p>
+                            <p class="mb-1" style="font-size: 12px !important;">Time :
+                                {{_recipientVisit.results[0].start_time|date:'hh:mm a'}} -
+                                {{_recipientVisit.results[0].end_time|date:'hh:mm a'}}
+                            </p>
+                        </div>
+                        <div style="clear: both;"></div> -->
+
+<!-- </div>
+<div class="py-2">
+    <button mat-button class="roboto-medium-14 btn rounded-pill mr-2"
+        style="border: 1px solid #F87D46 !important; color: #F87D46;">
+        Report Adverse Events</button> -->
+
+<!-- <p class="mt-2"><a href="javascript:void(0);" style="color: #0000F1;">UPDATE VACCINATION STATUS
+                            IN MYID</a></p> -->
+<!-- </div>
+</div>
+</div>
+</div>
+
+<div class="qr-code-details p-2">
+    <div class="card h-100 border-0 shadow w-100">
+        <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center">
+            <div class="d-flex w-75">
+                <div class="w-50 d-flex justify-content-center align-items-center">
+                    <p class="mb-1" style="font-size: 16px !important;position: absolute; top: 70px;left: 80px;">
+                        <b>Vaccination QR Code</b>
+                    </p>
+                    <p class="mb-1 pt-3" style="font-size: 12px !important; color: #999999;"> Use this code
+                        to
+                        quickly Check in to
+                        your appointment when you arrive at facility</p>
+                </div>
+                <div class="w-50 d-flex justify-content-center align-items-center">
+                    <img src="../../../../../../assets/images/png/QR Code.png">
+                </div> -->
+<!-- </div> -->
+<!-- <div class="d-flex w-75 justify-content-start">
+                    <button mat-button class="roboto-medium-14 btn rounded-pill"
+                        style="border: 1px solid #118484C4 !important; color: #118484C4;">
+                        View Certificate</button>
+                </div> -->
+<!-- </div>
+            </div>
+        </div> -->
+
+<!-- <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+        <div class="card h-100 border-0 shadow w-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="roboto-medium-20">2st Dose</div>
+                <div class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"
+                    style="color: #118484;">Compleated</div>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex align-items-center text-muted">
+                    <div class="p-2 px-4">
+                        <p class="mb-1 text-center" style="font-size: 30px !important;"><b>04</b></p>
+                        <p class="mb-1" style="font-size: 16px !important;">Jan&nbsp;|&nbsp;Mon</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="mb-1" style="font-size: 16px !important;">
+                            <b>New York peresbatrian hospital</b>
+                        </p>
+                        <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine : Pfizer Time</p>
+                        <p class="mb-1" style="font-size: 12px !important;">Time : 12:00 - 12:50 </p>
+                    </div>
+                </div>
+                <div class="py-2 d-flex justify-content-start">
+                    <button mat-button class="roboto-medium-14 btn rounded-pill mr-2"
+                        style="border: 1px solid #F87D46 !important; color: #F87D46;">
+                        Report Averse Efects</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+<!-- </div> -->
+<!-- <div *ngIf="!_recipientVisit.results[0].visit_status || _recipientVisit.results[0].visit_status=='checked-in' || _recipientVisit.results[0].visit_status=='scheduled'"
+        class="container pb-5 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+        <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+            <div class=" card h-100 border-0 shadow w-100">
+                <div class="card-header d-flex justify-content-between">
+                    <div><b>1st Dose</b></div>
+                    <div *ngIf="_recipientVisit.results[0].visit_status=='checked-in'"><b>Checked In</b></div>
+                    <div
+                        *ngIf="_recipientVisit.results[0].visit_status=='scheduled' || !_recipientVisit.results[0].visit_status">
+                        <b>Scheduled</b>
+                    </div>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="d-flex">
+                        <div class="p-2">
+                            <p class="mb-1 text-center" style="font-size: 30px !important;">
+                                <b>{{_recipientVisit.results[0].start_time|date:'dd'}}</b>
+                            </p>
+                            <p class="mb-1" style="font-size: 16px !important;">
+                                {{_recipientVisit.results[0].start_time|date:'MMM'}}&nbsp;|&nbsp;{{_recipientVisit.results[0].start_time|date:'EE'}}
+                            </p>
+                        </div>
+                        <div class="p-2">
+                            <p class="mb-1" style="font-size: 16px !important;">
+                                <b>{{_recipientVisit.results[0].$expanded.site_name}}</b>
+                            </p>
+                            <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine :
+                                {{_recipientVisit.results[0].$expanded.vaccine}}</p>
+                            <p class="mb-1" style="font-size: 12px !important;">Time :
+                                {{_recipientVisit.results[0].start_time|date:'hh:mm a'}} -
+                                {{_recipientVisit.results[0].end_time|date:'hh:mm a'}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="py-2"> -->
+<!-- <button mat-button class="edit btn mr-2"
+                    style="background: #0984E3 0% 0% no-repeat padding-box;color:white;border-radius: 40px;">Edit
+                    Appointment</button> -->
+<!-- <button mat-button class="edit btn mr-2"
+                            [ngClass]="{'active-button':_recipientVisit.results[0].visit_status=='scheduled','normal-button':_recipientVisit.results[0].visit_status=='checked-in'}">
+                            Edit
+                            Appointment</button> -->
+<!-- <button mat-button class="cancel btn mr-2"
+                            style="color: #fff;border: 1px solid #0984E3;color: #0984E3; border-radius: 40px;">Cancel
+                            Appointment
+                        </button>
+                        <button mat-button class="cancel btn mr-2"
+                            [disabled]="_recipientVisit.results[0].visit_status=='checked-in'"
+                            [routerLink]="'/recipient/pre-vaccinate-check-list'"
+                            [ngClass]="{'active-button':_recipientVisit.results[0].visit_status=='checked-in','normal-button':_recipientVisit.results[0].visit_status=='scheduled' || !_recipientVisit.results[0].visit_status}">
+                            Check In
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="qr-code-details p-2">
+            <div class="card h-100 border-0 shadow w-100">
+                <div class="card-body p-4 d-flex justify-content-center align-items-center">
+                    <div class="d-flex">
+                        <div class="p-2 w-50">
+                            <p class="mb-1" style="font-size: 16px !important;"><b>Vaccination QR Code</b>
+                            </p>
+                            <p class="mb-1" style="font-size: 12px !important; color: #999999;"> Use this code to
+                                quickly Check in to
+                                your appointment when you arrive at facility</p>
+                        </div>
+                        <div class="p-2 w-50 d-flex justify-content-center align-items-center">
+                            <img src="../../../../../../assets/images/QR Code.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<!-- ------------------------------------------ -->
+<!-- <div class="container pb-5 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+        <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+            <div class="card h-100 border-0 shadow w-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="roboto-medium-20">2st Dose</div>
+                    <div class="roboto-medium-14 white-bg blue-text rounded-pill py-2 px-4 badge">Scheduled</div>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div class="p-2 px-4">
+                            <p class="mb-1 text-center" style="font-size: 30px !important;"><b>04</b></p>
+                            <p class="mb-1" style="font-size: 16px !important;">Jan&nbsp;|&nbsp;Mon</p>
+                        </div>
+                        <div class="p-2">
+                            <p class="mb-1" style="font-size: 16px !important;">
+                                <b>New York peresbatrian hospital</b>
+                            </p>
+                            <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine : Pfizer Time</p>
+                            <p class="mb-1" style="font-size: 12px !important;">Time : 12:00 - 12:50 </p>
+                        </div>
+                    </div>
+                    <div class="py-2 d-flex justify-content-between">
+                        <button mat-button class="roboto-medium-14 btn blue-bg white-text rounded-pill mr-2">Edit
+                            Appointment</button>
+                        <button mat-button class="roboto-medium-14 btn blue-text rounded-pill mr-2">Cancel
+                            Appointment</button>
+                        <button mat-button class="roboto-medium-14 btn blue-text rounded-pill mr-2">Check-in</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qr-code-details p-2">
+            <div class="card h-100 border-0 shadow w-100">
+                <div class="card-body p-4 d-flex justify-content-center align-items-center">
+                    <div class="d-flex w-75">
+                        <div class="w-50">
+                            <p class="roboto-medium-18 mb-3">Vaccination&nbsp;QR&nbsp;Code</p>
+                            <p class="mb-1" style="font-size: 12px !important; color: #999999;">
+                                Use this code to<br>
+                                quickly Check in to<br>
+                                your appointment when you arrive at facility<br>
+                            </p>
+                        </div>
+                        <div class="w-50 d-flex justify-content-center align-items-center">
+                            <img src="../../../../../../assets/images/QR Code.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+            <div class="card h-100 border-0 shadow w-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="roboto-medium-20">1st Dose</div>
+                    <div class="roboto-medium-14 white-bg green-text rounded-pill py-2 px-4 badge"
+                        style="color: #118484;">Compleated</div>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="d-flex align-items-center text-muted">
+                        <div class="p-2 px-4">
+                            <p class="mb-1 text-center" style="font-size: 30px !important;"><b>04</b></p>
+                            <p class="mb-1" style="font-size: 16px !important;">Jan&nbsp;|&nbsp;Mon</p>
+                        </div>
+                        <div class="p-2">
+                            <p class="mb-1" style="font-size: 16px !important;">
+                                <b>New York peresbatrian hospital</b>
+                            </p>
+                            <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine : Pfizer Time</p>
+                            <p class="mb-1" style="font-size: 12px !important;">Time : 12:00 - 12:50 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+<!-- <hr > -->
+
+<!-- <div class="container">
+    <div class="container heading py-4">21-20 All Clear</div>
+
+
+</div> -->
+
+
+<!-- <ng-container *ngIf="_recipientVisit.results.length>0">
+
+</ng-container> -->
+<!-- <hr />
+<div class="container pb-5 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+    <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+        <div class="card h-100 border-0 shadow w-100">
+            <div class="card-header card-header-error d-flex justify-content-between">
+                <div><b>1st Dose</b></div>
+                <div style="color: #FC6E6E;"><b>Missed</b></div>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex">
+                    <div class="p-2">
+                        <p class="mb-1 text-center" style="font-size: 30px !important;"><b>04</b></p>
+                        <p class="mb-1" style="font-size: 16px !important;">Jan&nbsp;|&nbsp;Mon</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="mb-1" style="font-size: 16px !important;">
+                            <b>New York peresbatrian hospital</b>
+                        </p>
+                        <p class="mb-1" style="font-size: 14px !important;">Type of Vaccine : Pfizer Time</p>
+                        <p class="mb-1" style="font-size: 12px !important;">Time : 12:00 - 12:50 </p>
+                    </div>
+                </div>
+                <div class="py-2">
+                    <p style="color: #FC6E6E;">You have missed this appointment</p>
+                    <button mat-button class="edit btn mr-2"
+                        style="background: #375D9D 0% 0% no-repeat padding-box;color:white">Edit
+                        Reschedule</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="qr-code-details p-2">
+        <div class="card h-100 border-0 shadow w-100">
+            <div class="card-body p-4 d-flex justify-content-center align-items-center">
+                <div class="d-flex">
+                    <div class="p-2 w-50">
+                        <p class="mb-1" style="font-size: 16px !important;"><b>Vaccination QR Code</b>
+                        </p>
+                        <p class="mb-1" style="font-size: 12px !important; color: #999999;"> Use this code to
+                            quickly Check in to
+                            your appointment when you arrive at facility</p>
+                    </div>
+                    <div class="p-2 w-50 d-flex justify-content-center align-items-center">
+                        <img src="../../../../../../assets/images/QR Code.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!--
+<hr />
+<div class="container pb-5 d-flex flex-wrap flex-column flex-lg-row justify-content-between">
+    <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+        <div class="card h-100 border-0 shadow w-100">
+            <div class="card-header d-flex justify-content-between">
+                <div><b>1st Dose</b></div>
+                <div><b>Pending</b></div>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <p><b>Second Dose of Vaccination<br />Any time after 16 Feb 2021</b></p>
+                <div class="py-2">
+                    <button mat-button class="edit btn mr-2"
+                        style="background:#375D9D 0% 0% no-repeat padding-box;color:white">Book
+                        Appointment</button>
+                    <button mat-button class="edit btn mr-2"
+                        style="background:#118484 0% 0% no-repeat padding-box;color:white">Change Vaccination
+                        Center</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="vaccine-schedue-details p-2" style="min-height:300px;">
+        <div class="card h-100 border-0 shadow w-100">
+            <div class="card-header card-header-muted d-flex justify-content-between">
+                <div><b>1st Dose</b></div>
+                <div style="color: #118484;"><b>Compleated</b></div>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="d-flex">
+                    <div class="p-2">
+                        <p class="mb-1 text-muted text-center" style="font-size: 30px !important;"><b>04</b></p>
+                        <p class="mb-1 text-muted" style="font-size: 16px !important;">Jan&nbsp;|&nbsp;Mon</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="mb-1 text-muted" style="font-size: 16px !important;">
+                            <b>New York peresbatrian hospital</b>
+                        </p>
+                        <p class="mb-1 text-muted" style="font-size: 14px !important;">Type of Vaccine : Pfizer Time
+                        </p>
+                        <p class="mb-1 text-muted" style="font-size: 12px !important;">Time : 12:00 - 12:50 </p>
+                    </div>
+                </div>
+                <div class="py-2">
+                    <button mat-button class="edit btn mr-2" style="border: 1px solid #FF0000;color: black;">Report
+                        adverse effects</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

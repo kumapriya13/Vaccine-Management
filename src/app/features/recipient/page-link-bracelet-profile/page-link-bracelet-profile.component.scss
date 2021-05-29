@@ -1,0 +1,54 @@
+.link-brecelet-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  opacity: 1;
+  padding: 2.2rem 0;
+}
+.link-bracelet {
+  width: 131px;
+  height: 33px;
+  border: 0.5px solid #0069af;
+}
+.cancel-btn {
+  width: 119px;
+  height: 46px;
+  background: #999999 0% 0% no-repeat padding-box;
+  color: #ffffff;
+}
+.save-btn {
+  width: 119px;
+  height: 46px;
+  background: #1c8de8 0% 0% no-repeat padding-box;
+  color: #ffffff;
+}
+
+.p-name{
+  margin-top: 8px;
+  margin-left: 35px;
+}
+.delete-pht-btn{
+  color: #0984e3;
+  border: 2px solid #999999;
+  border-radius: 20px;
+  height: 33px;
+  width: 110px;
+}
+.change-pht-btn{
+  color: #0984e3;
+  border: 2px solid #999999;
+  border-radius: 20px;
+  height: 33px;
+  width: 115px;
+}
+input[type="file"] {
+  display: none;
+}
+.input-field{
+  width: 380px !important;
+}
+@media(max-width:768px){
+  .input-field{
+    width: 250px !important;
+  }
+
+}

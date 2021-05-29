@@ -1,0 +1,120 @@
+.site-admin-vaccine-header {
+  background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+    0% no-repeat padding-box;
+  padding: 2.2rem 0;
+  i {
+    font-size: 22px;
+    font-weight: lighter;
+  }
+}
+
+table {
+  width: 100%;
+  margin-top: 2rem;
+  th {
+    background-color: #1E8EE9;
+  }
+  .mat-row:nth-child(even) {
+    background-color: #00000029;
+  }
+  .mat-row:nth-child(odd) {
+    background-color: #fffdfd;
+  }
+}
+
+.edit {
+  width: 60px;
+  height: 25px;
+  background: #e9efff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+.delete {
+  width: 70px;
+  height: 25px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 0.5px solid #0984e3;
+  border-radius: 3px;
+}
+
+table {
+  width: 100%;
+  .mat-header-cell {
+    background-color: #1E8EE9;
+    color: white !important;
+    // padding-left: 48px !important;
+  }
+  th {
+    text-align: center !important;
+  }
+  .mat-row:nth-child(even) {
+    background-color: #00000029;
+  }
+  .mat-row:nth-child(odd) {
+    background-color: #fffdfd;
+  }
+}
+.blue-text {
+  color: #0984e3 !important;
+}
+
+:host ::ng-deep .table-action-strip {
+  .mat-form-field-flex > .mat-form-field-infix {
+    // border: 0 !important;
+    padding: 0.4em 0px !important;
+    padding-bottom: 0.6em !important;
+  }
+  .mat-form-field-label-wrapper {
+    top: -1.5em;
+  }
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label {
+    transform: translateY(-1.1em) scale(0.75);
+    width: 133.33333%;
+  }
+}
+
+.search-form-field {
+    width: 230px;
+}
+:host ::ng-deep .mat-sort-header-arrow {
+  color: white !important;
+}
+
+.greendot {
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.reddot {
+  height: 10px;
+  width: 10px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+// .mat-column-no_of_vials{
+//   word-wrap: break-word !important;
+//   white-space: unset !important;
+//   flex: 0 0 30% !important;
+//   width: 30% !important;
+//   overflow-wrap: break-word;
+//   word-wrap: break-word;
+
+//   word-break: break-word;
+
+//   -ms-hyphens: auto;
+//   -moz-hyphens: auto;
+//   -webkit-hyphens: auto;
+//   hyphens: auto;
+// }
+
+

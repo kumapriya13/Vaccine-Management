@@ -1,0 +1,128 @@
+<app-component-header></app-component-header>
+
+<div class="container py-4">
+    <div class="card mb-4 border-0 shadow">
+        <div class="card-body p-3">
+            <div class="d-md-flex">
+                <div class="d-flex mr-4">
+                    <img class="mx-auto" [src]="profile.qr_code" alt="" />
+                </div>
+                <div *ngIf="profileVisible" class="profile-info mt-3">
+                    <p class="m-0 mb-2">
+                        <label class="roboto-regular-16 grey-text mr-2">Full name:</label>
+                        <span class="roboto-medium-18">{{profile.fname}} {{profile.lname}}</span>
+                    </p>
+                    <p *ngIf="profile.dob" class="m-0 mb-2">
+                        <label class="roboto-regular-16 grey-text mr-2">Date of birth:</label>
+                        <span class="roboto-medium-18">{{profile.dob | date}}</span>
+                    </p>
+                    <p *ngIf="profile.email" class="m-0 mb-2">
+                        <label class="roboto-regular-16 grey-text mr-2">Email:</label>
+                        <span class="roboto-medium-18">{{profile.email}}</span>
+                    </p>
+                    <p *ngIf="profile.mobile_number" class="m-0 mb-2">
+                        <label class="roboto-regular-16 grey-text mr-2">Mobile:</label>
+                        <span class="roboto-medium-18">{{profile.mobile_number}}</span>
+                    </p>
+                    <p *ngIf="profile.county" class="m-0 mb-2">
+                        <label class="roboto-regular-16 grey-text mr-2">County:</label>
+                        <span class="roboto-medium-18">{{profile.county}}</span>
+                    </p>
+                    <div *ngIf="addressVisible" class="d-flex">
+                        <p class="mr-2">
+                            <label class="roboto-regular-16 grey-text">Address:</label>
+                        </p>
+                        <div>
+                            <div class="d-flex">
+                                <ng-container *ngIf="profile.address1">
+                                    <span class="roboto-medium-18">{{ profile.address1 }}, </span>
+                                </ng-container>
+
+                                <ng-container *ngIf="profile.address2">
+                                    <span class="roboto-medium-18"> {{ profile.address2 }},</span>
+                                </ng-container>
+
+                                <ng-container *ngIf="profile.address3">
+                                    <span class="roboto-medium-18"> {{ profile.address3}},</span>
+                                </ng-container>
+                            </div>
+
+                            <ng-container *ngIf="profile.city">
+                                <span class="roboto-medium-18"> {{ profile.city }},</span>
+                            </ng-container>
+
+                            <ng-container *ngIf="profile.state">
+                                <span class="roboto-medium-18"> {{ profile.state }},</span>
+                            </ng-container>
+                            <ng-container *ngIf="profile.zip">
+                                <span class="roboto-medium-18"> {{ profile.zip }}</span>
+                            </ng-container>
+                            <div *ngIf="profile.country" class="roboto-medium-18">
+                                {{ profile.country }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="!profileVisible" class="mt-3">
+                    <span class="roboto-medium-16">
+                        This recipient is not sharing any information
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="imageCert" class="image-certificate mb-4">
+        <div class="container-fluid py-4 d-flex justify-content-center"
+             style="background-color: rgba(104, 148, 187, 0.356);">
+            <div class="text-center px-4">
+                <p class="m-0 roboto-medium-18">Image of Certificate</p>
+            </div>
+        </div>
+        <div class="d-flex mt-4">
+            <img [src]="imageCert" alt="">
+        </div>
+    </div>
+
+    <div *ngIf="electronicCertificates?.length">
+        <div class="container-fluid py-4 d-flex justify-content-center"
+             style="background-color: rgba(104, 148, 187, 0.356);">
+            <div class="text-center px-4">
+                <p class="m-0 roboto-medium-18">CERTIFICATE OF COVID-19 VACCINATION</p>
+            </div>
+        </div>
+        <p class="m-0 py-4 roboto-regular-18">
+            This is the certify that <b>{{ profile.fname }} {{ profile.lname }} </b> is successfully vaccinated for
+            COVID-19
+            as per the schedule below
+        </p>
+        <table class="table table-striped">
+            <thead>
+                <tr class="blue-bg">
+                    <th class="white-text">Dose</th>
+                    <th class="white-text">Date</th>
+                    <!-- <th class="white-text">Vaccinator</th> -->
+                    <th class="white-text">Place</th>
+                    <th class="white-text">Vaccine</th>
+                    <!-- <th class="white-text">Time</th>
+                    <th class="white-text">Batch No. </th> -->
+                    <th class="white-text">Lot Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cert of electronicCertificates;let i = index;let length = count;">
+                    <td class="blue-text">{{ i+1 }}</td>
+                    <td class="blue-text">{{ cert.dose_date|date:'dd MMM'}}</td>
+                    <!-- <td class="blue-text"></td> -->
+                    <td class="blue-text">{{ cert.site_name }}</td>
+                    <td class="blue-text">{{ cert.material_name }}</td>
+                    <td class="blue-text">{{ cert.batch_no }}</td>
+                    <!-- <td class="blue-text"></td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

@@ -1,0 +1,26 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">You are now in line</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body fs-20 d-flex flex-column align-items-center position-relative">
+        <mat-spinner></mat-spinner>
+
+        <span class="mt-5">
+            Your estimated wait time is: {{nextRetryInterval}} seconds
+        </span>
+        <div class="fs-18 mt-3 mb-5">
+            <u class="cursor-pointer" (click)="modal.dismiss()">Leave the line</u> (You will lose your place)
+        </div>
+
+        <div style="position: absolute; right: 1rem; bottom: 1rem">
+            <u class="cursor-pointer fs-16">
+                What is this?
+            </u>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+    </div> -->
+</ng-template>

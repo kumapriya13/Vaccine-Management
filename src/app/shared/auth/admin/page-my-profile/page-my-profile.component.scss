@@ -1,0 +1,71 @@
+.page-header {
+    background: transparent linear-gradient(270deg, #71b7fe 0%, #0984e3 100%) 0%
+      0% no-repeat padding-box;
+    opacity: 1;
+    padding: 2.2rem 0;
+    .vcn-sch-text {
+      text-align: left;
+      // font: normal normal medium 30px/39px Roboto !important;
+      letter-spacing: 0px;
+      color: #ffffff;
+      // font-weight: 600;
+    }
+    i {
+      color: #ffffff;
+      font-size: 40px;
+    }
+  }
+  
+  .nav-link-box {
+    border-left: 3px solid #0099cf;
+  }
+  
+  .profile-photo {
+    top: 323px;
+    left: 230px;
+    width: 130px;
+    height: 104px;
+
+  }
+  
+  .profile-name {
+    top: 437px;
+    left: 231px;
+    // width: 87px;
+    height: 24px;
+    text-align: left;
+    font: normal normal medium 20px/30px Roboto;
+    letter-spacing: -0.32px;
+    color: #000000;
+    opacity: 1;
+  }
+  .change-password-btn {
+    color: #7b7b7b;
+  }
+  .fa-pencil-square-o {
+    font-size: 30px;
+    color: #7b7b7b;
+  }
+  .select-btn {
+    width: 115px;
+    height: 33px;
+    border: 0.5px solid #0069af;
+  }
+  .cursor-pointer{
+    cursor: pointer !important;
+  }
+  .profile-card{
+  width: 1087px;
+  height: 200px;
+  }
+  .user-detail-box{
+    width: auto !important;
+  }
+  .mfa-box{
+    height: 60px !important;
+    position: absolute;
+    top: 35px;
+    right: 160px !important;
+  
+   
+  }

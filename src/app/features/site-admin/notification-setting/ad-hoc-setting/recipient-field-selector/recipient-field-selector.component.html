@@ -1,0 +1,6 @@
+<button mat-button [matMenuTriggerFor]="menu">{{name}}</button>
+<mat-menu #menu="matMenu">
+  <button *ngFor="let field of fields"
+          mat-menu-item
+          (click)="onFieldClick(field)">{{field}}</button>
+</mat-menu>

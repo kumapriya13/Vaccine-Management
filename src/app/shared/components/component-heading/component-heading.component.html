@@ -1,0 +1,37 @@
+<div *ngIf="!dashboardHeader && heading" class="row dynamic-header" [attr.style]="background">
+   <div class="col-8">
+    <div class="container d-flex align-items-center" style="margin-left:60px;">
+    <i *ngIf="refererClick" class="fa fa-arrow-left white-text" (click)="backClicked()"></i>
+    <i *ngIf="listIcon" class="fa fa-list-alt iconClass"></i>
+    <!-- [innerHTML]="heading | safeHtmlData | titlecase"     -->
+    <h1 [ngClass]="textClass" 
+        style="font-size: 23px!important;">
+        {{caseType=='regular' ? heading : heading | titlecase}}
+    </h1>
+    </div>
+    </div>
+    <div class="col-4">
+    <!-- <button class="btn btn-light rounded-pill shadow-sm" style="float:right;margin-right:65px;" (click)="openHelpModel()">Help <i class="fa fa-question"></i></button> -->
+    </div>
+    </div>
+
+
+    <div *ngIf="dashboardHeader">
+        <div class="d-flex justify-content-between backgd text-light mb-5 mouse-hover" style="height: 115px;">
+            <div class="p-4 w-75">
+                <h1 class="m-0 roboto-medium-26" style="font-size: 23px!important;">Welcome <span *ngIf="loggedInUser">
+                        {{ loggedInUser['fname'] }} {{ loggedInUser['lname'] }} &nbsp;{{userTypeLabel ? userTypeLabel : ''}}</span></h1>
+                <hr class="bg-light" />
+                <p class="m-0 roboto-regular-26" style="font-size: 23px!important;" *ngIf="loggedInUser && loggedInUser.sites"> Site Assigned - <span *ngIf="loggedInUser">
+                    {{siteObject['site_name']}}</span> </p> 
+
+                  
+            </div>
+            <img class="mr-2" src="../../../../assets/images/vaccinator/Group 52521.svg" />
+            <!-- <button class="btn btn-light rounded-pill shadow-sm" 
+            style="float:right;margin-right:65px;height: 48px;width: 134px;margin-top: 12px;" (click)="openHelpModel()">Help <i class="fa fa-question"></i></button> -->
+        </div>
+        <!-- <img class="mr-2" src="../../../../assets/images/vaccinator/Group 52521.svg" /> -->
+        <!-- <button class="btn btn-light rounded-pill shadow-sm"
+            style="float:right;margin-right:65px;height: 48px;width: 134px;margin-top: 12px;" (click)="openHelpModel()">Help <i class="fa fa-question"></i></button> -->
+    </div>

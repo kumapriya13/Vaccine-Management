@@ -1,0 +1,269 @@
+<form class="manage-schedule-filter recipient-filter" [formGroup]="filterFormGroup" #form (ngSubmit)="applyFilter()">
+    <div class="filter-header d-flex align-items-center">
+        <span class="title">List Of Appointment: {{totalCount}} Appointment</span>
+
+        <div class="d-flex ml-auto align-items-center">
+            <span class="filter-btn ml-3" (click)="resetFilter()">
+                Reset Filter
+                <i class="fa fa-filter ml-1"></i>
+            </span>
+        </div>
+    </div>
+    <div class="filter-content">
+        <div class="row">
+            <mat-form-field appearance="outline" class="col-3" [formGroup]="targetFormGroup">
+                <mat-label>Manage Schedule</mat-label>
+                <mat-select formControlName="type" (valueChange)="onTypeChange($event)">
+                    <mat-option *ngFor="let scheduleOpt of manageScheduleOptions;" [value]="scheduleOpt">
+                        {{scheduleOpt}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Booking Status</mat-label>
+                <mat-select multiple formControlName="bookingStatus">
+                    <mat-option *ngFor="let bookingStatusOpt of bookingStatusOptions;" [value]="bookingStatusOpt.value">
+                        {{bookingStatusOpt.text}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Dose</mat-label>
+                <mat-select formControlName="doseList">
+                    <mat-option *ngFor="let doseOpt of doseOptions;" [value]="doseOpt.value">
+                        {{doseOpt.text}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Select Slots</mat-label>
+                <mat-select formControlName="allocationType">
+                    <mat-option *ngFor="let slotOpt of slotOptions;" [value]="slotOpt">
+                        {{slotOpt}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <mat-label class="font-weight-bold">Select Range (Which Slots should be moved)</mat-label>
+            </div>
+            <div *ngIf="targetFormGroup.value.type === 'Move Schedule'" class="col-6">
+                <mat-label class="font-weight-bold">Select Range (Slots postpone to)</mat-label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="row">
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>From</mat-label>
+                        <input matInput placeholder="From" [matDatepicker]="rangeMovedFrom"
+                               formControlName="fromStartDate" />
+                        <mat-datepicker-toggle matSuffix [for]="rangeMovedFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #rangeMovedFrom></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>To</mat-label>
+                        <input matInput placeholder="To" [matDatepicker]="rangeMovedTo" formControlName="fromEndDate" />
+                        <mat-datepicker-toggle matSuffix [for]="rangeMovedTo"></mat-datepicker-toggle>
+                        <mat-datepicker #rangeMovedTo></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="targetFormGroup.value.type === 'Move Schedule'" class="col-6">
+                <div class="row" [formGroup]="targetFormGroup">
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>Date</mat-label>
+                        <input matInput placeholder="From" [matDatepicker]="rangePostponeFrom" formControlName="targetDate"/>
+                        <mat-datepicker-toggle matSuffix [for]="rangePostponeFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #rangePostponeFrom></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>Time</mat-label>
+                        <ngx-material-timepicker #toStartTimePicker></ngx-material-timepicker>
+                        <input type="text" matInput [ngxTimepicker]="toStartTimePicker" formControlName="targetTime">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-label class="font-weight-bold">Select Time (Which Slots should be moved)</mat-label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="row">
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>From</mat-label>
+                        <ngx-material-timepicker #fromStartTimePicker></ngx-material-timepicker>
+                        <input type="text" matInput [ngxTimepicker]="fromStartTimePicker"
+                               formControlName="fromStartTime">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>To</mat-label>
+                        <ngx-material-timepicker #fromEndTimePicker></ngx-material-timepicker>
+                        <input type="text" matInput [ngxTimepicker]="fromEndTimePicker" formControlName="fromEndTime">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row d-none">
+            <div class="col-12">
+                <mat-label class="font-weight-bold">Select Site</mat-label>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>From</mat-label>
+                        <mat-select>
+                            <mat-option>
+                                From
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>To</mat-label>
+                        <mat-select>
+                            <mat-option>
+                                To
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="filter-seats mt-4 col-12">
+            <div class="label">
+                <mat-label class="select-seat-label font-weight-bold">
+                    Select Seat
+                </mat-label>
+            </div>
+            <!-- Top Seat Select -->
+            <div class="field">
+                <ng-select appearance="outline"
+                           placeholder="Seat"
+                           [multiple]="true"
+                           [bindValue]="'id'"
+                           [bindLabel]="'seat_name'"
+                           [items]="seats"
+                           [closeOnSelect]="false"
+                           formControlName="seatIds"
+                           #ngSelect>
+                    <ng-template ng-header-tmp>
+                        <button (click)="selectAllSeats(); ngSelect.close()" type="button" class="btn btn-sm btn-secondary">Select
+                            all</button>
+                    </ng-template>
+                </ng-select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4">
+            <button mat-button type="button" class="btn btn-secondary float-right" (click)="close()">
+                Cancel
+            </button>
+            <button mat-button type="button" class="btn btn-primary mr-4 float-right" (click)="proceed()" [disabled]="!filterFormGroup.valid">
+                Proceed
+            </button>
+            <button mat-button type="submit" class="btn btn-primary mr-4 float-right">
+                Apply Filter
+            </button>
+        </div>
+    </div>
+</form>
+<div class="manage-schedule-search-results my-4">
+    <div class="row">
+        <div class="col-12">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="selectSeat">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18 header-align-left">
+                        <mat-checkbox color="primary" [checked]="checkAll" (change)="checkUncheckAll($event)">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <mat-checkbox color="primary" [(ngModel)]="slotSelectionInfo[element.id]" (ngModelChange)="updateCheckAllStatus()">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="recipient">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18"> Recipient </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <ng-container *ngIf="element.$expanded?.recipient">
+                            {{element.$expanded?.recipient.fname}} {{element.$expanded?.recipient.lname}}
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18"> Date </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.start_time | formatDate}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="time">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18"> Time </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        {{element.start_time | date: 'h:mm a'}}
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="mobileNumber">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18">
+                        Mobile Number
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <ng-container *ngIf="element.$expanded?.recipient">
+                            {{element.$expanded?.recipient.mobile_number}}
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18">
+                        Email
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <ng-container *ngIf="element.$expanded?.recipient">
+                            {{element.$expanded?.recipient.email}}
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="vaccineAndDose">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18">
+                        Vaccine
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <ng-container *ngIf="element.$expanded?.material">
+                            {{element.$expanded?.material.name}}
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dob">
+                    <th mat-header-cell *matHeaderCellDef class="roboto-regular-18">
+                        DOB
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="roboto-medium-16 blue-text">
+                        <ng-container *ngIf="element.$expanded?.recipient">
+                            {{element.$expanded?.recipient.dob}}
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="totalCount" [pageIndex]="pageIndex" (page)="onPageChange($event)" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

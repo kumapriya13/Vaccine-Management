@@ -1,0 +1,106 @@
+<div class="d-flex align-items-center justify-content-between">
+
+    <app-search-box (searchEvent)="searchSiteAdmin($event)"></app-search-box>
+
+    <div class="ml-auto">
+        <div class="dropdown h-100">
+            <button class="btn roboto-medium-16 white-text blue-2-bg add-admin dropdown-toggle" type="button"
+                id="adminTypes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add Admin
+            </button>
+            <div class="dropdown-menu" aria-labelledby="adminTypes">
+                <button *ngIf="currentAdminType === 'super_admin'" class="dropdown-item"
+                    [routerLink]="'../state-admin/register'" disabled>Add State Admin</button>
+                <button *ngIf="currentAdminType === 'super_admin'" class="dropdown-item"
+                    [routerLink]="'../county-admin/register'" disabled>Add County
+                    Admin</button>
+                <button *ngIf="currentAdminType === 'super_admin'" class="dropdown-item"
+                    [routerLink]="'../provider-admin/register'">Add Provider Admin</button>
+                <button *ngIf="currentAdminType === 'super_admin'" class="dropdown-item"
+                    [routerLink]="'../facility-admin/register'" disabled>Add Facility
+                    Admin</button>
+                <button class="dropdown-item" [routerLink]="'../site-admin/register'">Add Site Admin</button>
+                <button class="dropdown-item" [routerLink]="'../vaccinator/register'">Add Vaccinator</button>
+                <button class="dropdown-item" [routerLink]="'../receptionist/register'">Add Receptionist</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-end py-1 mb-1">
+    <!-- <div class="blue-text cursor-pointer">
+        <i class="fa fa-cogs mr-1" aria-hidden="true"></i>Change Columns
+    </div> -->
+</div>
+
+<div class="mb-5">
+    <table class="table table-striped">
+        <thead class="blue-2-bg white-text">
+            <tr>
+                <th class="txt roboto-regular-18 text-left">Admin</th>
+                <th class="txt roboto-regular-18 text-left">Type</th>
+                <th class="txt roboto-regular-18 text-left">Provider</th>
+                <th class="txt roboto-regular-18 text-left"></th>
+                <th class="txt roboto-regular-18 text-left">Site</th>
+                <th class="txt roboto-regular-18 text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let User of adminDataList; let i =index">
+                <td class="txt blue-text roboto-medium-16 text-left blue-text">{{User.user_name}}</td>
+                <td class="txt blue-text roboto-medium-16 text-left blue-text">{{adminTitleByType[User.user_type]}}</td>
+                <td class="txt blue-text roboto-medium-16 text-left blue-text">{{User.$expanded?.provider_name}}</td>
+                <td class="txt blue-text roboto-medium-16 text-left blue-text"></td>
+                <td class="txt blue-text roboto-medium-16 text-left blue-text">
+                    <ng-container *ngIf="User.$expanded?.sites?.length > 0">
+                        <ng-container *ngIf="User.$expanded.sites?.length > 1; else siteName">Multiple</ng-container>
+                        <ng-template #siteName>{{User.$expanded.sites[0].site_name}}</ng-template>
+                    </ng-container>
+
+                </td>
+                <td class="txt blue-text roboto-medium-16 text-left blue-text">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <button type="button" class="btn btn-outline-primary roboto-regular-12 mr-2"
+                            (click)="onEdit(User)">
+                            Edit <i class="fa fa-pencil-square-o"></i></button>
+                        <button type="button" class="btn btn-outline-primary roboto-regular-12 mr-2"
+                            (click)="recipientInfo = User['mobile_number']"
+                            (click)="onDelete(confirmDialog, User)">Delete <i class="fa fa-trash-o"></i></button>
+                            <button type="button" class="btn btn-outline-primary roboto-regular-12 mr-2"
+                            (click)="OnStatus(User)">
+                            {{!User.is_disabled ? 'Disable' : 'Enable'}} 
+                            <i *ngIf="User.is_disabled" class="fa fa-eye"></i>
+                            <i *ngIf="!User.is_disabled " class="fa fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between">
+        <small class="text-muted roboto-regular-12">
+            Showing {{(pageIndex -1) * pageLength + 1}} to {{totalCount > (pageLength * pageIndex) ?(pageLength *
+            pageIndex)
+            : totalCount }} of {{totalCount}}
+            entries</small>
+        <ngb-pagination class="ml-auto" (pageChange)="onPageChange($event)" [maxSize]="5" [page]="pageIndex"
+            [pageSize]="pageLength" [collectionSize]="totalCount"></ngb-pagination>
+    </div>
+</div>
+
+<ng-template #confirmDialog let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Please confirm</h4>
+        <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Are you sure you want to delete this admin user?</strong></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+</ng-template>
+<app-component-footer-copyright-strip></app-component-footer-copyright-strip>

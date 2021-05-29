@@ -1,0 +1,195 @@
+<app-component-dynamic-heading [heading]="isNew ? 'Register Family Member' : 'Edit Recipient'"></app-component-dynamic-heading>
+
+
+<div *ngIf="formGroup" class="form-form-row-width container d-flex justify-content-center flex-column flex-md-row-width mx-auto">
+    <form [formGroup]="formGroup" (ngSubmit)="save()">
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>First Name *</mat-label>
+                <input matInput placeholder="First Name" maxlength="15" formControlName="firstName" />
+                <mat-error *ngIf="!formGroup.get('firstName').valid">First Name is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Last Name *</mat-label>
+                <input matInput placeholder="Last Name" maxlength="15" formControlName="lastName" />
+                <mat-error *ngIf="!formGroup.get('lastName').valid">Last Name is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email ID" formControlName="email" [readonly]="isSelfRegisteredRecipient" />
+                <mat-error *ngIf="formGroup.get('email').hasError('required')">Email ID is required
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('email').hasError('existingRecipient')">Email ID
+                    already exists
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('email').hasError('pattern')">Email must be a valid
+                </mat-error>
+            </mat-form-field>
+
+            <ng-container *ngIf="formGroup.get('countryFlag').value;else noFlag">
+                <mat-form-field appearance="outline" class="mr-md-4 ml-md-4" style="width: 6% !important;">
+                    <input formControlName="countryFlag" 
+                    [readonly]="(currentRecipientProfile?.is_activated || currentRecipientProfile?.inviteStatus)"
+                     autocomplete="off" type="text"
+                    (countryChange)="onCountryChange($event)" 
+                    matInput ng2TelInput [ng2TelInputOptions]="{initialCountry: formGroup.get('countryFlag').value.iso2}" />
+                </mat-form-field>
+            </ng-container>
+            <ng-template #noFlag>
+                <mat-form-field *ngIf="iso2;else emptyBox" appearance="outline" class="mr-md-4 ml-md-4" style="width: 6% !important;">
+                    <input formControlName="countryFlag" id="flagRef" 
+                    [readonly]="(currentRecipientProfile?.is_activated || currentRecipientProfile?.inviteStatus)"
+                     autocomplete="off" type="text" 
+                    (intlTelInputObject)="onLoadCountryChange($event)" 
+                    matInput ng2TelInput [ng2TelInputOptions]="{initialCountry: iso2}" />
+                </mat-form-field>
+                <ng-template #emptyBox>
+                    <mat-form-field  appearance="outline" class="mr-md-4 ml-md-4" style="width: 6% !important;">
+                        <input formControlName="countryFlag"  matInput/>
+                    </mat-form-field>
+                    </ng-template>
+            </ng-template>
+            <mat-form-field appearance="outline" class="mr-md-4" style="width: 82% !important;">
+                <mat-label>Mobile Phone Number</mat-label>
+                <input type="text" formControlName="phone" minlength="8" maxlength="14" [readonly]="(currentRecipientProfile?.is_activated || currentRecipientProfile?.inviteStatus)"
+                    matInput />
+                <mat-error *ngIf="formGroup.get('phone').hasError('pattern')">Enter valid Mobile
+                    Phone
+                    Number.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Date of Birth *</mat-label>
+                <input matInput placeholder="Date of Birth" [max]="maxDate" #dob (focusout)=getage(dob)
+                       formControlName="dob" [matDatepicker]="picker1" />
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="!formGroup.get('dob').valid">Date of Birth is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Gender *</mat-label>
+                <mat-select matInput placeholder="Gender" formControlName="gender">
+                    <mat-option *ngFor="let item of genderData; let j = index" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!formGroup.get('gender').valid">Gender is required</mat-error>
+            </mat-form-field>
+            
+        </div>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Relation *</mat-label>
+                <mat-select formControlName="primary_relationship">
+                    <mat-option *ngFor="let relation of FAMILY_RELATIONS; let i = index" [value]="relation">
+                        {{relation}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!formGroup.get('primary_relationship').valid">Relation is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Address Line 1 *</mat-label>
+                <input matInput placeholder="Address Line 1" maxlength="30" formControlName="address1" />
+                <mat-error *ngIf="!formGroup.get('address1').valid">Address Line 1 is required
+                </mat-error>
+            </mat-form-field>
+            
+        </div>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Address Line 2 </mat-label>
+                <input matInput placeholder="Address Line 2" maxlength="30" formControlName="address2" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Apartment,Suit,Unit Number</mat-label>
+                <input matInput placeholder="Apartment,Suit,Unit Number" maxlength="30" formControlName="address3" />
+            </mat-form-field>
+            
+        </div>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Home Phone Number</mat-label>
+                <input matInput placeholder="Home Mobile Phone Number" />
+                <!-- <mat-error *ngIf="!authRecipientSignUpForm.get('homephone').valid">Home Mobile Phone Number is
+                    required
+                </mat-error> -->
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Zip *</mat-label>
+                <input matInput placeholder="Zip" #zipCode formControlName="zip" />
+            </mat-form-field>
+            
+        </div>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>City *</mat-label>
+                <input matInput placeholder="City" maxlength="25" formControlName="city" />
+                <mat-error *ngIf="!formGroup.get('city').valid">City is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>State *</mat-label>
+                <input matInput placeholder="state" readonly formControlName="state" *ngIf="show" />
+                <mat-select formControlName="state" *ngIf="stateshow">
+                    <mat-option *ngFor="let state of stateInfo; let j = index" [value]="state.StateName">
+                        {{state.StateName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+        </div>
+        <div class="form-row-width container d-flex justify-content-center flex-column flex-md-row">
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>Country *</mat-label>
+                <input matInput maxlength="25" placeholder="Country" formControlName="country" readonly  *ngIf="show"/>
+                <mat-error *ngIf="!formGroup.get('country').valid">Country is required</mat-error>
+              <mat-select (selectionChange)="onChangeCountry($event)" formControlName="country" *ngIf="stateshow">
+                    <mat-option *ngFor="let country of countryInfo; let i = index" [value]="country.CountryName">
+                        {{country.CountryName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="mx-md-4 w-100">
+                <mat-label>County *</mat-label>
+                <input matInput  placeholder="County" formControlName="county" readonly *ngIf="show" />
+                 <mat-select formControlName="county" *ngIf="stateshow">
+                    <mat-option *ngFor="let county of this.countyAd; let i = index" [value]="county">{{county}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!formGroup.get('county').valid">County is required</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <component-user-static-questionnaire [questionnaire]="object.static_questionnaire_answers" [getallvalue]="object">
+            </component-user-static-questionnaire>
+        </div>
+        <div class="py-5">
+            <input type="checkbox" class="terms-cursor" formControlName="termandCondition" id="termAndCondition" />
+            <label class="term-cond-text" for="termAndCondition">
+                Please indicate your acceptance of the
+                <span class="highlight terms-cursor" [routerLink]="'/terms-of-use'">Terms of Service</span>
+                and the
+                <span class="highlight policy-cursor" [routerLink]="'/privacy-policy'">PrivacyPolicy</span>
+                by clicking the check box.
+            </label>
+        </div>
+        <div class="d-flex align-items-center justify-content-center proceed-div py-3">
+            <div class="d-flex center py-3 mr-3">
+                <button class="btn cancel-btn white-text" type="button"
+                        [routerLink]="'../'">Cancel</button>
+            </div>
+            <button *ngIf="isNew;else other_button" class="btn update-btn blue-2-bg white-text ml-3" type="submit">
+                Register&nbsp;&nbsp;<i class="fa fa-long-arform-row-width container d-flex justify-content-center flex-column flex-md-row-right" aria-hidden="true"></i>
+            </button>
+            <ng-template #other_button>
+                <button type="submit" class="btn update-btn white-text blue-2-bg ml-3 ">
+                    Update
+                </button>
+            </ng-template>
+        </div>
+    </form>
+</div>
